@@ -20,7 +20,7 @@
     <property name="connection.pool_size">1</property>
     <property name="current_session_context_class">thread</property>
 
-     <mapping class="br.usp.ime.genealogy.entity.Pessoa" />
+     <mapping class="br.usp.ime.genealogy.entity.Person" />
 
  <!-- <mapping resource="com/mkyong/user/DBUser.hbm.xml"></mapping> -->
 </session-factory>
