@@ -7,7 +7,7 @@
  
     <property name="connection.url">jdbc:mysql://localhost:3306/genealogy</property>
     <property name="connection.username">root</property>
-    <property name="connection.password">toor</property>
+    <property name="connection.password">senha</property>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
  
@@ -20,7 +20,8 @@
     <property name="connection.pool_size">1</property>
     <property name="current_session_context_class">thread</property>
 
-     <mapping class="br.usp.ime.genealogy.entity.Person" />
+     
+     <mapping class="br.usp.ime.genealogy.entity.Tree" />
 
  <!-- <mapping resource="com/mkyong/user/DBUser.hbm.xml"></mapping> -->
 </session-factory>
