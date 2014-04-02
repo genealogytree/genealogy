@@ -31,7 +31,7 @@ public class TreeController {
 	
 	public void save(Tree tree){
 		System.out.println("Estou aqui!");
-		 Session session = HibernateUtil.getSessionFactory().openSession();
+	//	 Session session = HibernateUtil.getSessionFactory().openSession();
 		 
 		 /*
 	     session.beginTransaction();	     

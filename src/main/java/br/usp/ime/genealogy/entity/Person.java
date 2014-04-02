@@ -2,6 +2,7 @@ package br.usp.ime.genealogy.entity;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -32,5 +33,8 @@ public class Person {
 		this.id = id;
 	}
 	
+	public void setName(String name) {
+	//	this.names = new HashSet<PersonName>();
+	}
 	
 }

@@ -20,7 +20,7 @@ public class PersonInformation {
 	
 	private Date dateTime;
 	private String place;
-	private String value;
+	private String description;
 	
 	public Date getDateTime() {
 		return dateTime;
@@ -36,11 +36,15 @@ public class PersonInformation {
 		this.place = place;
 	}
 	
-	public String getValue() {
-		return value;
+	public String getDescription() {
+		return description;
 	}
-	public void setValue(String value) {
-		this.value = value;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
+	public void setTypeByIndex(String type) {
+		//Busca o tipo e define
+		
+	}
 }

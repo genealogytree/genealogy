@@ -9,6 +9,7 @@ public class InformationType {
 
 	@Id @GeneratedValue   
 	private long id;
+	private String index;
 	private String type;
 	private boolean show;
 	
@@ -31,6 +32,12 @@ public class InformationType {
 	}
 	public void setShow(boolean show) {
 		this.show = show;
+	}
+	public String getIndex() {
+		return index;
+	}
+	public void setIndex(String index) {
+		this.index = index.toLowerCase();
 	}
 	
 	

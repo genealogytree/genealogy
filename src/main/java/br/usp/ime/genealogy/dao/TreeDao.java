@@ -3,7 +3,6 @@ package br.usp.ime.genealogy.dao;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import br.usp.ime.genealogy.entity.Tree;
 
 public class TreeDao {
 	/*

@@ -29,5 +29,6 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/home/luciana.kayo/Downloads/gedcom4j-2.1.6.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
