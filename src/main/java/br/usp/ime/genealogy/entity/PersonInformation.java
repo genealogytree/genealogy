@@ -3,12 +3,16 @@ package br.usp.ime.genealogy.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class PersonInformation {
-
+	
+	@ManyToOne
+	@JoinColumn(name="idPerson")
+	private Person person;
+	
 	
 	private Date dateTime;
 	private String place;
