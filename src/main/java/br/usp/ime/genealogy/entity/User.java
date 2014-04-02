@@ -1,8 +1,11 @@
 package br.usp.ime.genealogy.entity;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class User {
@@ -10,6 +13,9 @@ public class User {
 	private long id;
 	private String email;
 	private String password;
+	
+	@ManyToMany(mappedBy="users")
+	private Set<Tree> trees;
 	
 	public long getId() {
 		return id;

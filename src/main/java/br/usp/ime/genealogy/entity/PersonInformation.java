@@ -10,8 +10,12 @@ import javax.persistence.ManyToOne;
 public class PersonInformation {
 	
 	@ManyToOne
-	@JoinColumn(name="idPerson")
+	@JoinColumn(name="person_id")
 	private Person person;
+	
+	@ManyToOne
+	@JoinColumn(name="information_type_id")
+	private InformationType type;
 	
 	
 	private Date dateTime;
