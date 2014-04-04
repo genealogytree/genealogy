@@ -16,12 +16,15 @@ import javax.persistence.OneToMany;
 @Entity
 public class Person {
 	
+	private String name;	
+	
+	
 	@Id @GeneratedValue
 	private Long id;
 	
 	@OneToMany(mappedBy="information")
 	private Set<PersonInformation> personInfos;
-	
+
 	@ManyToMany(mappedBy="persons")		
 	private Set<PersonName> names;
 	
@@ -34,7 +37,20 @@ public class Person {
 	}
 	
 	public void setName(String name) {
+		this.name = name;
 	//	this.names = new HashSet<PersonName>();
+	}
+	public String getName(){
+		return name;
+	
+	}
+	
+	public Set<PersonInformation> getPersonInfos() {
+		return personInfos;
+	}
+
+	public void setPersonInfos(Set<PersonInformation> personInfos) {
+		this.personInfos = personInfos;
 	}
 	
 }
