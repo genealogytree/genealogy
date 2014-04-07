@@ -14,74 +14,32 @@
 		<artifactId>junit</artifactId>
 		<version>4.11</version>
 	</dependency>
-	            
-    <dependency>
-    	<groupId>br.com.caelum</groupId>
-    	<artifactId>vraptor</artifactId>
-    	<version>3.5.3</version>
-    </dependency>
-    
+
+
+	<dependency>
+		<groupId>br.com.caelum.vraptor</groupId>
+		<artifactId>vraptor-hibernate</artifactId>
+		<version>1.0.1</version>
+	</dependency>
+
+
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-core</artifactId>
+		<version>3.6.6.Final</version>
+		<scope>compile</scope>
+		<optional>true</optional>
+	</dependency>     
 
         <!-- MySQL database driver -->
 	<dependency>
 		<groupId>mysql</groupId>
 		<artifactId>mysql-connector-java</artifactId>
-		<version>5.1.9</version>
-	</dependency>
-
-	<!-- Hibernate framework -->
-	<dependency>
-		<groupId>org.hibernate</groupId>
-		<artifactId>hibernate-core</artifactId>
-		<version>4.3.4.Final</version>
+		<version>5.1.24</version>
 	</dependency>
 
 
-	<dependency>
-		<groupId>org.hibernate</groupId>
-		<artifactId>hibernate-annotations</artifactId>
-		<version>3.5.6-Final</version>
-	</dependency>
-
-
-	<dependency>
-		<groupId>org.hibernate</groupId>
-		<artifactId>hibernate-commons-annotations</artifactId>
-		<version>3.2.0.Final</version>
-	</dependency>          
  
- 
-	<!-- Hibernate library dependecy start -->
-	<dependency>
-		<groupId>dom4j</groupId>
-		<artifactId>dom4j</artifactId>
-		<version>1.6.1</version>
-	</dependency>
- 
-	<dependency>
-		<groupId>commons-logging</groupId>
-		<artifactId>commons-logging</artifactId>
-		<version>1.1.1</version>
-	</dependency>
- 
-	<dependency>
-		<groupId>commons-collections</groupId>
-		<artifactId>commons-collections</artifactId>
-		<version>3.2.1</version>
-	</dependency>
- 
-	<dependency>
-		<groupId>cglib</groupId>
-		<artifactId>cglib</artifactId>
-		<version>2.2</version>
-	</dependency>
-	<!-- Hibernate library dependecy end -->
- 
-	<dependency>
-		<groupId>javax.transaction</groupId>
-		<artifactId>jta</artifactId>
-		<version>1.1</version>
-	</dependency>
 
 	<dependency>
 		<groupId>jstl</groupId>
@@ -99,20 +57,6 @@
   </dependencies>
   <build>
     <finalName>genealogy</finalName>
-    <testOutputDirectory>target/test-classes</testOutputDirectory>
-    <sourceDirectory>src/main/java</sourceDirectory>
-    <scriptSourceDirectory>src/main/scripts</scriptSourceDirectory>
-    <testSourceDirectory>src/main/test</testSourceDirectory>
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-      </resource>
-    </resources>
-    <testResources>
-      <testResource>
-        <directory>src/test/resources</directory>
-      </testResource>
-    </testResources> 
   </build>
   
 </project>

@@ -7,7 +7,6 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.usp.ime.genealogy.dao.TreeDao;
 import br.usp.ime.genealogy.entity.Tree;
-import br.usp.ime.genealogy.util.HibernateUtil;
 
 @Resource
 public class TreeController {
@@ -29,8 +28,14 @@ public class TreeController {
 		result.include("variable", "VRaptor!");
 	}
 	
+	@Path("/tree/save")
 	public void save(Tree tree){
+		Tree t = new Tree();
 		System.out.println("Estou aqui!");
+		System.out.println(tree.getTitle());
+		System.out.println("Teste");
+		t.setTitle("Teste");
+		this.treeDao.save(t);
 	//	 Session session = HibernateUtil.getSessionFactory().openSession();
 		 
 		 /*
