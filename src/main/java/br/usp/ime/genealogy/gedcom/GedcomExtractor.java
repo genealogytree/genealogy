@@ -37,7 +37,7 @@ public class GedcomExtractor {
 			Person person = new Person();
 			person.setName(indiv.formattedName());			
 			person.setPersonInfos(extractPersonInformation(indiv));			
-			people.add(person);						
+			//people.add(person); -> arvore.add(person);						
 		}
 		
 		return people;
@@ -47,25 +47,23 @@ public class GedcomExtractor {
 		
 		Set<PersonInformation> personInfos = new HashSet<PersonInformation>();
 		
-		
+		PersonInformation pinfo = new PersonInformation();
+		pinfo.setTypeByIndex("SEX");
+		pinfo.setDescription(indiv.sex.toString());
+		personInfos.add(pinfo);
 	 	for (IndividualEvent ievent : indiv.events) {
-    		PersonInformation pinfo = new PersonInformation();
+    		pinfo = new PersonInformation();
+    		pinfo.setTypeByIndex(ievent.type.toString());
     		if(ievent.date != null)
     			pinfo.setDateTime(convertDateGedcomToDateTime(ievent.date.toString()));
-    		
-    		//Falta terminar a extração das informações variáveis
     		if(ievent.place != null && ievent.place.placeName != null)
-    			System.out.println("\t\t" + ievent.place.placeName);
+    			pinfo.setPlace(ievent.place.placeName);
     		if(ievent.description != null)
-    			System.out.println("blabla");
-    			
+    			pinfo.setDescription(ievent.description.toString());
+    		
+    		personInfos.add(pinfo);
     	}		
-		
-		personInfos.add(null);
-		
-		
-		
-		return null;
+		return personInfos;
 	}
 	
 	
