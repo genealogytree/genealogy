@@ -6,12 +6,10 @@
 <title>VRaptor Tree Blank Project</title>
 </head>
 <body>
-	The tree works!! ${variable} ${linkTo[IndexController].index}
-	
-	<form action="<c:url value='/tree/save'/>">
-	<input type="text" name="tree.id">
+	<form method="post" action="<c:url value='/tree/save'/>">
+	<input type="text" name="tree.id" value="${tree.id}">
 	<br/>
-	<input type="text" name="tree.title">
+	<input type="text" name="tree.title" value="${tree.title}">
 	<br/>
 	<input type="submit" value="Salvar">
 	</form>

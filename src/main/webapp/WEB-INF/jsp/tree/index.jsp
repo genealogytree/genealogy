@@ -6,24 +6,21 @@
 <title>VRaptor Tree Blank Project</title>
 </head>
 <body>
-	The tree works!! ${variable} ${linkTo[IndexController].index}
+<a href="<c:url value='/tree/form'/>">New tree</a>
 <table>
   <thead>
     <tr>
-      <th>Nome</th>
-      <th>Endereço</th>
-      <th>Latitudo</th>
-      <th>Longitude</th>
-      <th>Ações</th>
+      <th>Tree</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
-    <c:forEach items="${treelist}" var="tree">
+    <c:forEach items="${treeList}" var="tree">
       <tr>
         <td>${tree.title}</td>
         <td>
-        	<a href="produtos/formulario?id=${tree.id}">Editar</a>
-        	<a href="produtos/remove?id=${tree.id}">Remover</a>        
+        	<a href="<c:url value='/tree/form'/>?id=${tree.id}">Edit</a>
+        	<a href="<c:url value='/tree/delete'/>?id=${tree.id}">Delete</a>        
         </td>
       </tr>          
     </c:forEach>

@@ -21,33 +21,26 @@ public class TreeController {
 	
 	@Path("/tree")
 	public List<Tree> index() {
-		result.include("variable", "VRaptor!");
 		return treeDao.listAll();
 	}	
 	
-	public void form() {
-		result.include("variable", "VRaptor!");
+	public void form(long id) {
+		Tree tree;
+		if(id != 0)
+			tree = treeDao.get(id);
+		else
+			tree = new Tree();
+		result.include("tree", tree);
 	}
-	
-	@Path("/tree/save")
+
 	public void save(Tree tree){
-		Tree t = new Tree();
-		System.out.println("Estou aqui!");
-		System.out.println(tree.getTitle());
-		System.out.println("Teste");
-		t.setTitle("Teste");
-		this.treeDao.save(t);
-		//AnnotationConfiguration configuration = new AnnotationConfiguration();
-		
-	//	 Session session = HibernateUtil.getSessionFactory().openSession();
-		 
-		 /*
-	     session.beginTransaction();	     
-	     session.save(tree); 
-	     session.getTransaction().commit();
-	     */
-		
+		this.treeDao.save(tree);
 		result.redirectTo(TreeController.class).index();
 	}
 	
+	public void delete(long id) {
+		Tree tree = this.treeDao.get(id);
+		this.treeDao.delete(tree);
+		result.redirectTo(TreeController.class).index();
+	}
 }

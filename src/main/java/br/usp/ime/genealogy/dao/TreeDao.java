@@ -18,12 +18,23 @@ public class TreeDao {
 		this.session = session;
 	}
 	
-	public void save(Tree tree){
-		this.session.save(tree);
-	}
-	
 	@SuppressWarnings("unchecked")
 	public List<Tree> listAll() {
 		return session.createCriteria(Tree.class).list();
+	}
+	
+	public Tree get(long id) {
+		return (Tree) this.session.load(Tree.class,id);
+	}
+	
+	public void save(Tree tree){
+		if(tree.getId() == 0)
+			this.session.save(tree);
+		else
+			this.session.update(tree);
+	}
+	
+	public void delete(Tree tree){
+		this.session.delete(tree);
 	}
 }
