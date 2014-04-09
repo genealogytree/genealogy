@@ -1,6 +1,6 @@
 package br.usp.ime.genealogy.controller;
 
-import org.hibernate.Session;
+import java.util.List;
 
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
@@ -20,8 +20,9 @@ public class TreeController {
 	}
 	
 	@Path("/tree")
-	public void index() {
+	public List<Tree> index() {
 		result.include("variable", "VRaptor!");
+		return treeDao.listAll();
 	}	
 	
 	public void form() {
@@ -36,6 +37,8 @@ public class TreeController {
 		System.out.println("Teste");
 		t.setTitle("Teste");
 		this.treeDao.save(t);
+		//AnnotationConfiguration configuration = new AnnotationConfiguration();
+		
 	//	 Session session = HibernateUtil.getSessionFactory().openSession();
 		 
 		 /*
