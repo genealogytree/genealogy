@@ -5,9 +5,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections.map.HashedMap;
+import org.gedcom4j.model.Family;
+import org.gedcom4j.model.FamilySpouse;
 import org.gedcom4j.model.Gedcom;
 import org.gedcom4j.model.Individual;
 import org.gedcom4j.model.IndividualEvent;
@@ -15,8 +20,10 @@ import org.gedcom4j.model.IndividualEvent;
 import org.gedcom4j.parser.GedcomParser;
 import org.gedcom4j.parser.GedcomParserException;
 
+import br.usp.ime.genealogy.entity.MarriageInformation;
 import br.usp.ime.genealogy.entity.Person;
 import br.usp.ime.genealogy.entity.PersonInformation;
+import br.usp.ime.genealogy.entity.Relationship;
 
 public class GedcomExtractor {
 	
@@ -31,15 +38,30 @@ public class GedcomExtractor {
 	
 	public ArrayList<Person> getPeople()
 	{
+		Map<Person, Individual> map = new HashMap<Person, Individual>();
+		
 		ArrayList<Person> people = new ArrayList<Person>();
 		
 		for(Individual indiv : ged.individuals.values()){
 			Person person = new Person();
 			person.setName(indiv.formattedName());			
 			person.setPersonInfos(extractPersonInformation(indiv));			
-			//people.add(person); -> arvore.add(person);						
+			//??? people.add(person); -> arvore.add(person);
+			map.put(person, indiv);			
 		}
 		
+		//???Varrer os individuos para criar os relacionamentos. Paramos nos casamentos.
+		for(Individual indiv : ged.individuals.values()){
+			for(Individual spouse : indiv.getSpouses()){
+				FamilySpouse fs = new FamilySpouse();
+				Family f = new Family();
+			//	f.
+				//MarriageInformation marriage = new MarriageInformation(indiv.familiesWhereSpouse[get])
+			}
+				
+				
+			
+		}
 		return people;
 	}
 		
