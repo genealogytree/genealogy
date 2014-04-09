@@ -24,13 +24,13 @@ public class TreeController {
 		return treeDao.listAll();
 	}	
 	
-	public void form(long id) {
+	public Tree form(long id) {
 		Tree tree;
 		if(id != 0)
 			tree = treeDao.get(id);
 		else
 			tree = new Tree();
-		result.include("tree", tree);
+		return tree;
 	}
 
 	public void save(Tree tree){
