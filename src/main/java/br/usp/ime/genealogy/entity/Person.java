@@ -1,15 +1,13 @@
 package br.usp.ime.genealogy.entity;
 
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 
@@ -17,7 +15,6 @@ import javax.persistence.OneToMany;
 public class Person {
 	
 	private String name;	
-	
 	
 	@Id @GeneratedValue
 	private Long id;
@@ -28,6 +25,9 @@ public class Person {
 	@ManyToMany(mappedBy="persons")		
 	private Set<PersonName> names;
 	
+	@ManyToOne
+	private Tree tree;
+
 	public Long getId() {
 		return this.id;
 	}
@@ -53,4 +53,12 @@ public class Person {
 		this.personInfos = personInfos;
 	}
 	
+	
+	public Tree getTree() {
+		return tree;
+	}
+
+	public void setTree(Tree tree) {
+		this.tree = tree;
+	}
 }

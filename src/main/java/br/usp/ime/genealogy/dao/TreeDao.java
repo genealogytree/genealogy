@@ -1,9 +1,11 @@
 package br.usp.ime.genealogy.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
 
+import br.usp.ime.genealogy.entity.Person;
 import br.usp.ime.genealogy.entity.Tree;
 
 import com.google.inject.Inject;
@@ -36,5 +38,10 @@ public class TreeDao {
 	
 	public void delete(Tree tree){
 		this.session.delete(tree);
+	}
+	
+	public ArrayList<Person> getPeople(long treeId) {
+		return (ArrayList<Person>) 
+				this.session.load(ArrayList.class,treeId);
 	}
 }
