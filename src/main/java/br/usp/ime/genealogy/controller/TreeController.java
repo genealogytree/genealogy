@@ -48,6 +48,6 @@ public class TreeController {
 	}
 
 	public List<Person> view(long id) {
-		return new ArrayList<Person>();
+		return treeDao.getPeople(id);
 	}
 }

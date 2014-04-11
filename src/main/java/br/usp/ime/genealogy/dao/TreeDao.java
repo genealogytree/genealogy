@@ -40,8 +40,10 @@ public class TreeDao {
 		this.session.delete(tree);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ArrayList<Person> getPeople(long treeId) {
-		return (ArrayList<Person>) 
-				this.session.load(ArrayList.class,treeId);
+		return (ArrayList<Person>) session.createQuery("from Person p where p.tree.id=?").
+				setLong(0,treeId).
+				list();
 	}
 }
