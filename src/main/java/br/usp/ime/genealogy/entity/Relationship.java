@@ -4,25 +4,29 @@ import org.hibernate.annotations.Entity;
 
 @Entity
 public class Relationship {
+	
+	public Relationship() {
+		
+	}
 
 	//??? Falta arrumar com as anotações do hibernate 
-	public Relationship(Person p1, Person p2, char grau){
+	public Relationship(Person p1, Person p2, char type){
 		this.person1 = p1;
 		this.person2 = p2;
-		this.grau = grau;
+		this.type = type;
 	}
 	
-	public Relationship(Person p1, Person p2, char grau, MarriageInformation marriage){
+	public Relationship(Person p1, Person p2, char type, MarriageInformation marriage){
 		this.person1 = p1;
 		this.person2 = p2;
-		this.grau = grau;
+		this.type = type;
 		this.relation = marriage;
 	}
 	
 	
 	private Person person1;
 	private Person person2;
-	private char grau;
+	private char type;
 	private MarriageInformation relation = null;
 	
 	public Person getPerson1() {
@@ -39,11 +43,11 @@ public class Relationship {
 		this.person2 = person2;
 	}
 	
-	public char getGrau() {
-		return grau;
+	public char getType() {
+		return type;
 	}
-	public void setGrau(char grau) {
-		this.grau = grau;
+	public void setType(char type) {
+		this.type = type;
 	}
 	
 	public MarriageInformation getRelation() {

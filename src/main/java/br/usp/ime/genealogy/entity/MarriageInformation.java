@@ -21,13 +21,6 @@ public class MarriageInformation {
 	private String place;
 	private String registry;
 	
-	public MarriageInformation(Date dateTime, String place, String registry){
-		this.dateTime = dateTime;
-		this.place = place;
-		this.registry = registry;
-	}
-	
-	
 	
 	public long getId() {
 		return id;
