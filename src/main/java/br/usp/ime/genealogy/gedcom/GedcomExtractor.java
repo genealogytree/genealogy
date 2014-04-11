@@ -22,11 +22,16 @@ import org.gedcom4j.model.Place;
 //import org.gedcom4j.model.Gedcom;
 import org.gedcom4j.parser.GedcomParser;
 import org.gedcom4j.parser.GedcomParserException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotationConfiguration;
 
+import br.usp.ime.genealogy.dao.PersonDao;
 import br.usp.ime.genealogy.entity.MarriageInformation;
 import br.usp.ime.genealogy.entity.Person;
 import br.usp.ime.genealogy.entity.PersonInformation;
 import br.usp.ime.genealogy.entity.Relationship;
+import br.usp.ime.genealogy.util.HibernateUtil;
 
 //1: Faz o parse de um arquivo GEDCOM
 public class GedcomExtractor {
@@ -48,13 +53,23 @@ public class GedcomExtractor {
 	}
 	
 	private void setPeople() {
+		AnnotationConfiguration config = new AnnotationConfiguration();
+		config.configure();
+		
+		SessionFactory factory = config.buildSessionFactory();
+		Session session = factory.openSession();
+		//PersonDao personDao = new PersonDao(session);
+		
 		hashPeople = new HashMap<Integer, Person>();
+		
+		
 		//2: Varre o conjunto dos indivíduos de um GEDCOM		
 		for(Individual ind : ged.individuals.values()){
 			Person person = new Person();
 			person.setName(ind.formattedName());			
 			person.setPersonInfos(setPersonInformation(ind));		
 			//salva a pessoa
+			
 			hashPeople.put(ind.hashCode(), person);			
 		}
 	}
@@ -83,9 +98,9 @@ public class GedcomExtractor {
 							
 							for (FamilyEvent event: fam.family.events) {
 								if (event.type == FamilyEventType.MARRIAGE) {
-									MarriageInformation marriageInfo = new MarriageInformation();
-									marriageInfo.setDateTime(convertDate(event.date.toString()));
-									marriageInfo.setPlace(event.place.placeName);
+									//MarriageInformation marriageInfo = new MarriageInformation();
+									//marriageInfo.setDateTime(convertDate(event.date.toString()));
+									//marriageInfo.setPlace(event.place.placeName);
 									
 									//salva os dados do casamento
 								}

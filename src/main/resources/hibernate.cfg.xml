@@ -22,6 +22,7 @@
 
      
      <mapping class="br.usp.ime.genealogy.entity.Tree" />
+     
 
  <!-- <mapping resource="com/mkyong/user/DBUser.hbm.xml"></mapping> -->
 </session-factory>
