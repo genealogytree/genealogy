@@ -1,5 +1,8 @@
 package br.usp.ime.genealogy.entity;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 import org.hibernate.annotations.Entity;
 
 @Entity
@@ -8,21 +11,6 @@ public class Relationship {
 	public Relationship() {
 		
 	}
-
-	//??? Falta arrumar com as anotações do hibernate 
-	public Relationship(Person p1, Person p2, char type){
-		this.person1 = p1;
-		this.person2 = p2;
-		this.type = type;
-	}
-	
-	public Relationship(Person p1, Person p2, char type, MarriageInformation marriage){
-		this.person1 = p1;
-		this.person2 = p2;
-		this.type = type;
-		this.relation = marriage;
-	}
-	
 	
 	private Person person1;
 	private Person person2;

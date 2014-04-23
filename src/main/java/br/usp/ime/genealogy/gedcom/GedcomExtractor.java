@@ -26,12 +26,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 
-import br.usp.ime.genealogy.dao.PersonDao;
-import br.usp.ime.genealogy.entity.MarriageInformation;
 import br.usp.ime.genealogy.entity.Person;
 import br.usp.ime.genealogy.entity.PersonInformation;
 import br.usp.ime.genealogy.entity.Relationship;
-import br.usp.ime.genealogy.util.HibernateUtil;
+
+
 
 //1: Faz o parse de um arquivo GEDCOM
 public class GedcomExtractor {

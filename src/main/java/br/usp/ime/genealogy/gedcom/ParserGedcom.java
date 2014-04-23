@@ -23,6 +23,7 @@ import br.usp.ime.genealogy.entity.PersonInformation;
 public class ParserGedcom {
 	
 	public static void main(String[] args) throws IOException, GedcomParserException {
+
 		GedcomExtractor ge = new GedcomExtractor("src/main/java/br/usp/ime/genealogy/gedcom/example2.ged");
 		
 		ge.doParse();
