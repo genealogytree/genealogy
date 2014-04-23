@@ -1,5 +1,6 @@
 package br.usp.ime.genealogy.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -27,7 +28,8 @@ public class PersonName {
 	@ManyToOne
 	@JoinColumn(name="name_id")
 	private Name name;
-
+	
+	@Column(name="order1")
 	private int order;
 
 	public Person getPerson() {

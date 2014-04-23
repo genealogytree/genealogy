@@ -30,18 +30,29 @@ public class Person {
 	@JoinColumn(name="tree_id")
 	private Tree tree;
 	
-	/*
+	
+	
 	@OneToMany(mappedBy="person1")
-	private Set<Relationship> relationships;
-	public Set<Relationship> getRelationships() {
-		return relationships;
+	private Set<Relationship> relationships1;
+	public Set<Relationship> getRelationships1() {
+		return relationships1;
 	}
 
-	public void setRelationships(Set<Relationship> relationships) {
-		this.relationships = relationships;
+	public void setRelationships1(Set<Relationship> relationships1) {
+		this.relationships1 = relationships1;
+	}
+	
+	@OneToMany(mappedBy="person2")
+	private Set<Relationship> relationships2;
+	public Set<Relationship> getRelationships2() {
+		return relationships2;
 	}
 
-	*/
+	public void setRelationships2(Set<Relationship> relationships2) {
+		this.relationships2 = relationships2;
+	}	
+	
+
 	
 	public Set<PersonName> getNames() {
 		return names;

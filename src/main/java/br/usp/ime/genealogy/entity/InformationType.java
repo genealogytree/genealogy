@@ -9,9 +9,9 @@ public class InformationType {
 
 	@Id @GeneratedValue   
 	private long id;
-	private String index;
+	private String idx;
 	private String type;
-	private boolean show;
+	private boolean visible;
 	
 	public long getId() {
 		return id;
@@ -27,18 +27,20 @@ public class InformationType {
 		this.type = type;
 	}
 	
-	public boolean isShow() {
-		return show;
+	public String getIdx() {
+		return idx;
 	}
-	public void setShow(boolean show) {
-		this.show = show;
+	public void setIdx(String idx) {
+		this.idx = idx;
 	}
-	public String getIndex() {
-		return index;
+	
+	public boolean isVisible() {
+		return visible;
 	}
-	public void setIndex(String index) {
-		this.index = index.toLowerCase();
+	public void setVisible(boolean visible) {
+		this.visible = visible;
 	}
+
 	
 	
 }

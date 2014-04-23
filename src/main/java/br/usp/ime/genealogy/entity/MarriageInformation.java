@@ -3,21 +3,21 @@ package br.usp.ime.genealogy.entity;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
-import org.hibernate.annotations.Entity;
 
 @Entity
 public class MarriageInformation {
-	//??? Falta verirficar as anotações do hibernate
-	
 	@OneToOne(mappedBy="relation", cascade=CascadeType.ALL)
 	private Relationship relation;
 	
 	@Id @GeneratedValue
 	private long id;		
+	@Column(name="date_time")
 	private Date dateTime;
 	private String place;
 	private String registry;
