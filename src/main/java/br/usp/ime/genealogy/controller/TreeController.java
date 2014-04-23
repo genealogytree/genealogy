@@ -1,12 +1,10 @@
 package br.usp.ime.genealogy.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
-import br.usp.ime.genealogy.dao.PersonDao;
 import br.usp.ime.genealogy.dao.TreeDao;
 import br.usp.ime.genealogy.entity.Person;
 import br.usp.ime.genealogy.entity.Tree;
