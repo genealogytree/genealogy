@@ -18,10 +18,10 @@
     <c:forEach items="${personList}" var="person">
       <tr>
         <td>${person.name}</td>
-        <td>
+        <!-- <td>
         	<a href="<c:url value='/tree/form'/>?id=${person.id}">Edit</a>
         	<a href="<c:url value='/tree/delete'/>?id=${person.id}">Delete</a>        
-        </td>
+        </td> -->
       </tr>          
     </c:forEach>
   </tbody>

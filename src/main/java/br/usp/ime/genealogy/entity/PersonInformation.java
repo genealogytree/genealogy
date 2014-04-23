@@ -3,15 +3,22 @@ package br.usp.ime.genealogy.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
 public class PersonInformation {
 	
+	@Id @GeneratedValue
+	private Long id;
+	
+	
 	@ManyToOne
 	@JoinColumn(name="person_id")
 	private Person person;
+	
 	
 	@ManyToOne
 	@JoinColumn(name="information_type_id")

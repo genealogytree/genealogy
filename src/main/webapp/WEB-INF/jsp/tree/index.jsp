@@ -20,7 +20,8 @@
         <td>${tree.title}</td>
         <td>
         	<a href="<c:url value='/tree/form'/>?id=${tree.id}">Edit</a>
-        	<a href="<c:url value='/tree/delete'/>?id=${tree.id}">Delete</a>        
+        	<a href="<c:url value='/tree/delete'/>?id=${tree.id}">Delete</a>
+        	<a href="<c:url value='/tree/view'/>?id=${tree.id}">View</a>        
         </td>
       </tr>          
     </c:forEach>

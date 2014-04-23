@@ -6,7 +6,7 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -19,15 +19,39 @@ public class Person {
 	@Id @GeneratedValue
 	private Long id;
 	
-	@OneToMany(mappedBy="information")
+	@OneToMany(mappedBy="person")
 	private Set<PersonInformation> personInfos;
 
-	@ManyToMany(mappedBy="persons")		
+	
+	@OneToMany(mappedBy="person")		
 	private Set<PersonName> names;
 	
 	@ManyToOne
+	@JoinColumn(name="tree_id")
 	private Tree tree;
+	
+	/*
+	@OneToMany(mappedBy="person1")
+	private Set<Relationship> relationships;
+	public Set<Relationship> getRelationships() {
+		return relationships;
+	}
 
+	public void setRelationships(Set<Relationship> relationships) {
+		this.relationships = relationships;
+	}
+
+	*/
+	
+	public Set<PersonName> getNames() {
+		return names;
+	}
+
+	public void setNames(Set<PersonName> names) {
+		this.names = names;
+	}
+
+	
 	public Long getId() {
 		return this.id;
 	}

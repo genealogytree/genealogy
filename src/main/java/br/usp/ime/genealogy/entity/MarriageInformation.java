@@ -2,6 +2,7 @@ package br.usp.ime.genealogy.entity;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -12,10 +13,10 @@ import org.hibernate.annotations.Entity;
 public class MarriageInformation {
 	//??? Falta verirficar as anotações do hibernate
 	
-	//@OneToOne
+	@OneToOne(mappedBy="relation", cascade=CascadeType.ALL)
 	private Relationship relation;
 	
-	//@Id @GeneratedValue
+	@Id @GeneratedValue
 	private long id;		
 	private Date dateTime;
 	private String place;

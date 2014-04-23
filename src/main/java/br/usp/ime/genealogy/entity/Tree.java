@@ -5,9 +5,10 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Tree {
@@ -15,19 +16,15 @@ public class Tree {
 	private long id;
 	private String title; 
 	
-	/*
 	@ManyToMany
 	@JoinTable(name="tree_user", 
-    joinColumns={@JoinColumn(name="tree_id")}, 
-    inverseJoinColumns={@JoinColumn(name="user_id")})
+    	joinColumns={@JoinColumn(name="tree_id")}, 
+    	inverseJoinColumns={@JoinColumn(name="user_id")})
 	private Set<User> users;
 	
-	 @ManyToMany
-	 @JoinTable(name="tree_person", 
-	            joinColumns={@JoinColumn(name="tree_id")}, 
-	            inverseJoinColumns={@JoinColumn(name="person_id")})	
+	@OneToMany(mappedBy="tree") 	
 	private Set<Person> persons;
-	 */
+	 
 	
 	public long getId() {
 		return id;
