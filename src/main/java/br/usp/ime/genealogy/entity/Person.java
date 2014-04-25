@@ -1,6 +1,10 @@
 package br.usp.ime.genealogy.entity;
 
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -19,6 +23,8 @@ public class Person {
 	@Id @GeneratedValue
 	private Long id;
 	
+	private HashMap<String, String> information;
+	
 	@OneToMany(mappedBy="person")
 	private Set<PersonInformation> personInfos;
 
@@ -30,7 +36,9 @@ public class Person {
 	@JoinColumn(name="tree_id")
 	private Tree tree;
 	
-	
+	public Person () {
+		this.personInfos = new HashSet<PersonInformation>();
+	}
 	
 	@OneToMany(mappedBy="person1")
 	private Set<Relationship> relationships1;

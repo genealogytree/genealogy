@@ -1,11 +1,14 @@
 package br.usp.ime.genealogy.controller;
 
+import java.util.Iterator;
+
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.usp.ime.genealogy.dao.PersonDao;
 import br.usp.ime.genealogy.dao.TreeDao;
 import br.usp.ime.genealogy.entity.Person;
+import br.usp.ime.genealogy.entity.PersonInformation;
 import br.usp.ime.genealogy.entity.Tree;
 
 @Resource
@@ -23,8 +26,16 @@ public class PersonController {
 	}
 	
 	@Path("/person/save")
-	public void save(Person person, Tree tree){
+	public void save(Person person, Tree tree, 
+			String[] infotypes, String[] infos){
 		tree = treeDao.get(tree.getId());
+		for (int i = 0; i < infos.length; i++) {
+			System.out.println(infotypes[i] + infos[i]);
+			PersonInformation pi = new PersonInformation();
+			pi.setTypeByIndex(infotypes[i]);
+			pi.setDescription(infos[i]);
+			person.getPersonInfos().add(pi);
+		}
 		this.personDao.add(person, tree);
 		result.redirectTo(TreeController.class).view(tree.getId());
 	}

@@ -51,7 +51,7 @@ public class PersonInformation {
 	}
 	
 	public void setTypeByIndex(String type) {
-		//Busca o tipo e define
-		
+		this.type = new InformationType();
+		this.type.setType(type);
 	}
 }
