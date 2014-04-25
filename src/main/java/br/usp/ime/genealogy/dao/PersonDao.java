@@ -18,7 +18,7 @@ public class PersonDao {
 
 	public void add(Person person, Tree tree) {
 		person.setTree(tree);
-		if(tree.getId() == 0)
+		if(person.getId() == 0)
 			this.session.save(person);
 		else
 			this.session.update(person);

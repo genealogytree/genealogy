@@ -45,6 +45,7 @@ public class TreeController {
 		result.redirectTo(TreeController.class).index();
 	}
 
+	@Path("/tree/view/{id}")
 	public List<Person> view(long id) {
 		return treeDao.getPeople(id);
 	}

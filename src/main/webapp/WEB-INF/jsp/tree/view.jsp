@@ -6,7 +6,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<a href='<c:url value="/person/addPerson?tree_id="/><%= request.getParameter("id") %>'>Add person</a>
 <table>
   <thead>
     <tr>
