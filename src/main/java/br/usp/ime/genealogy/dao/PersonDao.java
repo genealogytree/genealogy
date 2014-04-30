@@ -16,11 +16,14 @@ public class PersonDao {
 		this.session = session;
 	}
 
-	public void add(Person person, Tree tree) {
-		person.setTree(tree);
+	public void save(Person person) {
 		if(person.getId() == 0)
 			this.session.save(person);
 		else
 			this.session.update(person);
+	}
+	
+	public Person get(long id) {
+		return (Person) this.session.load(Person.class, id);
 	}
 }

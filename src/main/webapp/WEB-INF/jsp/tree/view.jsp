@@ -17,7 +17,8 @@
   <tbody>
     <c:forEach items="${personList}" var="person">
       <tr>
-        <td>${person.name}</td>
+        <td>
+        <a href='<c:url value="/person/addPerson?tree_id="/><%= request.getParameter("id") %>&person_id=${person.id}'>${person.name}</a></td>
         <!-- <td>
         	<a href="<c:url value='/tree/form'/>?id=${person.id}">Edit</a>
         	<a href="<c:url value='/tree/delete'/>?id=${person.id}">Delete</a>        

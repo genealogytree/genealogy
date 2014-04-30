@@ -24,12 +24,12 @@ if( typeof id_field == 'undefined' ) {
         // Create an <input> element, set its type and name attributes
         var input = document.createElement("input");
         input.type = "text";
-        input.name = "infos";
+        input.name = "infotypes";
         new_info_field.appendChild(input);
         
         var input2 = document.createElement("input");
         input2.type = "text";
-        input2.name = "infotypes";
+        input2.name = "infos";
         new_info_field.appendChild(input2);
         
         var delbutton = document.createElement("IMG");
@@ -64,11 +64,6 @@ if( typeof id_field == 'undefined' ) {
 	<br/>
 	<a href="#" id="addinfo" onclick="addFields()">Insert Info</a>
     <div id="container"></div>
-
-<!-- 	<label for="infos" >Info</label>
-	<input type="text" name="infotypes">
-	<input type="text" name="infos">
-	<br/> -->
 
 	<input type="hidden" name="tree.id" value="${tree.id}">
 	<input type="submit" value="Salvar">

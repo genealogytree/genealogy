@@ -1,10 +1,7 @@
 package br.usp.ime.genealogy.entity;
 
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -13,6 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 
 
 @Entity
@@ -23,9 +24,8 @@ public class Person {
 	@Id @GeneratedValue
 	private Long id;
 	
-	private HashMap<String, String> information;
-	
 	@OneToMany(mappedBy="person")
+	@Cascade(CascadeType.PERSIST)
 	private Set<PersonInformation> personInfos;
 
 	
@@ -95,6 +95,8 @@ public class Person {
 	public void setPersonInfos(Set<PersonInformation> personInfos) {
 		this.personInfos = personInfos;
 	}
+	
+	
 	
 	
 	public Tree getTree() {
