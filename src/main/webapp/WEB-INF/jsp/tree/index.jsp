@@ -6,7 +6,14 @@
 <title>VRaptor Tree Blank Project</title>
 </head>
 <body>
-<a href="<c:url value='/tree/form'/>">New tree</a>
+<a href="<c:url value='/tree/form'/>">New tree</a><br>
+<br>
+Import tree from GEDCOM: <input type="submit" value="Import" /><br />
+<form action="UploadServlet" method="post" enctype="multipart/form-data">
+<input type="file" name="file" size="60" /></form>
+<br />
+
+
 <table>
   <thead>
     <tr>

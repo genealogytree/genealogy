@@ -3,4 +3,12 @@
 xmlns:web="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>genealogy</display-name>
 
+<context-param> 
+    <description>Location to store uploaded file</description> 
+    <param-name>file-upload</param-name> 
+    <param-value> /GEDCOM/
+         
+     </param-value> 
+</context-param>
+
 </web-app>
