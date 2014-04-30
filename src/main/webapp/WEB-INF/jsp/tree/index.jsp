@@ -8,9 +8,12 @@
 <body>
 <a href="<c:url value='/tree/form'/>">New tree</a><br>
 <br>
-Import tree from GEDCOM: <input type="submit" value="Import" /><br />
-<form action="UploadServlet" method="post" enctype="multipart/form-data">
-<input type="file" name="file" size="60" /></form>
+<form action="<c:url value='/gedcom/upload'/>" method="post" enctype="multipart/form-data">
+Import tree from GEDCOM: 
+<br />
+<input type="file" name="gedcom" size="60" /> <br />
+<input type="submit" value="Import" />
+</form>
 <br />
 
 
