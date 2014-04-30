@@ -1,6 +1,7 @@
 package br.usp.ime.genealogy.controller;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import br.com.caelum.vraptor.Path;
@@ -36,29 +37,26 @@ public class PersonController {
 	
 	@Path("/person/save")
 	public void save(Person person, Tree tree, 
-			String[] infotypes, String[] infos){
+			long [] idxs, String[] datas, String[] places, String [] descriptions){
 		
-		Set<PersonInformation> personInfos = new HashSet<PersonInformation>();
 		tree = treeDao.get(tree.getId());
 		person.setTree(tree);
 		this.personDao.save(person);
-		for (int i = 0; i < infos.length; i++) {
-			InformationType infoType = new InformationType();
-			infoType.setIdx(infotypes[i]);
-			infoType.setType(infotypes[i]);
-			infoType.setVisible(true);
-			informationTypeDao.save(infoType);
+		for (int i = 0; i < idxs.length; i++) {
+			InformationType infoType = informationTypeDao.get(idxs[i]);
 			
-			PersonInformation pi = new PersonInformation();
-			pi.setTypeByIndex(infotypes[i]);
-			pi.setDescription(infos[i]);
-			//person.getPersonInfos().add(pi);
-			personInfos.add(pi);
-			pi.setPerson(person);
-			pi.setType(infoType);
-			personInformationDao.add(pi);
-		}
-		person.setPersonInfos(personInfos);
+			personInformationDao.getByPersonInformationType(person, infoType);
+			
+			
+				
+			PersonInformation personInformation = new PersonInformation();
+			personInformation.setPlace(places[i]);
+			personInformation.setDescription(descriptions[i]);
+		
+			personInformation.setPerson(person);
+			personInformation.setType(infoType);
+			personInformationDao.save(personInformation);
+		}		
 		result.redirectTo(TreeController.class).view(tree.getId());
 	}
 	
@@ -76,8 +74,11 @@ public class PersonController {
 		else
 			person = new Person();
 		
+		List<InformationType> types = this.informationTypeDao.list();
+		
 		result.include("person", person);
 		result.include("tree", tree);
+		result.include("types", types);
 	}
 
 }

@@ -64,6 +64,15 @@ if( typeof id_field == 'undefined' ) {
 	<br/>
 	<a href="#" id="addinfo" onclick="addFields()">Insert Info</a>
     <div id="container"></div>
+    <br/>
+	<br/>
+	<c:forEach items="${types}" var="type">
+	${type.type}<br />
+	<input type="text" name="idxs[]" value="${type.id}" /><br />
+	<input type="text" name="datas[]" /><br />
+	<input type="text" name="places[]" /><br />
+	<input type="text" name="descriptions[]" /><br /><br />	
+	</c:forEach>
 
 	<input type="hidden" name="tree.id" value="${tree.id}">
 	<input type="submit" value="Salvar">
