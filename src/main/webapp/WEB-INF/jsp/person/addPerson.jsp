@@ -6,43 +6,50 @@
 <title>VRaptor Tree Blank Project</title>
 
     <script type='text/javascript'>
-        function addFields(){
-            // Container <div> where dynamic content will be placed
-            var container = document.getElementById("container");
-            // Append a node with a random text
-            container.appendChild(document.createTextNode("Info "));
-            // Create an <input> element, set its type and name attributes
-            var input = document.createElement("input");
-            input.type = "text";
-            input.name = "infos";
-            container.appendChild(input);
-            
-            var input2 = document.createElement("input");
-            input2.type = "text";
-            input2.name = "infotypes";
-            container.appendChild(input2);
-            
-            var delbutton = document.createElement("IMG");
-            var link = document.createElement("a");
-            link.setAttribute('href','#');
-            link.setAttribute('id','removeinfo');
-            link.setAttribute('onClick','removeField()');
-            
-            delbutton.setAttribute('src', "http://www.laps.ufpa.br/professores/html/img/x.png");
-            link.appendChild(delbutton);
-            container.appendChild(link);
-            //Append a line break 
-            container.appendChild(document.createElement("br"));
-        }
+    function addFields(){
+        // Container <div> where dynamic content will be placed
+        var container = document.getElementById("container");
+        var new_info_field = document.createElement("div");
+
+
+if( typeof id_field == 'undefined' ) {
+            id_field = 0;
+}
+     id_field++;
+
+        new_info_field.setAttribute("id",id_field);
+        container.appendChild(new_info_field);
+        // Append a node with a random text
+        new_info_field.appendChild(document.createTextNode("Info "));
+        // Create an <input> element, set its type and name attributes
+        var input = document.createElement("input");
+        input.type = "text";
+        input.name = "infos";
+        new_info_field.appendChild(input);
         
-        function removeField() {
-        	var container = document.getElementById("container");
-        	container.removeChild(container.lastChild);
-        	container.removeChild(container.lastChild);
-        	container.removeChild(container.lastChild);
-        	container.removeChild(container.lastChild);
-        	container.removeChild(container.lastChild);
-        }
+        var input2 = document.createElement("input");
+        input2.type = "text";
+        input2.name = "infotypes";
+        new_info_field.appendChild(input2);
+        
+        var delbutton = document.createElement("IMG");
+        var link = document.createElement("a");
+        link.setAttribute('href','#');
+        link.setAttribute('id','removeinfo');
+        link.setAttribute('onClick','removeField('+id_field+')');
+        
+        delbutton.setAttribute('src', "http://www.laps.ufpa.br/professores/html/img/x.png");
+        link.appendChild(delbutton);
+        new_info_field.appendChild(link);
+        //Append a line break 
+        new_info_field.appendChild(document.createElement("br"));
+    }
+    
+    function removeField(id) {
+    	var container = document.getElementById("container");
+    	container.removeChild(document.getElementById(id));
+    	
+    }
     </script>
     
 </head>
