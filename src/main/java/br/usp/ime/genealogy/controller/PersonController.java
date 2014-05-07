@@ -1,8 +1,6 @@
 package br.usp.ime.genealogy.controller;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
@@ -46,9 +44,6 @@ public class PersonController {
 			InformationType infoType = informationTypeDao.get(idxs[i]);
 			
 			personInformationDao.getByPersonInformationType(person, infoType);
-			
-			
-				
 			PersonInformation personInformation = new PersonInformation();
 			personInformation.setPlace(places[i]);
 			personInformation.setDescription(descriptions[i]);

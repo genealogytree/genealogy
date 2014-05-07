@@ -5,7 +5,7 @@
 <hibernate-configuration>
  <session-factory>
  
-    <property name="connection.url">jdbc:mysql://localhost:3306/genealogy</property>
+    <property name="connection.url">jdbc:mysql://200.144.254.81:50306/genealogy</property>
     <property name="connection.username">root</property>
     <property name="connection.password">senha</property>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
@@ -20,20 +20,14 @@
     <property name="connection.pool_size">1</property>
     <property name="current_session_context_class">thread</property>
 
-     
-     <mapping class="br.usp.ime.genealogy.entity.Relationship" />
-     <mapping class="br.usp.ime.genealogy.entity.Tree" />
-     <mapping class="br.usp.ime.genealogy.entity.Person" />
-     <mapping class="br.usp.ime.genealogy.entity.Name" />
-     <mapping class="br.usp.ime.genealogy.entity.PersonInformation" />
-     <mapping class="br.usp.ime.genealogy.entity.User" />     
-     <mapping class="br.usp.ime.genealogy.entity.InformationType" />     
-     <mapping class="br.usp.ime.genealogy.entity.PersonName" />
-     
-     
-     
-     
-     
+    <mapping class="br.usp.ime.genealogy.entity.Relationship" />
+    <mapping class="br.usp.ime.genealogy.entity.Tree" />
+    <mapping class="br.usp.ime.genealogy.entity.Person" />
+    <mapping class="br.usp.ime.genealogy.entity.Name" />
+    <mapping class="br.usp.ime.genealogy.entity.PersonInformation" />
+    <mapping class="br.usp.ime.genealogy.entity.User" />     
+    <mapping class="br.usp.ime.genealogy.entity.InformationType" />     
+    <mapping class="br.usp.ime.genealogy.entity.PersonName" />
  
 </session-factory>
 </hibernate-configuration>
