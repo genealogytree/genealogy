@@ -1,9 +1,12 @@
 package br.usp.ime.genealogy.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
+import br.usp.ime.genealogy.entity.Person;
 import br.usp.ime.genealogy.entity.Relationship;
 import br.usp.ime.genealogy.entity.Tree;
 
@@ -26,4 +29,15 @@ public class RelationshipDao {
 	public List<Relationship> listAll() {
 		return session.createCriteria(Relationship.class).list();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public Person getParent(Person person, char type) {
+		for (Relationship relation : person.getRelationships2()) {
+			if (relation.getType() == type)
+				return relation.getPerson1();
+		}
+	
+		return null; 
+	}
+
 }

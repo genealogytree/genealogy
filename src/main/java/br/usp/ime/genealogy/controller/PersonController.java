@@ -8,10 +8,12 @@ import br.com.caelum.vraptor.Result;
 import br.usp.ime.genealogy.dao.InformationTypeDao;
 import br.usp.ime.genealogy.dao.PersonDao;
 import br.usp.ime.genealogy.dao.PersonInformationDao;
+import br.usp.ime.genealogy.dao.RelationshipDao;
 import br.usp.ime.genealogy.dao.TreeDao;
 import br.usp.ime.genealogy.entity.InformationType;
 import br.usp.ime.genealogy.entity.Person;
 import br.usp.ime.genealogy.entity.PersonInformation;
+import br.usp.ime.genealogy.entity.Relationship;
 import br.usp.ime.genealogy.entity.Tree;
 
 @Resource
@@ -22,20 +24,24 @@ public class PersonController {
 	private TreeDao treeDao;
 	private PersonInformationDao personInformationDao;
 	private InformationTypeDao informationTypeDao;
+	private RelationshipDao relationDao;
 	
 	public PersonController(Result result, PersonDao personDao, 
 			TreeDao treeDao, PersonInformationDao personInformationDao,
-			InformationTypeDao informationTypeDao) {
+			InformationTypeDao informationTypeDao,
+			RelationshipDao relationDao) {
 		this.result = result;
 		this.personDao = personDao;
 		this.treeDao = treeDao;
 		this.personInformationDao = personInformationDao;
 		this.informationTypeDao = informationTypeDao;
+		this.relationDao = relationDao;
 	}
 	
 	@Path("/person/save")
 	public void save(Person person, Tree tree, 
-			long [] idxs, String[] datas, String[] places, String [] descriptions){
+			long [] idxs, String[] datas, String[] places, String [] descriptions,
+			long relation_id, char relation_type){
 		
 		tree = treeDao.get(tree.getId());
 		person.setTree(tree);
@@ -47,16 +53,31 @@ public class PersonController {
 			PersonInformation personInformation = new PersonInformation();
 			personInformation.setPlace(places[i]);
 			personInformation.setDescription(descriptions[i]);
-		
 			personInformation.setPerson(person);
 			personInformation.setType(infoType);
 			personInformationDao.save(personInformation);
+		}	
+		
+		if (relation_id > 0) {
+			Person p = personDao.get(relation_id);
+			if (relation_type == 'F' || relation_type == 'M') {
+				Relationship relation = new Relationship();
+				relation.setPerson1(person);
+				relation.setPerson2(p);
+				relation.setType(relation_type);
+				
+				relationDao.saveRelationship(relation);
+			}
+			else if (relation_type == 'S') {
+				
+			}
+			
 		}		
-		result.redirectTo(TreeController.class).view(tree.getId());
+		result.redirectTo(TreeController.class).view(tree.getId(), person.getId());
 	}
 	
 	@Path("/person/addPerson")
-	public void addPerson(long tree_id, long person_id) {
+	public void addPerson(long tree_id, long person_id, long relation_id, char relation_type) {
 		Tree tree;
 		if(tree_id != 0)
 			tree = treeDao.get(tree_id);
@@ -74,6 +95,8 @@ public class PersonController {
 		result.include("person", person);
 		result.include("tree", tree);
 		result.include("types", types);
+		result.include("relation_id", relation_id);
+		result.include("relation_type", relation_type);
 	}
 
 }

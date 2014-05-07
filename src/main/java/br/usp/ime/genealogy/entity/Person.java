@@ -19,6 +19,7 @@ import org.hibernate.annotations.CascadeType;
 @Entity
 public class Person {
 	
+	
 	private String name;	
 	
 	@Id @GeneratedValue
@@ -38,6 +39,7 @@ public class Person {
 	
 	public Person () {
 		this.personInfos = new HashSet<PersonInformation>();
+		this.id = (long) 0;
 	}
 	
 	@OneToMany(mappedBy="person1")
