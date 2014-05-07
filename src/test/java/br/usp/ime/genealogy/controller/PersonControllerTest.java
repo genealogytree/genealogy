@@ -6,6 +6,9 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,6 +17,7 @@ import br.usp.ime.genealogy.dao.InformationTypeDao;
 import br.usp.ime.genealogy.dao.PersonDao;
 import br.usp.ime.genealogy.dao.PersonInformationDao;
 import br.usp.ime.genealogy.dao.TreeDao;
+import br.usp.ime.genealogy.entity.InformationType;
 import br.usp.ime.genealogy.entity.Person;
 import br.usp.ime.genealogy.entity.Tree;
 
@@ -24,14 +28,11 @@ public class PersonControllerTest {
 	private PersonDao personDao;
 	private PersonController personController;
 	private PersonInformationDao personInformationDao;
-	private	InformationTypeDao informationTypeDao;
+	private InformationTypeDao informationTypeDao;
 
 	private Tree tree;
-	// private List<Tree> trees;
-
 	private Person person;
-
-	// private List<Person> people;
+	private List<InformationType> infotypes;
 
 	@Before
 	public void setUp() {
@@ -40,10 +41,8 @@ public class PersonControllerTest {
 		personDao = mock(PersonDao.class);
 		personInformationDao = mock(PersonInformationDao.class);
 		informationTypeDao = mock(InformationTypeDao.class);
-		personController = new PersonController(result, personDao, treeDao, personInformationDao, informationTypeDao);
-
-		// trees = new ArrayList<Tree>();
-		// people = new ArrayList<Person>();
+		personController = new PersonController(result, personDao, treeDao,
+				personInformationDao, informationTypeDao);
 
 		tree = new Tree();
 		tree.setId(1);
@@ -53,10 +52,11 @@ public class PersonControllerTest {
 		person.setId(1L);
 		person.setTree(tree);
 
-		// trees.add(tree);
-		// people.add(person);
-
+		infotypes = new ArrayList<InformationType>();
+		
+		when(personDao.get(1)).thenReturn(person);
 		when(treeDao.get(1)).thenReturn(tree);
+		when(informationTypeDao.list()).thenReturn(infotypes);
 	}
 
 	@Test
@@ -65,10 +65,10 @@ public class PersonControllerTest {
 		person.setId(10L);
 		person.setName("TESTE");
 
-		long[] idxs = {1};
-		String[] data = {"04/12/2012"};
-		String[] places = {"Here"};
-		String[] descriptions = {"Something"};
+		long[] idxs = { 1 };
+		String[] data = { "04/12/2012" };
+		String[] places = { "Here" };
+		String[] descriptions = { "Something" };
 
 		this.personController.save(person, tree, idxs, data, places,
 				descriptions);
@@ -77,15 +77,17 @@ public class PersonControllerTest {
 		verify(result).redirectTo(TreeController.class);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void addPerson() {
-//		Tree t;
-//		Person p;
+		this.personController.addPerson(0, 0);
+		assertEquals((long) ((Person) result.included("person")).getId(), 0L);
+		assertEquals((long) ((Tree) result.included("tree")).getId(), 0L);
+		List<InformationType> types = (List<InformationType>) result.included("types");
+		assertEquals(types.size(), 0);
 		
-//		t = this.treeController.form(0,0);
-//		assertEquals(t.getId(), 0);
-//		
-//		t = this.treeController.form(tree.getId());
-//		assertEquals(t.getId(), tree.getId());
+		this.personController.addPerson(1, 1);
+		assertEquals((long) ((Person) result.included("person")).getId(), 1L);
+		assertEquals((long) ((Tree) result.included("tree")).getId(), 1L);
 	}
 }
