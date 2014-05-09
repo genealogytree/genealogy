@@ -39,7 +39,9 @@
 	<c:forEach begin="1" end="${n}" var="l">
 		
 		<c:choose>
-			<c:when test="${people[i]!=null}">${people[i].name}</c:when>
+			<c:when test="${people[i]!=null}">
+				<a href='<c:url value="/tree/view/"/><%= request.getParameter("tree_id") %>/${people[i].id}' >${people[i].name}</a>
+			</c:when>
 			<c:otherwise>
 				<c:set var="filho" value="${(i/2)-((i+1)%2)}" />
 				<c:if test="${people[filho]!=null}">				
@@ -58,14 +60,18 @@
 <p>Children</p>
 <table>
 <c:forEach items="${children}" var="child">
-	<tr><td>${child.name}</td></tr>
+	<tr><td>
+	<a href='<c:url value="/tree/view/"/><%= request.getParameter("tree_id") %>/${child.id}' >${child.name}</a>
+	</td></tr>
 </c:forEach>
 </table>
 
 <p>Spouses</p>
 <table>
 <c:forEach items="${spouses}" var="spouse">
-	<tr><td>${spouse.name}</td></tr>
+	<tr><td>
+	<a href='<c:url value="/tree/view/"/><%= request.getParameter("tree_id") %>/${spouse.id}' >${spouse.name}</a>
+	</td></tr>
 </c:forEach>
 </table>
 

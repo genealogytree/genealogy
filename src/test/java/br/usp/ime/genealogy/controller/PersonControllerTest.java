@@ -16,6 +16,7 @@ import br.com.caelum.vraptor.util.test.MockResult;
 import br.usp.ime.genealogy.dao.InformationTypeDao;
 import br.usp.ime.genealogy.dao.PersonDao;
 import br.usp.ime.genealogy.dao.PersonInformationDao;
+import br.usp.ime.genealogy.dao.RelationshipDao;
 import br.usp.ime.genealogy.dao.TreeDao;
 import br.usp.ime.genealogy.entity.InformationType;
 import br.usp.ime.genealogy.entity.Person;
@@ -29,6 +30,7 @@ public class PersonControllerTest {
 	private PersonController personController;
 	private PersonInformationDao personInformationDao;
 	private InformationTypeDao informationTypeDao;
+	private RelationshipDao relationshipDao;
 
 	private Tree tree;
 	private Person person;
@@ -41,12 +43,14 @@ public class PersonControllerTest {
 		personDao = mock(PersonDao.class);
 		personInformationDao = mock(PersonInformationDao.class);
 		informationTypeDao = mock(InformationTypeDao.class);
+		relationshipDao = mock(RelationshipDao.class);
 		personController = new PersonController(
 					result,
 					personDao,
 					treeDao,
 					personInformationDao,
-					informationTypeDao
+					informationTypeDao,
+					relationshipDao
 				);
 
 		tree = new Tree();
@@ -76,7 +80,7 @@ public class PersonControllerTest {
 		String[] descriptions = { "Something" };
 
 		this.personController.save(person, tree, idxs, data, places,
-				descriptions);
+				descriptions,0,'Z');
 
 		verify(personDao).save(person);
 		verify(result).redirectTo(TreeController.class);
@@ -85,13 +89,13 @@ public class PersonControllerTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void addPerson() {
-		this.personController.addPerson(0, 0);
+		this.personController.addPerson(0, 0, 0, 'Z');
 		assertEquals((long) ((Person) result.included("person")).getId(), 0L);
 		assertEquals((long) ((Tree) result.included("tree")).getId(), 0L);
 		List<InformationType> types = (List<InformationType>) result.included("types");
 		assertEquals(types.size(), 0);
 		
-		this.personController.addPerson(1, 1);
+		this.personController.addPerson(1, 1, 0, 'Z');
 		assertEquals((long) ((Person) result.included("person")).getId(), 1L);
 		assertEquals((long) ((Tree) result.included("tree")).getId(), 1L);
 	}
