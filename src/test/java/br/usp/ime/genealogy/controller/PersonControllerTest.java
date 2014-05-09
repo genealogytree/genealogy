@@ -41,8 +41,13 @@ public class PersonControllerTest {
 		personDao = mock(PersonDao.class);
 		personInformationDao = mock(PersonInformationDao.class);
 		informationTypeDao = mock(InformationTypeDao.class);
-		personController = new PersonController(result, personDao, treeDao,
-				personInformationDao, informationTypeDao);
+		personController = new PersonController(
+					result,
+					personDao,
+					treeDao,
+					personInformationDao,
+					informationTypeDao
+				);
 
 		tree = new Tree();
 		tree.setId(1);

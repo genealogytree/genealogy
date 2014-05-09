@@ -40,4 +40,14 @@ public class RelationshipDao {
 		return null; 
 	}
 
+	@SuppressWarnings("unchecked")
+	public ArrayList<Person> getChildren(Person person) {
+		ArrayList<Person> children = new ArrayList<Person>();
+		for (Relationship relation : person.getRelationships1()) {
+			if (relation.getType() == 'F' ||
+					relation.getType() == 'M' )
+				children.add(relation.getPerson2());
+		}	
+		return children; 
+	}
 }

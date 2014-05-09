@@ -18,7 +18,7 @@
 	<br/>
 	<c:forEach items="${types}" var="type">
 	${type.type}<br />
-	<input type="text" name="idxs[]" value="${type.id}" /><br />
+	<input type="hidden" name="idxs[]" value="${type.id}" /><br />
 	Data - Hora:<br />
 	<input type="text" name="datas[]" /><br />
 	Local:<br />

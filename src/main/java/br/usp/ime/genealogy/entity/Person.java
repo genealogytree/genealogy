@@ -2,6 +2,7 @@ package br.usp.ime.genealogy.entity;
 
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -97,15 +98,22 @@ public class Person {
 	public void setPersonInfos(Set<PersonInformation> personInfos) {
 		this.personInfos = personInfos;
 	}
-	
-	
-	
-	
+		
 	public Tree getTree() {
 		return tree;
 	}
 
 	public void setTree(Tree tree) {
 		this.tree = tree;
+	}
+	
+	public String getSex() {
+		for (Iterator<PersonInformation> i = this.personInfos.iterator(); i.hasNext();) {
+			PersonInformation info = (PersonInformation) i.next();
+			if(info.getType().getType().equalsIgnoreCase("sex")) {
+				return info.getDescription();
+			}
+		}
+		return null;
 	}
 }

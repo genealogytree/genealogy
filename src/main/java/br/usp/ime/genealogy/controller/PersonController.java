@@ -71,7 +71,16 @@ public class PersonController {
 			else if (relation_type == 'S') {
 				
 			}
-			
+			else if (relation_type == 'C') {
+				Relationship relation = new Relationship();
+				relation.setPerson1(p);
+				relation.setPerson2(person);
+				if (p.getSex().equals("M"))
+					relation.setType('F');
+				else if (p.getSex().equals("F"))
+					relation.setType('M');
+				relationDao.saveRelationship(relation);
+			}
 		}		
 		result.redirectTo(TreeController.class).view(tree.getId(), person.getId());
 	}

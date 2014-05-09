@@ -73,4 +73,5 @@ public class PersonInformation {
 		this.type = new InformationType();
 		this.type.setType(type);
 	}
+	
 }
