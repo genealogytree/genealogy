@@ -58,11 +58,13 @@ public class TreeController {
 	public void view(long tree_id, long person_id) {
 		List<Person> people = new ArrayList<Person>();
 		List<Person> children;
+		List<Person> spouses;
 		
 		Person person = personDao.get(person_id);
 		
 		people.add(0, person);
 		children = relationshipDao.getChildren(person);
+		spouses = relationshipDao.getSpouses(person);
 		
 		int klevel = 3;
 		Person p;
@@ -84,6 +86,7 @@ public class TreeController {
 		
 		result.include("person", person);
 		result.include("children", children);
+		result.include("spouses", spouses);
 		result.include("people", people);
 		result.include("klevel", klevel);
 		

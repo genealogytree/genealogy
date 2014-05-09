@@ -60,27 +60,32 @@ public class PersonController {
 		
 		if (relation_id > 0) {
 			Person p = personDao.get(relation_id);
+			Relationship relation = new Relationship();
 			if (relation_type == 'F' || relation_type == 'M') {
-				Relationship relation = new Relationship();
 				relation.setPerson1(person);
 				relation.setPerson2(p);
 				relation.setType(relation_type);
-				
-				relationDao.saveRelationship(relation);
 			}
 			else if (relation_type == 'S') {
-				
+				if(p.getSex().equals("F")) {
+					relation.setPerson1(person);
+					relation.setPerson2(p);
+				}
+				else {
+					relation.setPerson1(p);
+					relation.setPerson2(person);
+				}
+				relation.setType('S');
 			}
 			else if (relation_type == 'C') {
-				Relationship relation = new Relationship();
 				relation.setPerson1(p);
 				relation.setPerson2(person);
 				if (p.getSex().equals("M"))
 					relation.setType('F');
 				else if (p.getSex().equals("F"))
 					relation.setType('M');
-				relationDao.saveRelationship(relation);
 			}
+			relationDao.saveRelationship(relation);
 		}		
 		result.redirectTo(TreeController.class).view(tree.getId(), person.getId());
 	}

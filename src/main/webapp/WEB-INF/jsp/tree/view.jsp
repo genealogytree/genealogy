@@ -62,5 +62,12 @@
 </c:forEach>
 </table>
 
+<p>Spouses</p>
+<table>
+<c:forEach items="${spouses}" var="spouse">
+	<tr><td>${spouse.name}</td></tr>
+</c:forEach>
+</table>
+
 </body>
 </html>

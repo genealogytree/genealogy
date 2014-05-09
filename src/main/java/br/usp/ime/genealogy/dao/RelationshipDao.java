@@ -50,4 +50,17 @@ public class RelationshipDao {
 		}	
 		return children; 
 	}
+	
+	public ArrayList<Person> getSpouses(Person person) {
+		ArrayList<Person> spouses = new ArrayList<Person>();
+		for (Relationship relation : person.getRelationships1()) {
+			if (relation.getType() == 'S')
+				spouses.add(relation.getPerson2());
+		}
+		for (Relationship relation : person.getRelationships2()) {
+			if (relation.getType() == 'S')
+				spouses.add(relation.getPerson1());
+		}	
+		return spouses; 
+	}
 }
