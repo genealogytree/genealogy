@@ -86,6 +86,7 @@ public class TreeControllerTest {
 		
 		t = this.treeController.form(tree.getId());
 		assertEquals(t.getId(), tree.getId());
+		assertEquals(t.getTitle(), "First Tree");
 	}
 	
 	@Test
