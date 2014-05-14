@@ -63,7 +63,10 @@ public class TreeControllerTest {
 		people.add(person);
 		
 		when(treeDao.get(1)).thenReturn(tree);		
-		
+		when(relationshipDao.getChildren(person)).thenReturn(null);
+		when(relationshipDao.getSpouses(person)).thenReturn(null);
+		when(relationshipDao.getParent(person, 'F')).thenReturn(null);
+		when(relationshipDao.getParent(person, 'M')).thenReturn(null);
 	}
 	
 	@Test
@@ -104,11 +107,10 @@ public class TreeControllerTest {
 	}
 	
 	@Test
-	public void view() {
-//		when(treeDao.getPeople(1)).thenReturn((ArrayList<Person>) people);
-//		assertTrue(this.treeController.view(1).size() == 1);
-//		when(treeDao.getPeople(0)).thenReturn(new ArrayList<Person>());
-//		assertTrue(this.treeController.view(0).size() == 0);
+	public void view() {		
+		this.treeController.view(1, 1L);
+		
+		//testday		
 	}
 	
 }
