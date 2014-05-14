@@ -2,13 +2,17 @@ package br.usp.ime.genealogy.entity;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 public class Tree {
@@ -16,6 +20,11 @@ public class Tree {
 	private long id;
 	private String title; 
 	
+	@OneToOne(cascade=CascadeType.ALL)  
+    @JoinColumn
+    private Person rootPerson;
+	
+
 	@ManyToMany
 	@JoinTable(name="tree_user", 
     	joinColumns={@JoinColumn(name="tree_id")}, 
@@ -38,6 +47,13 @@ public class Tree {
 	}
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	
+	public Person getRootPerson() {
+		return rootPerson;
+	}
+	public void setRootPerson(Person rootPerson) {
+		this.rootPerson = rootPerson;
 	}
 	
 }

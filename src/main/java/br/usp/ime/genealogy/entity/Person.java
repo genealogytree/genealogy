@@ -5,15 +5,17 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+
 
 
 
@@ -27,7 +29,7 @@ public class Person {
 	private Long id;
 	
 	@OneToMany(mappedBy="person")
-	@Cascade(CascadeType.PERSIST)
+	@Cascade(org.hibernate.annotations.CascadeType.PERSIST)
 	private Set<PersonInformation> personInfos;
 
 	
@@ -116,4 +118,5 @@ public class Person {
 		}
 		return null;
 	}
+	
 }

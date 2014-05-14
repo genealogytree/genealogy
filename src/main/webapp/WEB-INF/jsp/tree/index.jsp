@@ -31,7 +31,7 @@ Import tree from GEDCOM:
         <td>
         	<a href="<c:url value='/tree/form'/>?id=${tree.id}">Edit</a>
         	<a href="<c:url value='/tree/delete'/>?id=${tree.id}">Delete</a>
-        	<a href="<c:url value='/tree/view/${tree.id}'/>">View</a>        
+        	<a href="<c:url value='/tree/view/${tree.id}/${tree.rootPerson.id}'/>">View</a>        
         </td>
       </tr>          
     </c:forEach>

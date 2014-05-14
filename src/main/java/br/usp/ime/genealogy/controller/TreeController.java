@@ -43,9 +43,16 @@ public class TreeController {
 		return tree;
 	}
 
-	public void save(Tree tree){
+	public void save(Tree tree, Person person){
 		this.treeDao.save(tree);
-		result.redirectTo(TreeController.class).index();
+		
+		person.setTree(tree);
+		this.personDao.save(person);
+		
+		tree.setRootPerson(person);
+		this.treeDao.save(tree);
+
+		result.redirectTo(TreeController.class).view(tree.getId(),person.getId());
 	}
 	
 	public void delete(long id) {
