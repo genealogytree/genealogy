@@ -62,12 +62,7 @@ public class GedcomExtractor {
 		this.setRelationships();
 	}
 	
-	private void setPeople() {
-		AnnotationConfiguration config = new AnnotationConfiguration();
-		config.configure();
-		
-		SessionFactory factory = config.buildSessionFactory();
-		Session session = factory.openSession();
+	private void setPeople() {	
 		
 		//Cria árvore para este gedCom
 		tree.setRootPerson(null);
@@ -77,7 +72,7 @@ public class GedcomExtractor {
 		hashPeople = new HashMap<Integer, Person>();
 		
 		Person person = null;
-				//2: Varre o conjunto dos indivíduos de um GEDCOM		
+		//2: Varre o conjunto dos indivíduos de um GEDCOM		
 		for(Individual ind : ged.individuals.values()){
 			person = new Person();
 			person.setName(ind.formattedName());			
