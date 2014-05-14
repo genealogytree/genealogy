@@ -1,6 +1,7 @@
 package br.usp.ime.genealogy.dao;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.mockito.MockitoAnnotations;
 
 import br.usp.ime.genealogy.entity.Tree;
 
+@SuppressWarnings("deprecation")
 public class TreeDaoTest {
 	
 	TreeDao treeDao;
@@ -50,7 +52,6 @@ public class TreeDaoTest {
 		when(session.load(Tree.class,0L)).thenReturn(null);
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Test
 	public void listAll() {
 		List<Tree> ts = treeDao.listAll();
@@ -59,7 +60,6 @@ public class TreeDaoTest {
 		verify(criteria).list();
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Test
 	public void get_existing_tree() {
 		Tree t = treeDao.get(tree1.getId());
@@ -67,7 +67,6 @@ public class TreeDaoTest {
 		Assert.assertEquals(tree1, t);
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Test
 	public void get_not_existing_tree() {
 		Tree t = treeDao.get(0L);

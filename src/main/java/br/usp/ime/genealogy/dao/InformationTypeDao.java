@@ -28,6 +28,5 @@ private Session session;
 	
 	public void save(InformationType informationType) {
 		this.session.save(informationType);
-		
 	}
 }

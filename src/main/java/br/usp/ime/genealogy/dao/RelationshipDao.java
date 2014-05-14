@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 
 import br.usp.ime.genealogy.entity.Person;
 import br.usp.ime.genealogy.entity.Relationship;
-import br.usp.ime.genealogy.entity.Tree;
 
 import com.google.inject.Inject;
 
@@ -22,6 +20,7 @@ public class RelationshipDao {
 	}
 	
 	public void saveRelationship(Relationship rel) {
+		//if(RelationType.isType(rel.getType()))
 		this.session.saveOrUpdate(rel);	
 	}
 	
@@ -30,7 +29,6 @@ public class RelationshipDao {
 		return session.createCriteria(Relationship.class).list();
 	}
 	
-	@SuppressWarnings("unchecked")
 	public Person getParent(Person person, char type) {
 		for (Relationship relation : person.getRelationships2()) {
 			if (relation.getType() == type)
@@ -40,7 +38,6 @@ public class RelationshipDao {
 		return null; 
 	}
 
-	@SuppressWarnings("unchecked")
 	public ArrayList<Person> getChildren(Person person) {
 		ArrayList<Person> children = new ArrayList<Person>();
 		for (Relationship relation : person.getRelationships1()) {
