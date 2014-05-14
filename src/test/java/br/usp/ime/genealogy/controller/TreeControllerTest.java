@@ -57,6 +57,8 @@ public class TreeControllerTest {
 		person.setId(1L);
 		person.setTree(tree);
 		
+		tree.setRootPerson(person);
+		
 		trees.add(tree);
 		people.add(person);
 		
@@ -88,7 +90,7 @@ public class TreeControllerTest {
 		Tree tree = new Tree();		
 		tree.setTitle("Tree");
 		
-		this.treeController.save(tree);
+		this.treeController.save(tree,person);
 		
 		verify(treeDao).save(tree);
 		verify(result).redirectTo(TreeController.class);		
