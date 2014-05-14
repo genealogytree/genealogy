@@ -19,7 +19,7 @@ public class RelationshipDao {
 		this.session = session;
 	}
 	
-	public void saveRelationship(Relationship rel) {
+	public void save(Relationship rel) {
 		//if(RelationType.isType(rel.getType()))
 		this.session.saveOrUpdate(rel);	
 	}

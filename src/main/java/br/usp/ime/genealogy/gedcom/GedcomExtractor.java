@@ -26,9 +26,13 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 
+import br.usp.ime.genealogy.dao.PersonDao;
+import br.usp.ime.genealogy.dao.RelationshipDao;
+import br.usp.ime.genealogy.dao.TreeDao;
 import br.usp.ime.genealogy.entity.Person;
 import br.usp.ime.genealogy.entity.PersonInformation;
 import br.usp.ime.genealogy.entity.Relationship;
+import br.usp.ime.genealogy.entity.Tree;
 
 
 
@@ -38,17 +42,24 @@ public class GedcomExtractor {
 	private GedcomParser gedparser = new GedcomParser();
 	private Gedcom ged;
 	private Map<Integer, Person> hashPeople;
+	Tree tree;
+	TreeDao treeDao;
+	PersonDao personDao;
+	RelationshipDao relationDao;
 	
-	public GedcomExtractor(String path) throws IOException, GedcomParserException{		
-		gedparser.load(path);		
+	public GedcomExtractor(String path, Tree tree, TreeDao treeDao, PersonDao personDao, RelationshipDao relationDao) throws IOException, GedcomParserException{		
+		gedparser.load(path);
 		ged = gedparser.gedcom;
-		return;
+		
+		this.tree = tree;
+		this.treeDao = treeDao;
+		this.personDao = personDao;
+		this.relationDao = relationDao;
 	}
 	
 	public void doParse() {
 		this.setPeople();		
 		this.setRelationships();
-		
 	}
 	
 	private void setPeople() {
@@ -57,20 +68,34 @@ public class GedcomExtractor {
 		
 		SessionFactory factory = config.buildSessionFactory();
 		Session session = factory.openSession();
-		//PersonDao personDao = new PersonDao(session);
 		
+		//Cria árvore para este gedCom
+		tree.setRootPerson(null);
+		this.treeDao.save(tree);
+		
+				
 		hashPeople = new HashMap<Integer, Person>();
 		
-		
-		//2: Varre o conjunto dos indivíduos de um GEDCOM		
+		Person person = null;
+				//2: Varre o conjunto dos indivíduos de um GEDCOM		
 		for(Individual ind : ged.individuals.values()){
-			Person person = new Person();
+			person = new Person();
 			person.setName(ind.formattedName());			
 			person.setPersonInfos(setPersonInformation(ind));		
-			//salva a pessoa
+			//salva a pessoa			
+			
+			person.setTree(tree);
+			this.personDao.save(person);
+			
+			if (tree.getRootPerson() == null){		
+				tree.setRootPerson(person);
+				this.treeDao.save(tree);
+			}
 			
 			hashPeople.put(ind.hashCode(), person);			
 		}
+		
+		
 	}
 	
 	//adiociona os relacionamentos de casamento e pai-filho
@@ -94,6 +119,8 @@ public class GedcomExtractor {
 							rel.setPerson2(hashPeople.get(wife.hashCode()));
 							rel.setType('S');
 							//salva o casamento
+							
+							relationDao.save(rel);
 							
 							for (FamilyEvent event: fam.family.events) {
 								if (event.type == FamilyEventType.MARRIAGE) {
@@ -124,6 +151,7 @@ public class GedcomExtractor {
 							rel.setType('F');
 							
 							//salva o pai
+							this.relationDao.save(rel);
 						}
 					}
 					
@@ -135,6 +163,7 @@ public class GedcomExtractor {
 							rel.setType('M');
 							
 							//salva a mae
+							this.relationDao.save(rel);
 						}
 					}
 				}

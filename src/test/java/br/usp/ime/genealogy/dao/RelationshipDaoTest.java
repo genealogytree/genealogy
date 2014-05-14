@@ -89,7 +89,7 @@ public class RelationshipDaoTest {
 
 	@Test
 	public void save() {
-		relationshipDao.saveRelationship(father_mother);
+		relationshipDao.save(father_mother);
 		verify(this.session).saveOrUpdate(father_mother);
 	}
 	

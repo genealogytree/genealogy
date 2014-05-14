@@ -3,19 +3,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>VRaptor Tree Blank Project</title>
+<title>Genealogy tree list</title>
 </head>
 <body>
-<a href="<c:url value='/tree/form'/>">New tree</a><br>
+<a href="<c:url value='/tree/form'/>">Create new tree </a><br>
+<a href="<c:url value='/gedcom/import'/>">Import tree from Gedcom file</a><br>
 <br>
-<form action="<c:url value='/gedcom/upload'/>" method="post" enctype="multipart/form-data">
-Import tree from GEDCOM: 
-<br />
-<input type="file" name="gedcom" size="60" /> <br />
-<input type="submit" value="Import" />
-</form>
-<br />
-
 
 <table>
   <thead>
