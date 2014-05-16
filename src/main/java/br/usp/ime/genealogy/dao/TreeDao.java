@@ -48,4 +48,9 @@ public class TreeDao {
 				setLong(0,treeId).
 				list();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Person> search() {
+		return null;
+	}
 }

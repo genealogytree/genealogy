@@ -98,4 +98,16 @@ public class TreeController {
 		result.include("klevel", klevel);
 		
 	}
+	
+	public List<Person> search(String name) {
+		List<Person> people = new ArrayList<Person>();
+		Person person = new Person();
+		person.setName("Victor Corleone");
+		
+		
+		
+		people.add(person);
+		
+		return people;	
+	}
 }

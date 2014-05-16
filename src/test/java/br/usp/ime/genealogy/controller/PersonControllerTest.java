@@ -65,7 +65,7 @@ public class PersonControllerTest {
 		
 		when(personDao.get(1)).thenReturn(person);
 		when(treeDao.get(1)).thenReturn(tree);
-		when(informationTypeDao.list()).thenReturn(infotypes);
+		//when(informationTypeDao.list()).thenReturn(infotypes);
 	}
 
 	@Test

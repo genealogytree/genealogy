@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import br.com.caelum.vraptor.util.test.MockResult;
 
+import br.usp.ime.genealogy.controller.*;
+
 public class IndexControllerTest {
 	
 	private MockResult result;

@@ -49,6 +49,7 @@ public class PersonController {
 		for (int i = 0; i < idxs.length; i++) {
 			InformationType infoType = informationTypeDao.get(idxs[i]);
 			
+			
 			personInformationDao.getByPersonInformationType(person, infoType);
 			PersonInformation personInformation = new PersonInformation();
 			personInformation.setPlace(places[i]);

@@ -3,6 +3,7 @@ package br.usp.ime.genealogy.entity;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -22,6 +23,10 @@ import org.hibernate.annotations.Cascade;
 @Entity
 public class Person {
 	
+	public Person () {
+		this.personInfos = new HashSet<PersonInformation>();
+		this.id = (long) 0;
+	}
 	
 	private String name;	
 	
@@ -40,10 +45,7 @@ public class Person {
 	@JoinColumn(name="tree_id")
 	private Tree tree;
 	
-	public Person () {
-		this.personInfos = new HashSet<PersonInformation>();
-		this.id = (long) 0;
-	}
+	
 	
 	@OneToMany(mappedBy="person1")
 	private Set<Relationship> relationships1;
@@ -118,5 +120,7 @@ public class Person {
 		}
 		return null;
 	}
+	
+	
 	
 }

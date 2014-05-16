@@ -6,20 +6,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import br.usp.ime.genealogy.entity.*;
 
 @Entity
 public class PersonName {
 	
 	@Id @GeneratedValue
 	private Long id;
-	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
 	
 	@ManyToOne
 	@JoinColumn(name="person_id")
@@ -32,6 +25,13 @@ public class PersonName {
 	@Column(name="order1")
 	private int order;
 
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}	
+	
 	public Person getPerson() {
 		return person;
 	}
