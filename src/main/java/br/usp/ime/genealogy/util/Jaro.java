@@ -1,16 +1,22 @@
 package br.usp.ime.genealogy.util;
 
+import java.text.Normalizer;
+import java.text.Normalizer.Form;
+
 public class Jaro {    
 	
-    public float getSimilarity(final String string1, final String string2) {
+    public float getSimilarity(final String name1, final String name2) {
 
+    	String string1 = Normalizer.normalize(name1.toLowerCase(), Form.NFD);
+    	String string2 = Normalizer.normalize(name2.toLowerCase(), Form.NFD);
+    	
         //get half the length of the string rounded up - (this is the distance used for acceptable transpositions)
         final int halflen = ((Math.min(string1.length(), string2.length())) / 2) + ((Math.min(string1.length(), string2.length())) % 2);
-
+        
         //get common characters
         final StringBuffer common1 = getCommonCharacters(string1, string2, halflen);
         final StringBuffer common2 = getCommonCharacters(string2, string1, halflen);
-
+        
         //check for zero in common
         if (common1.length() == 0 || common2.length() == 0) {
             return 0.0f;
@@ -60,7 +66,7 @@ public class Jaro {
             boolean foundIt = false;
             //compare char with range of characters to either side
 
-            for (int j = Math.max(0, i - distanceSep); !foundIt && j < Math.min(i + distanceSep, m - 1); j++) {
+            for (int j = Math.max(0, i - distanceSep); !foundIt && j <= Math.min(i + distanceSep, m - 1); j++) {
                 //check if found
                 if (copy.charAt(j) == ch) {
                     foundIt = true;
