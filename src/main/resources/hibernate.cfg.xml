@@ -26,6 +26,7 @@
     <mapping class="br.usp.ime.genealogy.entity.Tree" />
     <mapping class="br.usp.ime.genealogy.entity.Person" />
     <mapping class="br.usp.ime.genealogy.entity.Name" />
+    <mapping class="br.usp.ime.genealogy.entity.NameMatch" />
     <mapping class="br.usp.ime.genealogy.entity.PersonInformation" />
     <mapping class="br.usp.ime.genealogy.entity.User" />     
     <mapping class="br.usp.ime.genealogy.entity.InformationType" />     

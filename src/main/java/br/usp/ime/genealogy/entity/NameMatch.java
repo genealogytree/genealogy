@@ -1,11 +1,33 @@
 package br.usp.ime.genealogy.entity;
 
-public class NameMatch {
-	private Name name1;
-	private Name name2;
-	private float rate;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import br.usp.ime.genealogy.util.Similarity;
+
+@Entity
+public class NameMatch {
 	
+	@Id @GeneratedValue   
+	private long id;
+	@ManyToOne
+	@JoinColumn(name="name1_id")
+	private Name name1;
+	@ManyToOne
+	@JoinColumn(name="name2_id")
+	private Name name2;
+	private Similarity rate;
+	
+	
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 	
 	public Name getName1() {
 		return name1;
@@ -21,11 +43,12 @@ public class NameMatch {
 		this.name2 = name2;
 	}
 	
-	public float getRate() {
+	public Similarity getRate() {
 		return rate;
 	}
-	public void setRate(float rate) {
+	public void setRate(Similarity rate) {
 		this.rate = rate;
 	}
+	
 	
 }

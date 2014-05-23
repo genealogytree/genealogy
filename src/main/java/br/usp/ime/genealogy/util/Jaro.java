@@ -5,7 +5,7 @@ import java.text.Normalizer.Form;
 
 public class Jaro {    
 	
-    public float getSimilarity(final String name1, final String name2) {
+    public static float getSimilarity(final String name1, final String name2) {
 
     	String string1 = Normalizer.normalize(name1.toLowerCase(), Form.NFD);
     	String string2 = Normalizer.normalize(name2.toLowerCase(), Form.NFD);
