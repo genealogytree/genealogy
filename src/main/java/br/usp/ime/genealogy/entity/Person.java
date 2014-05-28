@@ -1,6 +1,7 @@
 package br.usp.ime.genealogy.entity;
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -28,8 +29,6 @@ public class Person {
 		this.id = (long) 0;
 	}
 	
-	private String name;	
-	
 	@Id @GeneratedValue
 	private Long id;
 	
@@ -39,7 +38,7 @@ public class Person {
 
 	
 	@OneToMany(mappedBy="person")		
-	private Set<PersonName> names;
+	private List<PersonName> names;
 	
 	@ManyToOne
 	@JoinColumn(name="tree_id")
@@ -69,11 +68,11 @@ public class Person {
 	
 
 	
-	public Set<PersonName> getNames() {
+	public List<PersonName> getNames() {
 		return names;
 	}
 
-	public void setNames(Set<PersonName> names) {
+	public void setNames(List<PersonName> names) {
 		this.names = names;
 	}
 
@@ -86,13 +85,28 @@ public class Person {
 		this.id = id;
 	}
 	
-	public void setName(String name) {
-		this.name = name;
-	//	this.names = new HashSet<PersonName>();
-	}
 	public String getName(){
-		return name;
-	
+		String name = "";
+		for (PersonName n : this.names) {
+			name += n.getName().getName() + " ";
+		}
+		return name.trim();
+	}
+	public void setName(String name) {
+		String[] names = name.split(" ");
+		int j = 1;
+		this.names = new ArrayList<PersonName>();
+		for (int i = 0; i < names.length; i++) {
+			if(names[i] == "" || names[i] == " ") 
+				continue;
+			PersonName personName = new PersonName();
+			personName.setPerson(this);
+			Name n = new Name();
+			n.setName(names[i]);
+			personName.setName(n);
+			personName.setOrder(j++);
+			this.names.add(personName);
+		}
 	}
 	
 	public Set<PersonInformation> getPersonInfos() {
