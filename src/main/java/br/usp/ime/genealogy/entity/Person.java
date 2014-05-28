@@ -86,12 +86,17 @@ public class Person {
 	}
 	
 	public String getName(){
+		if (this.names == null) {
+			return "";
+		}
+		
 		String name = "";
 		for (PersonName n : this.names) {
 			name += n.getName().getName() + " ";
 		}
 		return name.trim();
 	}
+	
 	public void setName(String name) {
 		String[] names = name.split(" ");
 		int j = 1;
@@ -99,10 +104,16 @@ public class Person {
 		for (int i = 0; i < names.length; i++) {
 			if(names[i] == "" || names[i] == " ") 
 				continue;
+			
+			if (j <= this.names.size()) {
+				
+			}
+			
 			PersonName personName = new PersonName();
 			personName.setPerson(this);
 			Name n = new Name();
 			n.setName(names[i]);
+			personName.setId(0L);
 			personName.setName(n);
 			personName.setOrder(j++);
 			this.names.add(personName);
