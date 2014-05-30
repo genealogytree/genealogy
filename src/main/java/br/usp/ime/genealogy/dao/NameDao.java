@@ -1,6 +1,7 @@
 package br.usp.ime.genealogy.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -32,5 +33,10 @@ public class NameDao {
 	public void save(Name name) {
 		if(this.getByName(name.getName()) == null)
 			this.session.save(name);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Name> listAll() {		
+		return session.createCriteria(Name.class).list();
 	}
 }

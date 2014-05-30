@@ -14,6 +14,9 @@ import org.junit.Test;
 public class JaroTest {
 
 	private ArrayList<String> names;
+	final float equal = 1.0f;
+	final float high = 0.87f;
+	final float low = 0.7f;
 	
 	@SuppressWarnings("resource")
 	@Before
@@ -33,29 +36,31 @@ public class JaroTest {
 	
 	@Test
 	public void similarity_basic() {
-		assertTrue("Equal",Jaro.getSimilarity("Adriano", "Adriano") == 1.00);
-		assertTrue("e or a",Jaro.getSimilarity("Adrieno", "Adriano") > 0.90);
-		assertTrue("Igor and Adriano",Jaro.getSimilarity("Igor", "Adriano") < 0.80);
-		assertTrue("diacritic",Jaro.getSimilarity("Igôr", "Igor") > 0.90);
+		assertTrue("Equal",Jaro.getSimilarity("Adriano", "Adriano") == equal);
+		assertTrue("Cupermann",Jaro.getSimilarity("Kuperman", "Cuppermam") >= low);
+		assertTrue("Coopermann",Jaro.getSimilarity("Kuperman", "Cooppermam") >= low);
+		assertTrue("e or a",Jaro.getSimilarity("Adrieno", "Adriano") > high);
+		assertTrue("Igor and Adriano",Jaro.getSimilarity("Igor", "Adriano") < low);
+		assertTrue("diacritic",Jaro.getSimilarity("Igôr", "Igor") > high);
 		
-		assertTrue("mistyping with 7 chars",Jaro.getSimilarity("Ardiano", "Adriano") > 0.80);
-		assertTrue("mistyping with 4 chars",Jaro.getSimilarity("Iogr", "Igor") > 0.80);
-		assertTrue("mistyping with 2 chars",Jaro.getSimilarity("da", "ad") > 0.80);
-		assertTrue("mistyping with 2 chars and case insensitive ",Jaro.getSimilarity("Da", "Ad") > 0.80);
+		assertTrue("mistyping with 7 chars",Jaro.getSimilarity("Ardiano", "Adriano") > low);
+		assertTrue("mistyping with 4 chars",Jaro.getSimilarity("Iogr", "Igor") > low);
+		assertTrue("mistyping with 2 chars",Jaro.getSimilarity("da", "ad") > low);
+		assertTrue("mistyping with 2 chars and case insensitive ",Jaro.getSimilarity("Da", "Ad") > low);
 	}
 	
 	@Test
 	public void similarity_file() throws IOException {
 		for (int i = 0; i < names.size(); i++) {
 			String name1 = names.get(i);
-			assertTrue("Equal "+name1,Jaro.getSimilarity(name1, name1) == 1.00);
+			assertTrue("Equal "+name1,Jaro.getSimilarity(name1, name1) == equal);
 			for (int j = i+1; j < names.size(); j++) {
 				String name2 = names.get(j);
-				assertTrue(name1+" != "+name2,Jaro.getSimilarity(name1, name2) < 1.00);
-				/*if(Jaro.getSimilarity(name1, name2) >= 0.94)
+				assertTrue(name1+" != "+name2,Jaro.getSimilarity(name1, name2) < equal);
+				/*if(Jaro.getSimilarity(name1, name2) >= 0.85)
 					System.out.println("\t"+name1+"--"+name2);
-				else if(Jaro.getSimilarity(name1, name2) >= 0.87)
-					System.out.println(name1+"--"+name2);*/				
+				else if(Jaro.getSimilarity(name1, name2) >= 0.70)
+					System.out.println(name1+"--"+name2);*/			
 			}
 		}
 	}
