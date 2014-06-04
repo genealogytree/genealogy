@@ -45,10 +45,10 @@ public class TreeController {
 
 	public void save(Tree tree, Person person){
 		this.treeDao.save(tree);
-		
-		person.setTree(tree);
-		this.personDao.save(person);
-		
+		result.redirectTo(PersonController.class).saveFirstPerson(person, tree);
+	}
+	
+	public void saveRootPerson(Tree tree, Person person) {
 		tree.setRootPerson(person);
 		this.treeDao.save(tree);
 

@@ -100,6 +100,7 @@ public class Person {
 	public void setName(String name) {
 		String[] names = name.split(" ");
 		int j = 1;
+		System.out.println("QUEBRANDO O NOME!!!");
 		this.names = new ArrayList<PersonName>();
 		for (int i = 0; i < names.length; i++) {
 			if(names[i] == "" || names[i] == " ") 

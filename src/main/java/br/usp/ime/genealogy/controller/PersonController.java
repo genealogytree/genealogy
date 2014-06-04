@@ -47,18 +47,14 @@ public class PersonController {
 		this.personNameDao = personNameDao;
 		this.nameDao = nameDao;
 	}
-	
-	@Post("/person/save")
-	public void save(Person person, Tree tree, 
-			long [] idxs, String[] datas, String[] places, String [] descriptions,
-			long relation_id, char relation_type){
-		
+
+	private void savePerson(Person person, Tree tree, long[] idxs,
+			String[] datas, String[] places, String[] descriptions, long relation_id,
+			char relation_type) {
 		tree = treeDao.get(tree.getId());
 		person.setTree(tree);
 		this.personDao.save(person);
 		
-		
-		//resolver o problema do nome
 		Name name = null;
 		for (PersonName personName : person.getNames()) {
 			this.nameDao.save(personName.getName());	
@@ -109,8 +105,26 @@ public class PersonController {
 					relation.setType('M');
 			}
 			relationDao.save(relation);
-		}		
+		}
+	}
+	
+	@Post("/person/save")
+	public void save(Person person, Tree tree, 
+			long [] idxs, String[] datas, String[] places, String [] descriptions,
+			long relation_id, char relation_type){
+		
+		savePerson(person, tree, idxs, datas, places, descriptions,
+				relation_id, relation_type);		
 		result.redirectTo(TreeController.class).view(tree.getId(), person.getId());
+	}
+
+	public void  saveFirstPerson(Person person, Tree tree) {
+		long[] idxs = {};
+		String[] datas = {};
+		String[] places = {};
+		String [] descriptions = {};
+		savePerson(person, tree, idxs, datas, places, descriptions, 0, (char) 0);
+		result.redirectTo(TreeController.class).saveRootPerson(tree, person);
 	}
 	
 	@Path("/person/addPerson")

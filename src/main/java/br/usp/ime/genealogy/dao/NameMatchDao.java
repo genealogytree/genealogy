@@ -31,7 +31,15 @@ public class NameMatchDao {
 	
 	@SuppressWarnings("unchecked")
 	public ArrayList<Name> notComparedNames(){
-		Query qrMatch = this.session.createQuery("select name1 from Name inner join NameMatch on name1.name = name.name or name2.name = name.name where name1.name = name2.name");
+		Query qrMatch = this.session.createQuery("select * from Name where Name.id not in "
+				+ "(select Name.id from Name,NameMatch where Name.id=name1_id or Name.id=name2_id)");
+		return (ArrayList<Name>) qrMatch.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Name> comparedNames(){
+		Query qrMatch = this.session.createQuery("select * from Name where Name.id in "
+				+ "(select Name.id from Name,NameMatch where Name.id=name1_id or Name.id=name2_id)");
 		return (ArrayList<Name>) qrMatch.list();
 	}
 	

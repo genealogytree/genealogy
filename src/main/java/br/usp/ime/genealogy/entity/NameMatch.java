@@ -19,7 +19,7 @@ public class NameMatch {
 	@ManyToOne
 	@JoinColumn(name="name2_id")
 	private Name name2;
-	private Similarity rate;
+	private float rate;
 	
 	
 	public long getId() {
@@ -43,10 +43,10 @@ public class NameMatch {
 		this.name2 = name2;
 	}
 	
-	public Similarity getRate() {
+	public float getRate() {
 		return rate;
 	}
-	public void setRate(Similarity rate) {
+	public void setRate(float rate) {
 		this.rate = rate;
 	}
 	

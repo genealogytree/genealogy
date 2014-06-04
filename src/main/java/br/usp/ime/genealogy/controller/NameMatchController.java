@@ -28,7 +28,7 @@ public class NameMatchController {
 		ArrayList<Name> allNames = (ArrayList<Name>) nameDao.listAll();
 		
 		
-		
+		/*
 		if(((List) qrMatch.list()).length() == 0)
 		{
 			Query qrNames = (Query) this.session.createQuery("select name from Name");
@@ -60,7 +60,7 @@ public class NameMatchController {
 					}
 				}
 			}
-		}
+		}*/
 	}
 	 
 }
