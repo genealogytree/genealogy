@@ -97,28 +97,70 @@ public class Person {
 		return name.trim();
 	}
 	
-	public void setName(String name) {
-		String[] names = name.split(" ");
+	public void setName(String name) {		
+		String[] names = name.split(" ");		
+		
+		if (this.names == null) {
+			this.names = new ArrayList<PersonName>();
+		}
+		
 		int j = 1;
-		System.out.println("QUEBRANDO O NOME!!!");
-		this.names = new ArrayList<PersonName>();
+		int k = this.names.size();
 		for (int i = 0; i < names.length; i++) {
 			if(names[i] == "" || names[i] == " ") 
 				continue;
 			
-			if (j <= this.names.size()) {
+			PersonName personName;
+			Name n;
+			
+			System.out.println("I:" + i);
+			if (j <= k) {
+				personName = this.names.get(j-1);
+				n  = personName.getName();
+				System.out.println("aqui");				
+			}
+			else {
+				personName = new PersonName();				
+				personName.setId(0L);	
 				
+				n = new Name();
+				n.setId(0L);
+				
+				System.out.println("Ali");
 			}
 			
-			PersonName personName = new PersonName();
-			personName.setPerson(this);
-			Name n = new Name();
+			System.out.println("Name!: " + names[i]);
+			
+			 
+			
 			n.setName(names[i]);
-			personName.setId(0L);
+			
 			personName.setName(n);
-			personName.setOrder(j++);
-			this.names.add(personName);
+			personName.setOrder(j);
+			this.names.set(j-1, personName);
+			
+			j = j + 1;
 		}
+		
+		for (int i=0; i < this.names.size(); i++) {
+			System.out.println("Nome --- " + this.names.get(i).getName().getName());
+		}
+		
+		System.out.println("J: " + j);
+		System.out.println("Size: " + this.names.size());
+		
+		if (j-1 < this.names.size()) {
+			for (int i=j-1; i < k; i++) {
+				this.names.remove(j-1);
+				
+				System.out.println("removendo ai=" + i);
+			}
+		}
+		
+		for (int i=0; i < this.names.size(); i++) {
+			System.out.println("Nome -- " + this.names.get(i).getName().getName());
+		}
+		
 	}
 	
 	public Set<PersonInformation> getPersonInfos() {

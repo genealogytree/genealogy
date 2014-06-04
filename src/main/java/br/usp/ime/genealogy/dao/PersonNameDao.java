@@ -22,4 +22,11 @@ public class PersonNameDao {
 		else
 			this.session.update(personName);
 	}
+	
+	public void delete(Person person, int ordem) {
+		session.createQuery("delete from PersonName where id=:idPerson and order > :ordem")
+		.setParameter("idPerson", person.getId())
+		.setParameter("ordem", ordem)
+		.executeUpdate();
+	}
 }

@@ -13,7 +13,7 @@
 	<label for="${person.id}" >Id</label>
 	<br/>
 	<label for="${person.name}" >Name</label>
-	<input type="text" name="person.name" value="${person.name}">
+	<input type="text" name="name" value="${person.name}">
     <br/>
 	<br/>
 	<c:forEach items="${types}" var="type">

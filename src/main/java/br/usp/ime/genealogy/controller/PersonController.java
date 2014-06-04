@@ -50,20 +50,43 @@ public class PersonController {
 
 	private void savePerson(Person person, Tree tree, long[] idxs,
 			String[] datas, String[] places, String[] descriptions, long relation_id,
-			char relation_type) {
+			char relation_type, String name_form) {
+		
+		person = this.personDao.get(person.getId());
+		int personName_size = person.getNames().size();
+		
 		tree = treeDao.get(tree.getId());
 		person.setTree(tree);
 		this.personDao.save(person);
 		
+		person.setName(name_form);
+		
+		System.out.println("Agora vai salvar as caixas no banco!");
+		
+		
+		
+		
+		
 		Name name = null;
-		for (PersonName personName : person.getNames()) {
-			this.nameDao.save(personName.getName());	
-			
-			personName.setPerson(person);
-			name = this.nameDao.getByName(personName.getName().getName());
-			personName.setName(name);
-			this.personNameDao.save(personName);
+		if (person.getNames() != null) {
+			int i = 0;
+			for (PersonName personName : person.getNames()) {
+				this.nameDao.save(personName.getName());	
+				
+				
+				personName.setPerson(person);
+				name = this.nameDao.getByName(personName.getName().getName());
+				personName.setName(name);
+				this.personNameDao.save(personName);
+				
+				System.out.println("Nome: " + personName.getName().getName());
+				i++;
+			}
+			this.personNameDao.delete(person, i);
+			System.out.println("Diferença "+ i + " " + personName_size );
 		}
+		
+		System.out.println("final");
 		
 		for (int i = 0; i < idxs.length; i++) {
 			InformationType infoType = informationTypeDao.get(idxs[i]);
@@ -111,10 +134,10 @@ public class PersonController {
 	@Post("/person/save")
 	public void save(Person person, Tree tree, 
 			long [] idxs, String[] datas, String[] places, String [] descriptions,
-			long relation_id, char relation_type){
+			long relation_id, char relation_type, String name){
 		
 		savePerson(person, tree, idxs, datas, places, descriptions,
-				relation_id, relation_type);		
+				relation_id, relation_type, name);		
 		result.redirectTo(TreeController.class).view(tree.getId(), person.getId());
 	}
 
@@ -123,7 +146,7 @@ public class PersonController {
 		String[] datas = {};
 		String[] places = {};
 		String [] descriptions = {};
-		savePerson(person, tree, idxs, datas, places, descriptions, 0, (char) 0);
+		savePerson(person, tree, idxs, datas, places, descriptions, 0, (char) 0, person.getName());
 		result.redirectTo(TreeController.class).saveRootPerson(tree, person);
 	}
 	
