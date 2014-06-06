@@ -64,6 +64,8 @@ public class PersonController {
 		
 		Name name = null;
 		if (person.getNames() != null) {
+			this.personNameDao.delete(person, 0);
+			
 			int i = 0;
 			for (PersonName personName : person.getNames()) {
 				this.nameDao.save(personName.getName());	
@@ -73,11 +75,10 @@ public class PersonController {
 				name = this.nameDao.getByName(personName.getName().getName());
 				personName.setName(name);
 				this.personNameDao.save(personName);
-				
-				System.out.println("Nome: " + personName.getName().getName());
+
 				i++;
 			}
-			this.personNameDao.delete(person, i);			
+			//this.personNameDao.delete(person, i);			
 		}
 		
 		System.out.println("final");

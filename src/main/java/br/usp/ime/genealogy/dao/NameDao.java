@@ -24,9 +24,10 @@ public class NameDao {
 		Query q = (Query) this.session.createQuery("from Name where name=?");
 		q.setString(0, nameString);
 		ArrayList<Name> l = (ArrayList<Name>) q.list();
+		
 		if(l.size() > 0)
-			return l.get(0);
-		else
+				return l.get(0);
+		else		
 			return null;
 	}
 	

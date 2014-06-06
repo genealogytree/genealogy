@@ -7,18 +7,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
-import org.hibernate.annotations.Cascade;
-
-
 
 
 @Entity
@@ -32,12 +26,11 @@ public class Person {
 	@Id @GeneratedValue
 	private Long id;
 	
-	@OneToMany(mappedBy="person")
-	@Cascade(org.hibernate.annotations.CascadeType.PERSIST)
+	@OneToMany(mappedBy="person")	
 	private Set<PersonInformation> personInfos;
 
 	
-	@OneToMany(mappedBy="person")		
+	@OneToMany(mappedBy="person")	
 	private List<PersonName> names;
 	
 	@ManyToOne
@@ -98,71 +91,61 @@ public class Person {
 	}
 	
 	public void setName(String name) {		
-		String[] names = name.split(" ");		
+		String[] newNamesContent = name.split(" ");	
+		System.out.println("ASDF");
 		
 		if (this.names == null) {
 			this.names = new ArrayList<PersonName>();
 		}
 		
-		int j = 1;
-		int k = this.names.size();
-		for (int i = 0; i < names.length; i++) {
-			if(names[i] == "" || names[i] == " ") 
+		
+		int order_currentName = 0;
+		int oldName_size = this.names.size();
+		for (int i = 0; i < newNamesContent.length; i++) {
+			if(newNamesContent[i] == "" || newNamesContent[i] == " ") 
 				continue;
+			else 
+				order_currentName++;
 			
 			PersonName personName;
-			Name n;
+			Name newName = new Name();
 			
-			System.out.println("I:" + i);
-			if (j <= k) {
-				personName = this.names.get(j-1);
-				n  = personName.getName();
-				System.out.println("aqui");				
+			/*
+			if (order_currentName <= oldName_size) {
+				personName = this.names.get(order_currentName-1);								
 			}
 			else {
 				personName = new PersonName();				
-				personName.setId(0L);	
-				
-				n = new Name();
-				n.setId(0L);
-				
-				System.out.println("Ali");
+				personName.setId(0L);				
 			}
+			*/
 			
-			System.out.println("Name!: " + names[i]);
+			personName = new PersonName();				
+			personName.setId(0L);			
 			
-			 
+			newName.setId(0L);			
+			newName.setName(newNamesContent[i]);
 			
-			n.setName(names[i]);
-			
-			personName.setName(n);
-			personName.setOrder(j);
-			if(this.names.size() < j)
+			personName.setName(newName);
+			personName.setOrder(order_currentName);
+			if(this.names.size() < order_currentName)
 				this.names.add(personName);
 			else
-				this.names.set(j-1, personName);
+				this.names.set(order_currentName-1, personName);
 			
-			j = j + 1;
+			System.out.println(personName.getName().getName()+"---");
 		}
+		/*
+		System.out.println("\nOldName_Size: "+oldName_size);
+		//Remove os nomes sobressalentes (advindos do nome antigo)
+		while(oldName_size > order_currentName)
+			this.names.remove(--oldName_size);
 		
-		for (int i=0; i < this.names.size(); i++) {
-			System.out.println("Nome --- " + this.names.get(i).getName().getName());
-		}
-		
-		System.out.println("J: " + j);
-		System.out.println("Size: " + this.names.size());
-		
-		if (j-1 < k) {
-			for (int i=j-1; i < k; i++) {
-				this.names.remove(j-1);
-				
-				System.out.println("removendo ai=" + i);
-			}
-		}
-		
-		for (int i=0; i < this.names.size(); i++) {
-			System.out.println("Nome -- " + this.names.get(i).getName().getName());
-		}
+		System.out.println("Size: "+this.names.size());
+		for(int i = 0; i < this.names.size(); i++)
+			System.out.println(this.names.get(i).getName().getName()+" ");
+		System.out.println("ASDFIM");
+		*/
 		
 	}
 	
