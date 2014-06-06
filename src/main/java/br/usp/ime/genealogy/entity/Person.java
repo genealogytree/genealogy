@@ -137,7 +137,10 @@ public class Person {
 			
 			personName.setName(n);
 			personName.setOrder(j);
-			this.names.set(j-1, personName);
+			if(this.names.size() < j)
+				this.names.add(personName);
+			else
+				this.names.set(j-1, personName);
 			
 			j = j + 1;
 		}
@@ -149,7 +152,7 @@ public class Person {
 		System.out.println("J: " + j);
 		System.out.println("Size: " + this.names.size());
 		
-		if (j-1 < this.names.size()) {
+		if (j-1 < k) {
 			for (int i=j-1; i < k; i++) {
 				this.names.remove(j-1);
 				

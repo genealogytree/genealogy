@@ -52,20 +52,15 @@ public class PersonController {
 			String[] datas, String[] places, String[] descriptions, long relation_id,
 			char relation_type, String name_form) {
 		
-		person = this.personDao.get(person.getId());
-		int personName_size = person.getNames().size();
+		if(person.getId() != 0){
+			person = this.personDao.get(person.getId());
+		}
 		
 		tree = treeDao.get(tree.getId());
 		person.setTree(tree);
 		this.personDao.save(person);
 		
 		person.setName(name_form);
-		
-		System.out.println("Agora vai salvar as caixas no banco!");
-		
-		
-		
-		
 		
 		Name name = null;
 		if (person.getNames() != null) {
@@ -82,8 +77,7 @@ public class PersonController {
 				System.out.println("Nome: " + personName.getName().getName());
 				i++;
 			}
-			this.personNameDao.delete(person, i);
-			System.out.println("Diferença "+ i + " " + personName_size );
+			this.personNameDao.delete(person, i);			
 		}
 		
 		System.out.println("final");
