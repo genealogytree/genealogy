@@ -35,21 +35,25 @@
 		<c:set var="n" value="${n*2}" />
 	</c:forEach>
 	
-	
+	<c:set var="sex_m" value="${true}" />
 	<c:forEach begin="1" end="${n}" var="l">
-		
 		<c:choose>
 			<c:when test="${people[i]!=null}">
 				<a href='<c:url value="/tree/view/"/><%= request.getParameter("tree_id") %>/${people[i].id}' >${people[i].name}</a>
 			</c:when>
 			<c:otherwise>
 				<c:set var="filho" value="${(i/2)-((i+1)%2)}" />
-				<c:if test="${people[filho]!=null}">				
-					<a href='<c:url value="/person/addPerson?tree_id="/><%= request.getParameter("tree_id") %>&relation_id=${people[filho].id}&relation_type=F'>Pai</a>
+				<c:if test="${people[filho]!=null}">
+					<c:if test="${sex_m}">
+						<a href='<c:url value="/person/addPerson?tree_id="/><%= request.getParameter("tree_id") %>&relation_id=${people[filho].id}&relation_type=F'>Pai</a>				
+					</c:if>
+					<c:if test="${sex_m == false}">
+						<a href='<c:url value="/person/addPerson?tree_id="/><%= request.getParameter("tree_id") %>&relation_id=${people[filho].id}&relation_type=M'>Mãe</a>				
+					</c:if>
 				</c:if>				
 			</c:otherwise>
 		</c:choose>
-		
+		<c:set var="sex_m" value="${sex_m ? false : true}" />
 		<c:set var="i" value="${i+1}" />	
 	</c:forEach>	
 	
