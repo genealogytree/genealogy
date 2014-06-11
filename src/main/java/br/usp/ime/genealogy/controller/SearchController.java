@@ -3,6 +3,7 @@ package br.usp.ime.genealogy.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.usp.ime.genealogy.dao.NameDao;
@@ -24,14 +25,15 @@ public class SearchController {
 		this.result = result;
 	}
 	
+	@Path("/search")	
 	public List<Person> index(String name, float similarity, char sex) {
 				
-		System.out.println(Similarity.EQUAL);
+		System.out.println(Similarity.EQUAL.getSimilarity());
 		System.out.println("nome:" + name + "similaridade: "+ similarity);
 		result.include("name", name);
-		result.include("equal", Similarity.EQUAL);
-		result.include("high", Similarity.HIGH);
-		result.include("low", Similarity.LOW);
+		result.include("equal", Similarity.EQUAL.getSimilarity());
+		result.include("high", Similarity.HIGH.getSimilarity());
+		result.include("low", Similarity.LOW.getSimilarity());
 		result.include("male", sex);
 		result.include("female", sex);
 		return this.search(name, similarity);
