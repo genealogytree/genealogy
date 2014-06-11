@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,23 +21,25 @@
 	</p>
 	<p>
 		Sex:
+		<input type="radio" name="sex" value="A" checked="checked">Any
 		<input type="radio" name="sex" value="${male}">M
 		<input type="radio" name="sex" value="${female}">F
 	</p>	
 </form>
 <br/>
+
 <table>
   <thead>
     <tr>
       <th>Name</th>
-      <th>Sex</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
     <c:forEach items="${personList}" var="person">
       <tr>
-        <td>${person.id}</td>
-        <td>${person.id}</td>
+        <td>${person.name}</td>
+        <td><a href='<c:url value="/tree/view/"/>${person.tree.id}/${person.id}'>View</a></td>
       </tr>          
     </c:forEach>
   </tbody>

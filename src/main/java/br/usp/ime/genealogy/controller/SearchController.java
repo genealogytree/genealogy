@@ -36,6 +36,7 @@ public class SearchController {
 		result.include("low", Similarity.LOW.getSimilarity());
 		result.include("male", sex);
 		result.include("female", sex);
+
 		return this.search(name, similarity);
 		
 	}
