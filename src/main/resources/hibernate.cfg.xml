@@ -22,7 +22,6 @@
     <property name="current_session_context_class">thread</property>
      -->
 
-    <mapping class="br.usp.ime.genealogy.entity.Relationship" />
     <mapping class="br.usp.ime.genealogy.entity.Tree" />
     <mapping class="br.usp.ime.genealogy.entity.Person" />
     <mapping class="br.usp.ime.genealogy.entity.Name" />
@@ -31,6 +30,7 @@
     <mapping class="br.usp.ime.genealogy.entity.User" />     
     <mapping class="br.usp.ime.genealogy.entity.InformationType" />     
     <mapping class="br.usp.ime.genealogy.entity.PersonName" />
+    <mapping class="br.usp.ime.genealogy.entity.Relationship" />
  
 </session-factory>
 </hibernate-configuration>

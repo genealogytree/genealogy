@@ -1,8 +1,8 @@
 package br.usp.ime.genealogy.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.usp.ime.genealogy.dao.NameDao;
@@ -24,20 +24,25 @@ public class SearchController {
 		this.result = result;
 	}
 	
-	@Path("/search")
-	public void index(String name, float similarity) {
+	public List<Person> index(String name, float similarity, char sex) {
 				
+		System.out.println(Similarity.EQUAL);
+		System.out.println("nome:" + name + "similaridade: "+ similarity);
 		result.include("name", name);
 		result.include("equal", Similarity.EQUAL);
 		result.include("high", Similarity.HIGH);
 		result.include("low", Similarity.LOW);
+		result.include("male", sex);
+		result.include("female", sex);
+		return this.search(name, similarity);
+		
 	}
 	
-	public void search(String name_search, float rate) {
+	private List<Person> search(String name_search, float rate) {
 		ArrayList<Name> names = new ArrayList<Name>();
 		Name new_name;
 		if(name_search == null) 
-			return;
+			return null;
 		for (String name : name_search.split(" ")) {
 			if(name == "" && name == " ")
 				continue;
@@ -52,10 +57,7 @@ public class SearchController {
 			names.add(new_name);
 		}
 		this.nameMatchDao.completeNameMatch();
-		ArrayList<Person> people = this.nameMatchDao.searchSimilarPeople(names,rate);
-		System.out.println("#pessoas"+people.size());
-		for (Person person : people) {
-			System.out.println(person.getId());
-		}
+		return this.nameMatchDao.searchSimilarPeople(names,rate);
 	}
+
 }

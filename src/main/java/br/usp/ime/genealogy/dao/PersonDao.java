@@ -1,10 +1,14 @@
 package br.usp.ime.genealogy.dao;
 
+import java.util.ArrayList;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 
 import antlr.collections.List;
+import br.com.caelum.vraptor.Path;
 import br.usp.ime.genealogy.entity.Person;
+import br.usp.ime.genealogy.entity.Tree;
 
 import com.google.inject.Inject;
 
@@ -34,4 +38,9 @@ public class PersonDao {
 		List l = (List) q.list();
 		return l.length() == 0;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Person> listAll() {		
+		return (ArrayList<Person>) session.createCriteria(Person.class).list();
+	}	
 }

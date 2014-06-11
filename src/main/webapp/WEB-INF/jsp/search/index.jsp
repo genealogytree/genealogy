@@ -8,13 +8,38 @@
 </head>
 <body>
 <form method="post" action="">
-Search:
-<br />
-<input type="text" name="name" value="${name}" />
-${equal}
-<br /><br />
-<input type="submit" value="Search" />
+	Search: <input type="submit" value=">>" />
+	<p>
+	Name:
+	<input type="text" name="name" value="${name}" />
+	</p>
+	<p> Similarity: 
+		<input type="radio" name="similarity" value="${equal}">Exact
+		<input type="radio" name="similarity" value="${high}">High
+		<input type="radio" name="similarity" value="${low}">Low
+	</p>
+	<p>
+		Sex:
+		<input type="radio" name="sex" value="${male}">M
+		<input type="radio" name="sex" value="${female}">F
+	</p>	
 </form>
-
+<br/>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Sex</th>
+    </tr>
+  </thead>
+  <tbody>
+    <c:forEach items="${personList}" var="person">
+      <tr>
+        <td>${person.id}</td>
+        <td>${person.id}</td>
+      </tr>          
+    </c:forEach>
+  </tbody>
+</table>
 </body>
 </html>
