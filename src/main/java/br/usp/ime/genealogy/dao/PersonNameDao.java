@@ -24,8 +24,8 @@ public class PersonNameDao {
 	}
 	
 	public void delete(Person person, int ordem) {
-		session.createQuery("delete from PersonName where id=:idPerson and order > :ordem")
-		.setParameter("idPerson", person.getId())
+		session.createQuery("delete from PersonName where person=:aPerson and order > :ordem")
+		.setParameter("aPerson", person)
 		.setParameter("ordem", ordem)
 		.executeUpdate();
 	}

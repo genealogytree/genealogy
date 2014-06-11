@@ -98,7 +98,6 @@ public class Person {
 			this.names = new ArrayList<PersonName>();
 		}
 		
-		
 		int order_currentName = 0;
 		int oldName_size = this.names.size();
 		for (int i = 0; i < newNamesContent.length; i++) {
@@ -120,8 +119,8 @@ public class Person {
 			}
 			*/
 			
-			personName = new PersonName();				
-			personName.setId(0L);			
+			personName = new PersonName();
+			personName.setId(0L);
 			
 			newName.setId(0L);			
 			newName.setName(newNamesContent[i]);
@@ -131,8 +130,8 @@ public class Person {
 			if(this.names.size() < order_currentName)
 				this.names.add(personName);
 			else
-				this.names.set(order_currentName-1, personName);
 			
+				this.names.set(order_currentName-1, personName);
 			System.out.println(personName.getName().getName()+"---");
 		}
 		/*
