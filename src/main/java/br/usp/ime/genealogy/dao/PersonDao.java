@@ -6,7 +6,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import antlr.collections.List;
-import br.com.caelum.vraptor.Path;
 import br.usp.ime.genealogy.entity.Person;
 import br.usp.ime.genealogy.entity.Tree;
 
@@ -43,4 +42,10 @@ public class PersonDao {
 	public ArrayList<Person> listAll() {		
 		return (ArrayList<Person>) session.createCriteria(Person.class).list();
 	}	
+
+	public ArrayList<Person> getByTree(Tree tree) {
+		Query q = (Query) this.session.createQuery("from Person where tree=?");
+		q.setParameter(0, tree);
+		return (ArrayList<Person>) q.list();
+	}
 }

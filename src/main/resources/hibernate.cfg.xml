@@ -31,6 +31,7 @@
     <mapping class="br.usp.ime.genealogy.entity.InformationType" />     
     <mapping class="br.usp.ime.genealogy.entity.PersonName" />
     <mapping class="br.usp.ime.genealogy.entity.Relationship" />
+    <mapping class="br.usp.ime.genealogy.entity.Merge" />
  
 </session-factory>
 </hibernate-configuration>
