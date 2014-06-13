@@ -26,7 +26,13 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 
+import br.com.caelum.vraptor.Result;
+import br.usp.ime.genealogy.controller.PersonController;
+import br.usp.ime.genealogy.dao.InformationTypeDao;
+import br.usp.ime.genealogy.dao.NameDao;
 import br.usp.ime.genealogy.dao.PersonDao;
+import br.usp.ime.genealogy.dao.PersonInformationDao;
+import br.usp.ime.genealogy.dao.PersonNameDao;
 import br.usp.ime.genealogy.dao.RelationshipDao;
 import br.usp.ime.genealogy.dao.TreeDao;
 import br.usp.ime.genealogy.entity.Person;
@@ -42,19 +48,32 @@ public class GedcomExtractor {
 	private GedcomParser gedparser = new GedcomParser();
 	private Gedcom ged;
 	private Map<Integer, Person> hashPeople;
-	Tree tree;
-	TreeDao treeDao;
-	PersonDao personDao;
-	RelationshipDao relationDao;
+	private Tree tree;
+	private final Result result;
+	private final TreeDao treeDao;
+	private final PersonDao personDao;
+	private final RelationshipDao relationDao;
+	private final PersonInformationDao personInformationDao;
+	private final InformationTypeDao informationTypeDao;
+	private final PersonNameDao personNameDao;
+	private final NameDao nameDao;
 	
-	public GedcomExtractor(String path, Tree tree, TreeDao treeDao, PersonDao personDao, RelationshipDao relationDao) throws IOException, GedcomParserException{		
+	public GedcomExtractor(String path, Tree tree, Result result, TreeDao treeDao, PersonDao personDao, 
+			RelationshipDao relationDao, PersonInformationDao personInformationDao, InformationTypeDao informationTypeDao, 
+			PersonNameDao personNameDao, NameDao nameDao) throws IOException, GedcomParserException{		
 		gedparser.load(path);
 		ged = gedparser.gedcom;
 		
+	
 		this.tree = tree;
+		this.result = result;
 		this.treeDao = treeDao;
 		this.personDao = personDao;
 		this.relationDao = relationDao;
+		this.personInformationDao = personInformationDao;
+		this.informationTypeDao = informationTypeDao;		
+		this.personNameDao = personNameDao;
+		this.nameDao = nameDao;
 	}
 	
 	public void doParse() {
@@ -63,6 +82,10 @@ public class GedcomExtractor {
 	}
 	
 	private void setPeople() {	
+		
+		PersonController personController = new PersonController(this.result, this.personDao, this.treeDao, 
+				this.personInformationDao, this.informationTypeDao, this.relationDao, 
+				this.personNameDao, nameDao);
 		
 		//Cria árvore para este gedCom
 		tree.setRootPerson(null);
@@ -80,7 +103,8 @@ public class GedcomExtractor {
 			//salva a pessoa			
 			
 			person.setTree(tree);
-			this.personDao.save(person);
+			//this.personDao.save(person);
+			personController.savePerson(person, this.tree, new long[0], new String[0], new String[0], new String[0], 0, 'U', ind.formattedName());
 			
 			if (tree.getRootPerson() == null){		
 				tree.setRootPerson(person);

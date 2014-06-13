@@ -48,7 +48,7 @@ public class PersonController {
 		this.nameDao = nameDao;
 	}
 
-	private void savePerson(Person person, Tree tree, long[] idxs,
+	public void savePerson(Person person, Tree tree, long[] idxs,
 			String[] datas, String[] places, String[] descriptions, long relation_id,
 			char relation_type, String name_form) {
 		

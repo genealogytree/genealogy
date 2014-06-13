@@ -18,7 +18,11 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.core.RequestInfo;
 import br.com.caelum.vraptor.interceptor.multipart.UploadedFile;
+import br.usp.ime.genealogy.dao.InformationTypeDao;
+import br.usp.ime.genealogy.dao.NameDao;
 import br.usp.ime.genealogy.dao.PersonDao;
+import br.usp.ime.genealogy.dao.PersonInformationDao;
+import br.usp.ime.genealogy.dao.PersonNameDao;
 import br.usp.ime.genealogy.dao.RelationshipDao;
 import br.usp.ime.genealogy.dao.TreeDao;
 import br.usp.ime.genealogy.entity.Tree;
@@ -32,14 +36,23 @@ public class GedcomController {
 	private final TreeDao treeDao;
 	private final PersonDao personDao;	
 	private final RelationshipDao relationDao;
+	private final PersonInformationDao personInformationDao;
+	private final InformationTypeDao informationTypeDao;
+	private final PersonNameDao personNameDao;
+	private final NameDao nameDao;
 	
 	public GedcomController(Result result, TreeDao treeDao,
-							PersonDao personDao, RelationshipDao relationDao) {
+							PersonDao personDao, RelationshipDao relationDao, PersonInformationDao personInformationDao, 
+							InformationTypeDao informationTypeDao, PersonNameDao personNameDao, NameDao nameDao) {
 		this.result = result;
 		
 		this.treeDao = treeDao;
 		this.personDao = personDao;
 		this.relationDao = relationDao;
+		this.personInformationDao = personInformationDao;
+		this.informationTypeDao = informationTypeDao;		
+		this.personNameDao = personNameDao;
+		this.nameDao = nameDao;		
 	}
 	
 	@Get("/gedcom/import")
@@ -60,7 +73,9 @@ public class GedcomController {
 			throw new RuntimeException("Error: copy failed!", e);			
 		}
 		
-		GedcomExtractor gedcomExtractor = new GedcomExtractor(file_name, tree, treeDao, personDao, relationDao);
+		GedcomExtractor gedcomExtractor = new GedcomExtractor(file_name, tree, this.result, treeDao, personDao, relationDao,
+				this.personInformationDao, this.informationTypeDao, this.personNameDao, this.nameDao);
+		
 		gedcomExtractor.doParse();
 		
 		result.redirectTo(TreeController.class).view(tree.getId(), tree.getRootPerson().getId());;
