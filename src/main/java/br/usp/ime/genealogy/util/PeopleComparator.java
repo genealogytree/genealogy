@@ -2,23 +2,18 @@ package br.usp.ime.genealogy.util;
 
 import java.util.List;
 
-import br.usp.ime.genealogy.dao.MergeDao;
 import br.usp.ime.genealogy.dao.RelationshipDao;
-import br.usp.ime.genealogy.entity.Merge;
 import br.usp.ime.genealogy.entity.Person;
 
 public class PeopleComparator {
 	
 	private final RelationshipDao relationshipDao;
-	private final MergeDao mergeDao;
 	
-	public PeopleComparator(RelationshipDao relationshipDao,
-			MergeDao mergeDao) {
+	public PeopleComparator(RelationshipDao relationshipDao) {
 		this.relationshipDao = relationshipDao;
-		this.mergeDao = mergeDao;
 	}
 
-	public void comparePeople(Person person1, Person person2) {
+	public float comparePeople(Person person1, Person person2) {
 		float rate, rate_max, weight, ratio, mean;
 		
 		Person father1, father2, mother1, mother2;
@@ -27,8 +22,9 @@ public class PeopleComparator {
 		
 		rate = Jaro.getSimilarity(person1.getName(), person2.getName());
 		
+		//Não deveria retornar nada. O resultado da função deve ser sempre comparado.
 		if (rate < Similarity.HIGH.getSimilarity()) 
-			return;
+			return -1; 
 		
 		weight = 60;
 		ratio = 60 * rate;
@@ -90,14 +86,6 @@ public class PeopleComparator {
 		}						
 		
 		mean = ratio / weight;
-		if (mean >= 80) {
-			Merge merge = new Merge();
-			merge.setPerson1(person1);
-			merge.setPerson2(person2);
-			merge.setRate(mean);
-			merge.setStatus(MergeStatus.NONE);
-			
-			this.mergeDao.save(merge);
-		}
+		return mean;
 	}
 }

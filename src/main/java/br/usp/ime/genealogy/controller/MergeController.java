@@ -9,8 +9,10 @@ import br.usp.ime.genealogy.dao.MergeDao;
 import br.usp.ime.genealogy.dao.PersonDao;
 import br.usp.ime.genealogy.dao.RelationshipDao;
 import br.usp.ime.genealogy.dao.TreeDao;
+import br.usp.ime.genealogy.entity.Merge;
 import br.usp.ime.genealogy.entity.Person;
 import br.usp.ime.genealogy.entity.Tree;
+import br.usp.ime.genealogy.util.MergeStatus;
 import br.usp.ime.genealogy.util.PeopleComparator;
 
 @Resource
@@ -18,6 +20,7 @@ public class MergeController {
 	private final Result result;
 	private final TreeDao treeDao;
 	private final PersonDao personDao;
+	private final MergeDao mergeDao;
 	private final PeopleComparator peopleComparator;
 	
 	
@@ -27,7 +30,8 @@ public class MergeController {
 		this.result = result;
 		this.treeDao = treeDao;
 		this.personDao = personDao;
-		this.peopleComparator = new PeopleComparator(relationshipDao,mergeDao);
+		this.mergeDao = mergeDao;
+		this.peopleComparator = new PeopleComparator(relationshipDao);
 	}
 	
 	@Path("/merge")
@@ -36,6 +40,8 @@ public class MergeController {
 		
 		ArrayList<Person> people1 = null;
 		ArrayList<Person> people2 = null;
+		
+		float mean;
 		
 		for (Tree tree1 : trees) {
 			people1 = this.personDao.getByTree(tree1);
@@ -47,7 +53,16 @@ public class MergeController {
 				
 				for (Person person1 : people1) {
 					for (Person person2 : people2) {
-						peopleComparator.comparePeople(person1, person2);
+						mean = peopleComparator.comparePeople(person1, person2);
+						if (mean >= 80) {
+							Merge merge = new Merge();
+							merge.setPerson1(person1);
+							merge.setPerson2(person2);
+							merge.setRate(mean);
+							merge.setStatus(MergeStatus.NONE);
+							
+							this.mergeDao.save(merge);
+						}
 					}
 				}
 				
