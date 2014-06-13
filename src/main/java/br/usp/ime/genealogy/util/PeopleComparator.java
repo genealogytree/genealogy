@@ -24,7 +24,7 @@ public class PeopleComparator {
 		
 		//Não deveria retornar nada. O resultado da função deve ser sempre comparado.
 		if (rate < Similarity.HIGH.getSimilarity()) 
-			return -1; 
+			return rate; 
 		
 		weight = 60;
 		ratio = 60 * rate;
@@ -43,7 +43,6 @@ public class PeopleComparator {
 		
 		if (father1 != null && father2 != null) {
 			rate = Jaro.getSimilarity(father1.getName(), father2.getName());
-			System.out.println(rate);
 			
 			weight += 15;
 			ratio += 15 * rate;
@@ -51,8 +50,7 @@ public class PeopleComparator {
 		
 		if (mother1 != null && mother2 != null) {
 			rate = Jaro.getSimilarity(mother1.getName(), mother2.getName());
-			System.out.println(rate);
-			
+		
 			weight += 15;
 			ratio += 15 * rate;
 		}	

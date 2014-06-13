@@ -1,6 +1,8 @@
 package br.usp.ime.genealogy.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
@@ -21,7 +23,12 @@ public class MergeController {
 	private final TreeDao treeDao;
 	private final PersonDao personDao;
 	private final MergeDao mergeDao;
+	private final RelationshipDao relationshipDao;
 	private final PeopleComparator peopleComparator;
+	
+	private final float thresholdSimilarity = (float) 0.8;
+	
+	private Map<Long, Person> hashPeople;
 	
 	
 	public MergeController(Result result, TreeDao treeDao, 
@@ -31,6 +38,7 @@ public class MergeController {
 		this.treeDao = treeDao;
 		this.personDao = personDao;
 		this.mergeDao = mergeDao;
+		this.relationshipDao = relationshipDao;
 		this.peopleComparator = new PeopleComparator(relationshipDao);
 	}
 	
@@ -52,9 +60,10 @@ public class MergeController {
 				people2 = this.personDao.getByTree(tree2);
 				
 				for (Person person1 : people1) {
-					for (Person person2 : people2) {
+					for (Person person2 : people2) {						
 						mean = peopleComparator.comparePeople(person1, person2);
-						if (mean >= 80) {
+						
+						if (mean >= this.thresholdSimilarity) {
 							Merge merge = new Merge();
 							merge.setPerson1(person1);
 							merge.setPerson2(person2);
@@ -65,11 +74,46 @@ public class MergeController {
 						}
 					}
 				}
-				
 			}			
 		}
 		Tree tree = this.treeDao.get(1);
 		this.personDao.getByTree(tree);
 	}
-
+	
+	@Path("/merge/merge")
+	public void merge() {
+		hashPeople = new HashMap<Long, Person>();
+		
+		Person person1 = this.personDao.get(20);
+		Person person2 = this.personDao.get(48);
+		
+		this.executeRecursive(person1, person2);
+	}
+	
+	private void executeRecursive(Person person1, Person person2) {
+		hashPeople.put(person1.getId(), person1);
+		hashPeople.put(person2.getId(), person2);
+		
+		float mean;
+		
+		Person father1 = this.relationshipDao.getParent(person1, 'F');
+		Person father2 = this.relationshipDao.getParent(person2, 'F');
+		
+		if (father1 != null && father2 != null) {
+			mean = peopleComparator.comparePeople(father1, father2);
+			if (mean >= this.thresholdSimilarity) {
+				this.executeRecursive(father1, father2);
+			}
+		}
+		
+		//verificar pai
+		
+		//verificar mae
+		
+		//verificar spouses
+		
+		//verificar children
+		
+		
+	}
 }
