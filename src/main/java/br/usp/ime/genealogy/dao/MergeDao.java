@@ -52,5 +52,16 @@ public class MergeDao {
 			}
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Merge> getMergeCandidates() {
+		Query q = (Query) this.session.createQuery("from Merge where status like ?");
+		q.setParameter(0, MergeStatus.NONE);
+		ArrayList<Merge> candidates = (ArrayList<Merge>) q.list();
+		if(candidates.size() > 0)
+			return candidates;
+		else		
+			return null;
+	}
 
 }

@@ -5,6 +5,6 @@
 <title>VRaptor Blank Project</title>
 </head>
 <body>
-	It works!
+	<h1>Looking for merges...</h1>
 </body>
 </html>

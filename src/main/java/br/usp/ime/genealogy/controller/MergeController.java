@@ -113,7 +113,16 @@ public class MergeController {
 		//verificar spouses
 		
 		//verificar children
-		
-		
+	}
+
+	public void list() {
+		ArrayList<Merge> candidates = this.mergeDao.getMergeCandidates();
+		result.include("candidates", candidates);
+	}
+	
+	public void save(String[] status, Merge[] candidates) {
+		result.include("candidates", candidates);
+		result.include("status", status);
+		result.include("n", status.length);
 	}
 }
