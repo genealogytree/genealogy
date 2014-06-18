@@ -31,7 +31,7 @@
 	</c:forEach>
 	</table>
 	
-	<input type="hidden" name="candidates" value="${candidates}">
+	<!-- <input type="hidden" name="ids" value="${candidates_ids}"> -->
 	<input type="submit" value="Save">
 	</form>
 </body>

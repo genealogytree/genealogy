@@ -12,8 +12,8 @@
 	<table>
 	<c:forEach begin="0" end="${n}" var="i">
 		<tr>
-			<td>${candidates[i].person1.name}</td>
-			<td>${candidates[i].person2.name}</td>
+			<td>${candidates[i]}</td>
+			<td>${candidates[i]}</td>
 			<td>${status[i]}</td>
 		</tr>
 	</c:forEach>

@@ -117,11 +117,16 @@ public class MergeController {
 
 	public void list() {
 		ArrayList<Merge> candidates = this.mergeDao.getMergeCandidates();
+		ArrayList<Long> ids = new ArrayList<Long>();
+		for (Merge candidate : candidates) {
+			ids.add(candidate.getId());
+		}
 		result.include("candidates", candidates);
+		result.include("candidates_ids", ids);
 	}
 	
-	public void save(String[] status, Merge[] candidates) {
-		result.include("candidates", candidates);
+	public void save(String[] status) {
+		//result.include("candidates", ids);
 		result.include("status", status);
 		result.include("n", status.length);
 	}
