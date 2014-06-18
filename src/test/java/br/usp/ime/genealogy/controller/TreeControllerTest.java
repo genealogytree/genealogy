@@ -11,7 +11,6 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -99,7 +98,7 @@ public class TreeControllerTest {
 		this.treeController.save(tree,person);
 		
 		//verify(treeDao).save(tree);
-		verify(result).redirectTo(TreeController.class);		
+		verify(result).redirectTo(PersonController.class);		
 	}
 	
 	@Test
@@ -125,8 +124,9 @@ public class TreeControllerTest {
 		assertEquals(people.get(0).getName(), person.getName());
 		
 		name = "fabiano";
+		people = this.treeController.search(name);
+		System.out.println("NOME:"+people.get(0).getName());
 		assertEquals(people.size(), 0);
-		
 	}
 	
 }

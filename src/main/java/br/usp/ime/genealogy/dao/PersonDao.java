@@ -43,6 +43,7 @@ public class PersonDao {
 		return (ArrayList<Person>) session.createCriteria(Person.class).list();
 	}	
 
+	@SuppressWarnings("unchecked")
 	public ArrayList<Person> getByTree(Tree tree) {
 		Query q = (Query) this.session.createQuery("from Person where tree=?");
 		q.setParameter(0, tree);

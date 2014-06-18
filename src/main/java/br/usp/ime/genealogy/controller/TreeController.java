@@ -10,7 +10,6 @@ import br.usp.ime.genealogy.dao.PersonDao;
 import br.usp.ime.genealogy.dao.RelationshipDao;
 import br.usp.ime.genealogy.dao.TreeDao;
 import br.usp.ime.genealogy.entity.Person;
-import br.usp.ime.genealogy.entity.Relationship;
 import br.usp.ime.genealogy.entity.Tree;
 
 @Resource
@@ -103,8 +102,6 @@ public class TreeController {
 		List<Person> people = new ArrayList<Person>();
 		Person person = new Person();
 		person.setName("Victor Corleone");
-		
-		
 		
 		people.add(person);
 		

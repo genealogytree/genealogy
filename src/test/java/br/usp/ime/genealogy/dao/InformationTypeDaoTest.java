@@ -1,12 +1,13 @@
 package br.usp.ime.genealogy.dao;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import junit.framework.Assert;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -58,7 +59,7 @@ public class InformationTypeDaoTest {
 	@Test
 	public void list() {
 		List<InformationType> ts = infotypeDao.list();
-		Assert.assertEquals(infotypes, ts);
+		assertEquals(infotypes, ts);
 		verify(session).createCriteria(InformationType.class);
 		verify(criteria).list();
 	}
@@ -66,14 +67,14 @@ public class InformationTypeDaoTest {
 	@Test
 	public void get_existing_infotype() {
 		InformationType t = infotypeDao.get(infotype1.getId());
-		Assert.assertNotNull(t);
-		Assert.assertEquals(infotype1, t);
+		assertNotNull(t);
+		assertEquals(infotype1, t);
 	}
 	
 	@Test
 	public void get_not_existing_infotype() {
 		InformationType t = infotypeDao.get(0L);
-		Assert.assertNull(t);
+		assertNull(t);
 	}
 	
 	@Test

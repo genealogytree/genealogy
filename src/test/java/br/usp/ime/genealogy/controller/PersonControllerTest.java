@@ -14,8 +14,10 @@ import org.junit.Test;
 
 import br.com.caelum.vraptor.util.test.MockResult;
 import br.usp.ime.genealogy.dao.InformationTypeDao;
+import br.usp.ime.genealogy.dao.NameDao;
 import br.usp.ime.genealogy.dao.PersonDao;
 import br.usp.ime.genealogy.dao.PersonInformationDao;
+import br.usp.ime.genealogy.dao.PersonNameDao;
 import br.usp.ime.genealogy.dao.RelationshipDao;
 import br.usp.ime.genealogy.dao.TreeDao;
 import br.usp.ime.genealogy.entity.InformationType;
@@ -31,6 +33,8 @@ public class PersonControllerTest {
 	private PersonInformationDao personInformationDao;
 	private InformationTypeDao informationTypeDao;
 	private RelationshipDao relationshipDao;
+	private PersonNameDao personNameDao;
+	private NameDao nameDao;
 
 	private Tree tree;
 	private Person person;
@@ -44,13 +48,17 @@ public class PersonControllerTest {
 		personInformationDao = mock(PersonInformationDao.class);
 		informationTypeDao = mock(InformationTypeDao.class);
 		relationshipDao = mock(RelationshipDao.class);
+		personNameDao = mock(PersonNameDao.class);
+		nameDao = mock(NameDao.class);
 		personController = new PersonController(
 					result,
 					personDao,
 					treeDao,
 					personInformationDao,
 					informationTypeDao,
-					relationshipDao
+					relationshipDao, 
+					personNameDao, 
+					nameDao
 				);
 
 		tree = new Tree();
@@ -65,7 +73,7 @@ public class PersonControllerTest {
 		
 		when(personDao.get(1)).thenReturn(person);
 		when(treeDao.get(1)).thenReturn(tree);
-		//when(informationTypeDao.list()).thenReturn(infotypes);
+		when(informationTypeDao.list()).thenReturn(infotypes);
 	}
 
 	@Test
@@ -80,7 +88,7 @@ public class PersonControllerTest {
 		String[] descriptions = { "Something" };
 
 		this.personController.save(person, tree, idxs, data, places,
-				descriptions,0,'Z');
+				descriptions,0,'Z', person.getName());
 
 		verify(personDao).save(person);
 		verify(result).redirectTo(TreeController.class);

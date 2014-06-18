@@ -30,6 +30,7 @@
 		</tr>
 	</c:forEach>
 	</table>
+	
 	<input type="hidden" name="candidates" value="${candidates}">
 	<input type="submit" value="Save">
 	</form>

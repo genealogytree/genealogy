@@ -1,11 +1,10 @@
 package br.usp.ime.genealogy.dao;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-
-import junit.framework.Assert;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -54,15 +53,15 @@ public class PersonInformationDaoTest {
 		personInformation.setPlace("place");		
 		
 		when(session.createCriteria(PersonInformation.class)).thenReturn(criteria);
-		//when(session.load(Pe.class,1L)).thenReturn(person1);
+		//when(session.load(Person.class,1L)).thenReturn(person);
 		//when(session.load(Tree.class,0L)).thenReturn(null);
 	}
 	
 	@Test
 	public void get_existing_person() {
 		PersonInformation pi = personInformationDao.getByPersonInformationType(person, informationType);
-		Assert.assertNotNull(pi);
-		Assert.assertEquals(personInformation, pi);
+		assertNotNull(pi);
+		assertEquals(personInformation, pi);
 	}
 	
 	@Test
@@ -70,7 +69,7 @@ public class PersonInformationDaoTest {
 		InformationType infotype = new InformationType();
 		infotype.setId(0L);
 		PersonInformation pi = personInformationDao.getByPersonInformationType(person, infotype);
-		Assert.assertNull(pi);
+		assertNull(pi);
 	}
 	
 	@Test

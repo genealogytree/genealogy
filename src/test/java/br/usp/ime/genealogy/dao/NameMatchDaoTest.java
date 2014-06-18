@@ -1,6 +1,5 @@
 package br.usp.ime.genealogy.dao;
 
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.hibernate.Criteria;

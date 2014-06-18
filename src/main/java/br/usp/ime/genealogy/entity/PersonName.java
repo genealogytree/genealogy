@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import br.usp.ime.genealogy.entity.*;
 
 @Entity
 public class PersonName {

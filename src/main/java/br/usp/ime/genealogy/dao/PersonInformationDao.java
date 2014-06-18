@@ -1,6 +1,5 @@
 package br.usp.ime.genealogy.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -26,9 +25,9 @@ private Session session;
 	
 	@SuppressWarnings("unchecked")
 	public PersonInformation getByPersonInformationType(Person person, InformationType type) {
-		List<PersonInformation> infos = session.createQuery("from PersonInformation pi where pi.person.id=?")
-				.setLong(0,person.getId())
-				//.setLong(0, type.getId())
+		List<PersonInformation> infos = session.createQuery("from PersonInformation where person like ? and type like ?")
+				.setParameter(0,person)
+				.setParameter(1,type)
 				.list();
 		if (infos.size() > 0)
 			return infos.get(0);

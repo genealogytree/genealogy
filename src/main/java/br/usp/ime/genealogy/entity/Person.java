@@ -99,7 +99,7 @@ public class Person {
 		}
 		
 		int order_currentName = 0;
-		int oldName_size = this.names.size();
+		//int oldName_size = this.names.size();
 		for (int i = 0; i < newNamesContent.length; i++) {
 			if(newNamesContent[i] == "" || newNamesContent[i] == " ") 
 				continue;

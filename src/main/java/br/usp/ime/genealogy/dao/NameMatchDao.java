@@ -51,7 +51,7 @@ public class NameMatchDao {
 				+ "inner join fetch n.matches1 as nm1 "
 				+ "inner join fetch n.matches2 as nm2 "
 				+ "where (nm1.rate >= ? or nm2.rate >= ?) ";
-		for (Name name : names)
+		for (int j = 0; j < names.size(); j++)
 			query_str += "and (nm1.name1 = ? or nm2.name2 = ?) ";
 		query_str += "group by p";
 		Query q = this.session.createQuery(query_str);

@@ -1,14 +1,12 @@
 package br.usp.ime.genealogy.controller;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.spy;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.vraptor.util.test.MockResult;
-
-import br.usp.ime.genealogy.controller.*;
 
 public class IndexControllerTest {
 	
