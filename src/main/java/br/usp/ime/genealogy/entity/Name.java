@@ -13,7 +13,7 @@ public class Name {
 	@Id @GeneratedValue   
 	private long id;
 	
-	@Column(name="name1")
+	
 	private String name;
 	
 	@OneToMany(mappedBy="name1")	
