@@ -5,7 +5,8 @@ public enum MergeStatus {
 	NONE(0),
 	ACCEPT(1),
 	REJECT(2),
-	MAYBE(3);
+	MAYBE(3),
+	NEW(4);
 	
 
 	private int status;

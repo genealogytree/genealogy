@@ -29,6 +29,7 @@ public class MergeController {
 	private final float thresholdSimilarity = (float) 0.8;
 	
 	private Map<Long, Person> hashPeople;
+	private ArrayList<Merge> peopleMerge;
 	
 	
 	public MergeController(Result result, TreeDao treeDao, 
@@ -82,15 +83,28 @@ public class MergeController {
 	
 	@Path("/merge/merge")
 	public void merge() {
-		hashPeople = new HashMap<Long, Person>();
-		
-		Person person1 = this.personDao.get(20);
-		Person person2 = this.personDao.get(48);
-		
-		this.executeRecursive(person1, person2);
+
 	}
 	
-	private void executeRecursive(Person person1, Person person2) {
+	public ArrayList<Merge> initMerge(long id1, long id2) {
+		hashPeople = new HashMap<Long, Person>();
+		peopleMerge = new ArrayList<Merge>();
+		
+		Person person1 = this.personDao.get(id1);
+		Person person2 = this.personDao.get(id2);
+		
+		this.executeRecursive(person1, person2);
+		return peopleMerge;
+	}
+	
+	public void executeRecursive(Person person1, Person person2) {
+		Merge merge = new Merge();
+		merge.setPerson1(person1);
+		merge.setPerson2(person2);
+		merge.setStatus(MergeStatus.ACCEPT);
+		peopleMerge.add(merge);	
+
+		
 		hashPeople.put(person1.getId(), person1);
 		hashPeople.put(person2.getId(), person2);
 		
@@ -99,20 +113,131 @@ public class MergeController {
 		Person father1 = this.relationshipDao.getParent(person1, 'F');
 		Person father2 = this.relationshipDao.getParent(person2, 'F');
 		
-		if (father1 != null && father2 != null) {
+		if (father1 != null && father2 != null &&
+				hashPeople.containsKey(father1.getId()) == false &&
+				hashPeople.containsKey(father2.getId()) == false) {
 			mean = peopleComparator.comparePeople(father1, father2);
 			if (mean >= this.thresholdSimilarity) {
 				this.executeRecursive(father1, father2);
 			}
 		}
+		else if (father1 == null && father2 != null) {
+			if (hashPeople.containsKey(father2.getId())) {
+				System.out.println("Father");
+				this.newPerson(father2);
+			}
+		}
 		
-		//verificar pai
+		Person mother1 = this.relationshipDao.getParent(person1, 'M');
+		Person mother2 = this.relationshipDao.getParent(person2, 'M');
 		
-		//verificar mae
+		if (mother1 != null && mother2 != null &&
+				hashPeople.containsKey(mother1.getId()) == false &&
+				hashPeople.containsKey(mother2.getId()) == false) {
+			mean = peopleComparator.comparePeople(mother1, mother2);
+			if (mean >= this.thresholdSimilarity) {
+				this.executeRecursive(mother1, mother2);	
+			}
+		}
+		else if (mother1 == null && mother2 != null) {
+			if (hashPeople.containsKey(mother2.getId()) == false) {
+				System.out.println("Mother");
+				this.newPerson(mother2);				
+			}
+		}
 		
-		//verificar spouses
 		
-		//verificar children
+		ArrayList<Person> spouses1 = this.relationshipDao.getSpouses(person1);
+		ArrayList<Person> spouses2 = this.relationshipDao.getSpouses(person2);
+		for (Person spouse1 : spouses1) {
+			float max = 0.0f;
+			Person finalSpouse2 = null;
+			for (Person spouse2 : spouses2) {
+				mean = peopleComparator.comparePeople(spouse1, spouse2);
+				if(mean > max) {
+					max = mean;
+					finalSpouse2 = spouse2;
+				}
+			}		
+			if (max >= this.thresholdSimilarity) {
+				if(hashPeople.containsKey(spouse1.getId()) == false &&
+				hashPeople.containsKey(finalSpouse2.getId()) == false)
+					this.executeRecursive(spouse1, finalSpouse2);
+			}
+		}
+		
+		
+		for (Person spouse2 : spouses2) {
+			if (hashPeople.containsKey(spouse2.getId()) == false) {
+				System.out.println("Spouse");
+				this.newPerson(spouse2);
+			}
+		}
+		
+		
+		ArrayList<Person> children1 = this.relationshipDao.getChildren(person1);
+		ArrayList<Person> children2 = this.relationshipDao.getChildren(person2);
+		for (Person child1 : children1) {
+			float max = 0.0f;
+			Person finalChild2 = null;
+			for (Person child2 : children2) {
+				mean = peopleComparator.comparePeople(child1, child2);
+				if(mean > max) {
+					max = mean;
+					finalChild2 = child2;
+				}
+			}		
+			if (max >= this.thresholdSimilarity) {
+				if(hashPeople.containsKey(child1.getId()) == false &&
+				hashPeople.containsKey(finalChild2.getId()) == false)
+					this.executeRecursive(child1, finalChild2);
+			}
+		}
+		
+		
+		for (Person child2 : children2) {
+			if (hashPeople.containsKey(child2.getId()) == false) {
+				System.out.println("Child");
+				this.newPerson(child2);
+			}
+		}
+		
+	}
+	
+	public void newPerson(Person person) {
+		Merge merge = new Merge();
+		merge.setPerson1(null);
+		merge.setPerson2(person);
+		merge.setStatus(MergeStatus.NEW);
+		peopleMerge.add(merge);	
+		
+		
+		hashPeople.put(person.getId(), person);
+		
+		Person father = this.relationshipDao.getParent(person, 'F');
+		Person mother = this.relationshipDao.getParent(person, 'M');
+		ArrayList<Person> spouses = this.relationshipDao.getSpouses(person);
+		ArrayList<Person> children = this.relationshipDao.getChildren(person);
+		
+		if (father != null && hashPeople.containsKey(father.getId()) == false) {
+			this.newPerson(father);
+		}
+		
+		if (mother != null && hashPeople.containsKey(mother.getId()) == false) {
+			this.newPerson(mother);
+		}
+		
+		for (Person spouse : spouses) {
+			if (hashPeople.containsKey(spouse.getId()) == false) {
+				this.newPerson(spouse);
+			}
+		}
+		
+		for (Person child : children) {
+			if (hashPeople.containsKey(child.getId()) == false) {
+				this.newPerson(child);
+			}
+		}		
 	}
 
 	public void list() {
