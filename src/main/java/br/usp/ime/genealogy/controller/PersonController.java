@@ -49,8 +49,8 @@ public class PersonController {
 	}
 
 	public void savePerson(Person person, Tree tree, long[] idxs,
-			String[] datas, String[] places, String[] descriptions, long relation_id,
-			char relation_type, String name_form) {
+			String[] datas, String[] places, String[] descriptions,
+			long relation_id, char relation_type, String name_form) {
 		
 		if(person.getId() != 0){
 			person = this.personDao.get(person.getId());
@@ -80,8 +80,6 @@ public class PersonController {
 			}
 			//this.personNameDao.delete(person, i);			
 		}
-		
-		System.out.println("final");
 		
 		for (int i = 0; i < idxs.length; i++) {
 			InformationType infoType = informationTypeDao.get(idxs[i]);

@@ -58,6 +58,12 @@ public class SearchControllerTest {
 
 	@Test
 	public void nullNameTest() {
+		List<Person> list = this.searchController.index(null,0.8f,'M');
+		assertNull(list);
+	}
+	
+	@Test
+	public void emptyNameTest() {
 		List<Person> list = this.searchController.index("",0.8f,'M');
 		assertEquals(0,list.size());
 	}
