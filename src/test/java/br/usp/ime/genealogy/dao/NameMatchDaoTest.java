@@ -18,9 +18,9 @@ import org.mockito.MockitoAnnotations;
 import br.usp.ime.genealogy.entity.Name;
 import br.usp.ime.genealogy.entity.NameMatch;
 import br.usp.ime.genealogy.util.HibernateUtil;
+import br.usp.ime.genealogy.util.Similarity;
 
 
-/*Teste ainda não funciona, pois não sabemos fazer testes com querys*/
 public class NameMatchDaoTest {
 		
 	Name name;
@@ -76,5 +76,35 @@ public class NameMatchDaoTest {
 				nameInList = true;			
 		}
 		assertTrue(nameInList);
+	}
+	
+	@Test
+	public void getComparedNames() {
+		Session session = HibernateUtil.getSession();
+		NameDao nameDao = new NameDao(session);
+		NameMatchDao nameMatchDao = new NameMatchDao(session);
+		
+		Name name1 = new Name();
+		Name name2 = new Name();
+		name1.setName("TestName");
+		name2.setName("TestName2");
+		nameDao.save(name1);
+		nameDao.save(name2);
+		
+		NameMatch nameMatch = new NameMatch();
+		nameMatch.setName1(name1);
+		nameMatch.setName2(name2);
+		nameMatch.setRate(Similarity.HIGH.getSimilarity());
+		nameMatchDao.save(nameMatch);
+		
+		ArrayList<Name> names = nameMatchDao.getComparedNames();
+		
+		boolean nameInList = false;
+		for (Name n : names) {
+			if (n.getId() == name1.getId() || n.getId() == name2.getId())
+				nameInList = true;			
+		}
+		assertTrue(nameInList);
+		assertEquals(2, names.size());
 	}
 }
