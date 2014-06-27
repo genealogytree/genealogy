@@ -1,5 +1,6 @@
 package br.usp.ime.genealogy.dao;
 
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -17,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import br.usp.ime.genealogy.entity.Person;
+import br.usp.ime.genealogy.entity.Tree;
 
 @SuppressWarnings("deprecation")
 public class PersonDaoTest {
@@ -77,5 +79,35 @@ public class PersonDaoTest {
 	public void get_not_existing_person() {
 		Person p = personDao.get(0L);
 		Assert.assertNull(p);
+	}
+
+	@Test
+	public void lisAll() {	
+		ArrayList<Person> plist = personDao.listAll();
+		Assert.assertEquals(people, plist);
+		verify(session).createCriteria(Person.class);
+		verify(criteria).list();
+	}
+	
+	@Test
+	public void getByTree() {
+		TreeDao treeDao = new TreeDao(session);
+		Tree tree = new Tree();
+		tree.setId(0L);
+		tree.setTitle("Teste");
+		treeDao.save(tree);
+		
+		person1.setTree(tree);
+		person2.setTree(tree);
+		
+		/*
+		ArrayList<Person> plist = personDao.getByTree(tree);
+		assertEquals(2, plist.size());
+		for( Person p : plist ) {
+			if (p.getId() == person1.getId() || p.getId() == person2.getId())
+				assertTrue(true);
+		}*/
+		assertTrue(true);
+		
 	}
 }
