@@ -28,8 +28,6 @@ public class SearchController {
 	@Path("/search")	
 	public List<Person> index(String name, float similarity, char sex) {
 				
-		System.out.println(Similarity.EQUAL.getSimilarity());
-		System.out.println("nome:" + name + "similaridade: "+ similarity);
 		result.include("name", name);
 		result.include("equal", Similarity.EQUAL.getSimilarity());
 		result.include("high", Similarity.HIGH.getSimilarity());
@@ -38,7 +36,6 @@ public class SearchController {
 		result.include("female", sex);
 
 		return this.search(name, similarity);
-		
 	}
 	
 	private List<Person> search(String name_search, float rate) {
@@ -46,8 +43,8 @@ public class SearchController {
 		Name new_name;
 		if(name_search == null) 
 			return null;
-		for (String name : name_search.split(" ")) {
-			if(name == "" && name == " ")
+		for (String name : name_search.split("\\s")) {
+			if(name.equals("") || name.equals(" "))
 				continue;
 			new_name = this.nameDao.getByName(name);
 			if(new_name == null) {

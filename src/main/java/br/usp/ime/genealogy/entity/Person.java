@@ -92,14 +92,12 @@ public class Person {
 	
 	public void setName(String name) {		
 		String[] newNamesContent = name.split(" ");	
-		System.out.println("ASDF");
 		
 		if (this.names == null) {
 			this.names = new ArrayList<PersonName>();
 		}
 		
 		int order_currentName = 0;
-		//int oldName_size = this.names.size();
 		for (int i = 0; i < newNamesContent.length; i++) {
 			if(newNamesContent[i] == "" || newNamesContent[i] == " ") 
 				continue;
@@ -108,16 +106,6 @@ public class Person {
 			
 			PersonName personName;
 			Name newName = new Name();
-			
-			/*
-			if (order_currentName <= oldName_size) {
-				personName = this.names.get(order_currentName-1);								
-			}
-			else {
-				personName = new PersonName();				
-				personName.setId(0L);				
-			}
-			*/
 			
 			personName = new PersonName();
 			personName.setId(0L);
@@ -132,19 +120,7 @@ public class Person {
 			else
 			
 				this.names.set(order_currentName-1, personName);
-			System.out.println(personName.getName().getName()+"---");
 		}
-		/*
-		System.out.println("\nOldName_Size: "+oldName_size);
-		//Remove os nomes sobressalentes (advindos do nome antigo)
-		while(oldName_size > order_currentName)
-			this.names.remove(--oldName_size);
-		
-		System.out.println("Size: "+this.names.size());
-		for(int i = 0; i < this.names.size(); i++)
-			System.out.println(this.names.get(i).getName().getName()+" ");
-		System.out.println("ASDFIM");
-		*/
 		
 	}
 	

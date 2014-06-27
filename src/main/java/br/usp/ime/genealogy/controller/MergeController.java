@@ -141,7 +141,7 @@ public class MergeController {
 		}
 		else if (mother1 == null && mother2 != null) {
 			if (hashPeople.containsKey(mother2.getId()) == false) {
-				System.out.println("Mother");
+				//System.out.println("Mother");
 				this.newPerson(mother2);				
 			}
 		}
@@ -169,7 +169,7 @@ public class MergeController {
 		
 		for (Person spouse2 : spouses2) {
 			if (hashPeople.containsKey(spouse2.getId()) == false) {
-				System.out.println("Spouse");
+				//System.out.println("Spouse");
 				this.newPerson(spouse2);
 			}
 		}
@@ -182,14 +182,14 @@ public class MergeController {
 			Person finalChild2 = null;
 			for (Person child2 : children2) {
 				mean = peopleComparator.comparePeople(child1, child2);
-				System.out.println(child1.getName()+" "+child2.getName()+" "+mean);
+				//System.out.println(child1.getName()+" "+child2.getName()+" "+mean);
 				if(mean > max) {
 					max = mean;
 					finalChild2 = child2;
 				}
 			}		
 			if (max >= this.thresholdSimilarity) {
-				System.out.println("Pair!");
+				//System.out.println("Pair!");
 				if(hashPeople.containsKey(child1.getId()) == false &&
 				hashPeople.containsKey(finalChild2.getId()) == false)
 					this.executeRecursive(child1, finalChild2);
@@ -207,8 +207,8 @@ public class MergeController {
 				}
 				
 				if(mean < this.thresholdSimilarity) {
-					System.out.println(person1.getName()+" parent of "+child2.getName());
-					System.out.println("Child");
+					//System.out.println(person1.getName()+" parent of "+child2.getName());
+					//System.out.println("Child");
 					this.newPerson(child2);
 				}
 			}
