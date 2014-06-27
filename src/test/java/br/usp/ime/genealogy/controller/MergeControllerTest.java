@@ -80,4 +80,14 @@ public class MergeControllerTest {
 		}
 		assertEquals(2, i);
 	}
+	
+	@Test
+	public void absentChild() {
+		ArrayList<Merge> mergePeople = mergeController.initMerge(109,112);
+		assertEquals(3, mergePeople.size());
+		for (Merge merge : mergePeople) {
+			System.out.println(merge.getPerson2().getId()+merge.getStatus().toString());
+			assertEquals(MergeStatus.ACCEPT, merge.getStatus());
+		}
+	}
 }

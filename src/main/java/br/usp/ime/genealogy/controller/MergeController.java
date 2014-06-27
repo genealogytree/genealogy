@@ -182,26 +182,37 @@ public class MergeController {
 			Person finalChild2 = null;
 			for (Person child2 : children2) {
 				mean = peopleComparator.comparePeople(child1, child2);
+				System.out.println(child1.getName()+" "+child2.getName()+" "+mean);
 				if(mean > max) {
 					max = mean;
 					finalChild2 = child2;
 				}
 			}		
 			if (max >= this.thresholdSimilarity) {
+				System.out.println("Pair!");
 				if(hashPeople.containsKey(child1.getId()) == false &&
 				hashPeople.containsKey(finalChild2.getId()) == false)
 					this.executeRecursive(child1, finalChild2);
 			}
 		}
 		
-		
 		for (Person child2 : children2) {
 			if (hashPeople.containsKey(child2.getId()) == false) {
-				System.out.println("Child");
-				this.newPerson(child2);
+				ArrayList<Person> stepChildren = this.relationshipDao.getStepChildren(person1);
+				mean = 0.0f;
+				for (Person stepChild : stepChildren) {
+					mean = peopleComparator.comparePeople(child2, stepChild);
+					if(mean >= this.thresholdSimilarity)
+						break;
+				}
+				
+				if(mean < this.thresholdSimilarity) {
+					System.out.println(person1.getName()+" parent of "+child2.getName());
+					System.out.println("Child");
+					this.newPerson(child2);
+				}
 			}
 		}
-		
 	}
 	
 	public void newPerson(Person person) {

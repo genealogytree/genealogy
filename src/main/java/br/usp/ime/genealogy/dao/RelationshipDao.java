@@ -48,6 +48,20 @@ public class RelationshipDao {
 		return children; 
 	}
 	
+	public ArrayList<Person> getStepChildren(Person person) {
+		ArrayList<Person> stepChildren = new ArrayList<Person>();
+		ArrayList<Person> children = this.getChildren(person);
+		ArrayList<Person> spouses = this.getSpouses(person);
+		for (Person spouse : spouses) {
+			ArrayList<Person> spouseChildren = this.getChildren(spouse);
+			for (Person spouseChild : spouseChildren) {
+				if(children.contains(spouseChild) == false)
+					stepChildren.add(spouseChild);
+			}
+		}		
+		return stepChildren;
+	}
+	
 	public ArrayList<Person> getSpouses(Person person) {
 		ArrayList<Person> spouses = new ArrayList<Person>();
 		for (Relationship relation : person.getRelationships1()) {

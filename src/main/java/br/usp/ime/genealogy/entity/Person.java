@@ -174,6 +174,11 @@ public class Person {
 		return null;
 	}
 	
-	
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Person))
+            return false;
+		Person person = (Person) obj;
+		return this.getId() == person.getId(); 
+	}
 	
 }
