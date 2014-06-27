@@ -1,5 +1,6 @@
 package br.usp.ime.genealogy.dao;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -9,6 +10,7 @@ import java.util.List;
 import junit.framework.Assert;
 
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.Before;
@@ -16,7 +18,9 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import br.usp.ime.genealogy.entity.Person;
 import br.usp.ime.genealogy.entity.Tree;
+import br.usp.ime.genealogy.util.HibernateUtil;
 
 @SuppressWarnings("deprecation")
 public class TreeDaoTest {
@@ -91,6 +95,30 @@ public class TreeDaoTest {
 	public void delete() {
 		treeDao.delete(tree1);
 		verify(this.session).delete(tree1);
+	}
+	
+	@Test
+	public void getPeople() {
+		Session session = HibernateUtil.getSession();
+		TreeDao treeDao = new TreeDao(session);
+		PersonDao personDao = new PersonDao(session);
+		
+		Tree tree = new Tree();
+		tree.setTitle("teste");
+		
+		treeDao.save(tree);
+		
+		Person person = new Person();
+		person.setTree(tree);
+		person.setName("teste");
+		personDao.save(person);
+		
+		ArrayList<Person> people = treeDao.getPeople(tree.getId());
+		
+		for (Person person2 : people) {
+			assertEquals("teste", person2.getName());
+		}
+		
 	}
 
 }

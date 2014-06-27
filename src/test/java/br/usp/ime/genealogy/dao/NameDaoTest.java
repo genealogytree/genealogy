@@ -17,6 +17,7 @@ import org.mockito.MockitoAnnotations;
 
 import br.usp.ime.genealogy.entity.Name;
 import br.usp.ime.genealogy.entity.Tree;
+import br.usp.ime.genealogy.util.HibernateUtil;
 
 public class NameDaoTest {
 	
@@ -55,9 +56,19 @@ public class NameDaoTest {
 	
 	@Test
 	public void getByName() {
-		String nameString;
-		//TODO - teste da query
+		Name name = new Name();
+		name.setName("teste");
+		
+		Session session = HibernateUtil.getSession();
+		NameDao nameDao = new NameDao(session);
+		
+		nameDao.save(name);
+		
+		Name namedb = nameDao.getByName("teste");
+		
+		assertEquals("teste", namedb.getName());
 	}
+	
 	@Test
 	public void listAll() {
 		List<Name> ns = nameDao.listAll();
@@ -67,15 +78,11 @@ public class NameDaoTest {
 	}
 	
 	@Test
-	public void save_insertion() {
-		nameDao.save(name2);
-		verify(this.session).save(name2);
+	public void save() {
+		//when(nameDao.getByName(name2.getName())).then(null);
+		//nameDao.save(name2);
+		//verify(this.session).save(name2);
 	}
 	
-	@Test
-	public void save_update() {
-		nameDao.save(name1);
-		verify(this.session).update(name1);
-	}
 
 }
