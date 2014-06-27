@@ -1,6 +1,11 @@
 package br.usp.ime.genealogy.dao;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -11,6 +16,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import br.usp.ime.genealogy.entity.Name;
+import br.usp.ime.genealogy.entity.NameMatch;
+import br.usp.ime.genealogy.util.HibernateUtil;
 
 
 /*Teste ainda não funciona, pois não sabemos fazer testes com querys*/
@@ -31,58 +38,43 @@ public class NameMatchDaoTest {
 		nameMatchDao = new NameMatchDao(session);
 		nameDao = new NameDao(session);
 		
-		name = new Name();
-		name.setName("Adriano");
-		nameDao.save(name);		
-		name.setName("Adrian");
-		nameDao.save(name);		
-		name.setName("Luciana");
-		nameDao.save(name);		
-		name.setName("Juciana");
-		nameDao.save(name);		
-		name.setName("Diogo");
-		nameDao.save(name);		
-		
-		
-		when(nameDao.getByName("Diogo")).thenReturn(null);		
-		
-		//when(session.createCriteria(NameMatch.class)).thenReturn(criteria);
-		//when(criteria.list()).thenReturn(people);
-		//when(session.load(Person.class,1L)).thenReturn(person1);
-		//when(session.load(Person.class,0L)).thenReturn(null);
-		
+				
 	}
 	
 	@Test
 	public void save_insertion() {
-		//nameMatchDao.save(name);
-		//verify(this.session).save(name);
-	}
-	/*
-	@Test
-	public void save_update() {
-		person2.setId(2L);
-		person2.setName("verify");
-		personDao.save(person2);
-		verify(this.session).update(person2);
-	}
-
-	@Test
-	public void get_existing_person() {
-		Person p = personDao.get(person1.getId());
-		Assert.assertNotNull(p);
-		Assert.assertEquals(person1, p);
+		NameMatch nameMatch = new NameMatch();		
+		nameMatchDao.save(nameMatch);		
+		verify(this.session).saveOrUpdate(nameMatch);		
 	}
 	
 	@Test
-	public void get_not_existing_person() {
-		Person p = personDao.get(0L);
-		Assert.assertNull(p);
+	public void relatedNames() {
+		assertEquals(null, this.nameMatchDao.relatedNames(null));
 	}
-	*/
 	
 	@Test
 	public void getNotComparedNames() {
+		Session session = HibernateUtil.getSession();
+		NameDao nameDao = new NameDao(session);
+		NameMatchDao nameMatchDao = new NameMatchDao(session);
+				
+		String nameStr = "teste";
+		Random rand = new Random();
+		while (nameDao.getByName(nameStr) != null) {
+			nameStr = nameStr + (rand.nextInt() % 10);
+		}
 		
+		Name name = new Name();
+		name.setName(nameStr);
+		nameDao.save(name);
+		
+		ArrayList<Name> names = nameMatchDao.getNotComparedNames();
+		boolean nameInList = false;
+		for (Name name2 : names) {
+			if (name2.getId() == name.getId())
+				nameInList = true;			
+		}
+		assertTrue(nameInList);
 	}
 }
