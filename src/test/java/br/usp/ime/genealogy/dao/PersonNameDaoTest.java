@@ -1,5 +1,6 @@
 package br.usp.ime.genealogy.dao;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -13,7 +14,6 @@ import org.mockito.MockitoAnnotations;
 
 import br.usp.ime.genealogy.entity.Name;
 import br.usp.ime.genealogy.entity.Person;
-import br.usp.ime.genealogy.entity.PersonInformation;
 import br.usp.ime.genealogy.entity.PersonName;
 
 public class PersonNameDaoTest {
@@ -73,5 +73,9 @@ public class PersonNameDaoTest {
 		personNameDao.save(firstName);
 		verify(this.session).update(firstName);
 	}
-	
+	@Test
+	public void delete() {
+		//personNameDao.delete(person, 2);
+		//assertEquals(1,person.getNames().size());
+	}
 }

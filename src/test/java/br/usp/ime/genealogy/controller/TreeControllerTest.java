@@ -64,6 +64,7 @@ public class TreeControllerTest {
 		people.add(person);
 		
 		when(treeDao.get(1)).thenReturn(tree);
+		when(personDao.get(1L)).thenReturn(person);
 		when(relationshipDao.getChildren(person)).thenReturn(null);
 		when(relationshipDao.getSpouses(person)).thenReturn(null);
 		when(relationshipDao.getParent(person, 'F')).thenReturn(null);
@@ -95,10 +96,22 @@ public class TreeControllerTest {
 		Tree tree = new Tree();		
 		tree.setTitle("Tree");
 		
-		this.treeController.save(tree,person);
+		this.treeController.save(tree, person);
 		
-		//verify(treeDao).save(tree);
+		verify(treeDao).save(tree);
 		verify(result).redirectTo(PersonController.class);		
+	}
+	
+	@Test
+	public void saveRootPerson() {
+		Tree tree = new Tree();		
+		tree.setTitle("Tree");
+		
+		this.treeController.saveRootPerson(tree,person);
+		
+		assertEquals(person,tree.getRootPerson());
+		verify(treeDao).save(tree);
+		verify(result).redirectTo(TreeController.class);		
 	}
 	
 	@Test
@@ -111,7 +124,6 @@ public class TreeControllerTest {
 	@Test
 	public void view() {		
 		this.treeController.view(1, 1L);
-		
 		//testday		
 	}
 	
@@ -126,7 +138,7 @@ public class TreeControllerTest {
 		name = "fabiano";
 		people = this.treeController.search(name);
 		System.out.println("NOME:"+people.get(0).getName());
-		assertEquals(people.size(), 0);
+		assertEquals(1,people.size());
 	}
 	
 }
