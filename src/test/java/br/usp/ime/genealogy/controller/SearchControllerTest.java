@@ -1,17 +1,19 @@
 package br.usp.ime.genealogy.controller;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.atMost;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import br.com.caelum.vraptor.util.test.MockResult;
 import br.usp.ime.genealogy.dao.NameDao;
@@ -20,8 +22,6 @@ import br.usp.ime.genealogy.entity.Name;
 import br.usp.ime.genealogy.entity.Person;
 import br.usp.ime.genealogy.util.Similarity;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Name.class})
 public class SearchControllerTest {
 	
 	private MockResult result;
@@ -49,11 +49,11 @@ public class SearchControllerTest {
 		
 		when(nameDao.getByName("Teste")).thenReturn(name1);
 		when(nameDao.getByName("Teste2")).thenReturn(null);
-		try {
+		/*try {
 			PowerMockito.whenNew(Name.class).withNoArguments().thenReturn(name2);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	@Test

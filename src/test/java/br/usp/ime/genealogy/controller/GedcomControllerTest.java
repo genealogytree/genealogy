@@ -1,27 +1,22 @@
 package br.usp.ime.genealogy.controller;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintStream;
 
-import org.apache.commons.io.IOUtils;
 import org.gedcom4j.parser.GedcomParserException;
 import org.hibernate.Session;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.mockito.Mockito.when;
 import br.com.caelum.vraptor.core.RequestInfo;
 import br.com.caelum.vraptor.interceptor.multipart.UploadedFile;
-import br.com.caelum.vraptor.interceptor.multipart.UploadedFileConverter;
 import br.com.caelum.vraptor.util.test.MockResult;
 import br.usp.ime.genealogy.dao.InformationTypeDao;
 import br.usp.ime.genealogy.dao.NameDao;
@@ -74,16 +69,6 @@ public class GedcomControllerTest {
 	public void upload() {
 		RequestInfo info = mock(RequestInfo.class);
 		//UploadedFile gedcom = mock(UploadedFile.class);		
-		InputStream file = null;
-		
-		
-		
-		try {
-			file = new FileInputStream("src/test/resources/example.ged");
-		} catch (FileNotFoundException e1) {
-			assertTrue(false);
-		}
-		
 		
 		UploadedFile gedcom = new UploadedFile() {
 			private InputStream file = null;

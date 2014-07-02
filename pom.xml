@@ -22,43 +22,6 @@
 	</dependency>
             
 	<dependency>
-		<groupId>org.powermock</groupId>
-		<artifactId>powermock-module-junit4</artifactId>
-		<version>1.5.5</version>
-	</dependency>
-
-	<dependency>
-		<groupId>org.powermock</groupId>
-		<artifactId>powermock-module-junit4-common</artifactId>
-		<version>1.5.5</version>
-	</dependency>
-	
-	<dependency>
-		<groupId>org.powermock</groupId>
-		<artifactId>powermock-core</artifactId>
-		<version>1.5.5</version>
-	</dependency>
-	
-	<dependency>
-	<groupId>org.powermock</groupId>
-	<artifactId>powermock-api-mockito</artifactId>
-	<version>1.5.5</version>
-	</dependency>
-
-	<dependency>
-		<groupId>org.powermock</groupId>
-		<artifactId>powermock-reflect</artifactId>
-		<version>1.5.5</version>
-	</dependency>
-	
-	<dependency>
-		<groupId>org.powermock</groupId>
-		<artifactId>powermock-module-junit4</artifactId>
-		<version>1.5.5</version>
-	</dependency>
-	
-	
-	<dependency>
 		<groupId>br.com.caelum.vraptor</groupId>
 		<artifactId>vraptor-hibernate</artifactId>
 		<version>1.0.1</version>
