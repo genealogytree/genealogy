@@ -89,4 +89,28 @@ public class MergeControllerTest {
 			assertEquals(MergeStatus.ACCEPT, merge.getStatus());
 		}
 	}
+	
+	@Test
+	public void differentMother() {
+		ArrayList<Merge> mergePeople = mergeController.initMerge(435,437);
+		assertEquals(3, mergePeople.size());
+		for (Merge merge : mergePeople) {
+			if(merge.getPerson1().getId() == 436)
+				assertEquals(MergeStatus.REJECT, merge.getStatus());
+			else
+				assertEquals(MergeStatus.ACCEPT, merge.getStatus());
+		}
+	}
+	
+	@Test
+	public void differentFather() {
+		ArrayList<Merge> mergePeople = mergeController.initMerge(549,552);
+		assertEquals(3, mergePeople.size());
+		for (Merge merge : mergePeople) {
+			if(merge.getPerson1().getId() == 550)
+				assertEquals(MergeStatus.REJECT, merge.getStatus());
+			else
+				assertEquals(MergeStatus.ACCEPT, merge.getStatus());
+		}
+	}
 }

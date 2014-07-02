@@ -93,15 +93,15 @@ public class MergeController {
 		Person person1 = this.personDao.get(id1);
 		Person person2 = this.personDao.get(id2);
 		
-		this.executeRecursive(person1, person2);
+		this.executeRecursive(person1, person2,MergeStatus.ACCEPT);
 		return peopleMerge;
 	}
 	
-	public void executeRecursive(Person person1, Person person2) {
+	public void executeRecursive(Person person1, Person person2, MergeStatus status) {
 		Merge merge = new Merge();
 		merge.setPerson1(person1);
 		merge.setPerson2(person2);
-		merge.setStatus(MergeStatus.ACCEPT);
+		merge.setStatus(status);
 		peopleMerge.add(merge);	
 
 		
@@ -118,7 +118,10 @@ public class MergeController {
 				hashPeople.containsKey(father2.getId()) == false) {
 			mean = peopleComparator.comparePeople(father1, father2);
 			if (mean >= this.thresholdSimilarity) {
-				this.executeRecursive(father1, father2);
+				this.executeRecursive(father1, father2,MergeStatus.ACCEPT);
+			}
+			else {
+				this.executeRecursive(father1, father2,MergeStatus.REJECT);
 			}
 		}
 		else if (father1 == null && father2 != null) {
@@ -136,7 +139,10 @@ public class MergeController {
 				hashPeople.containsKey(mother2.getId()) == false) {
 			mean = peopleComparator.comparePeople(mother1, mother2);
 			if (mean >= this.thresholdSimilarity) {
-				this.executeRecursive(mother1, mother2);	
+				this.executeRecursive(mother1, mother2,MergeStatus.ACCEPT);	
+			}
+			else {
+				this.executeRecursive(mother1, mother2,MergeStatus.REJECT);
 			}
 		}
 		else if (mother1 == null && mother2 != null) {
@@ -162,7 +168,7 @@ public class MergeController {
 			if (max >= this.thresholdSimilarity) {
 				if(hashPeople.containsKey(spouse1.getId()) == false &&
 				hashPeople.containsKey(finalSpouse2.getId()) == false)
-					this.executeRecursive(spouse1, finalSpouse2);
+					this.executeRecursive(spouse1, finalSpouse2,MergeStatus.ACCEPT);
 			}
 		}
 		
@@ -192,7 +198,7 @@ public class MergeController {
 				//System.out.println("Pair!");
 				if(hashPeople.containsKey(child1.getId()) == false &&
 				hashPeople.containsKey(finalChild2.getId()) == false)
-					this.executeRecursive(child1, finalChild2);
+					this.executeRecursive(child1, finalChild2,MergeStatus.ACCEPT);
 			}
 		}
 		

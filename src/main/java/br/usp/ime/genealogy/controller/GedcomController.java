@@ -66,10 +66,12 @@ public class GedcomController {
 		String folder = "/tmp";
 		File destination = new File(folder, gedcom.getFileName());
 		String file_name = folder + "/" + gedcom.getFileName();
-		
+		System.out.println(file_name);
+		System.out.println(gedcom.getFile().toString());
 		try {
 			IOUtils.copy(gedcom.getFile(), new FileOutputStream(destination));
 		} catch (IOException e) {
+			e.printStackTrace();
 			throw new RuntimeException("Error: copy failed!", e);			
 		}
 		

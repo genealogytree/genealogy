@@ -7,9 +7,12 @@ import static org.mockito.Mockito.spy;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 
+import org.apache.commons.io.IOUtils;
 import org.gedcom4j.parser.GedcomParserException;
 import org.hibernate.Session;
 import org.junit.Before;
@@ -18,6 +21,7 @@ import org.junit.Test;
 import static org.mockito.Mockito.when;
 import br.com.caelum.vraptor.core.RequestInfo;
 import br.com.caelum.vraptor.interceptor.multipart.UploadedFile;
+import br.com.caelum.vraptor.interceptor.multipart.UploadedFileConverter;
 import br.com.caelum.vraptor.util.test.MockResult;
 import br.usp.ime.genealogy.dao.InformationTypeDao;
 import br.usp.ime.genealogy.dao.NameDao;
@@ -69,20 +73,46 @@ public class GedcomControllerTest {
 	@Test
 	public void upload() {
 		RequestInfo info = mock(RequestInfo.class);
-		UploadedFile gedcom = mock(UploadedFile.class);
+		//UploadedFile gedcom = mock(UploadedFile.class);		
 		InputStream file = null;
+		
+		
+		
 		try {
 			file = new FileInputStream("src/test/resources/example.ged");
 		} catch (FileNotFoundException e1) {
 			assertTrue(false);
 		}
-		when(gedcom.getFileName()).thenReturn("src/test/resources/example.ged");
-		when(gedcom.getFile()).thenReturn(file);
+		
+		
+		UploadedFile gedcom = new UploadedFile() {
+			private InputStream file = null;
+
+			public long getSize() {				
+				return 0;
+			}
+			
+			public String getFileName() {
+				return "example.ged";
+			}
+			
+			public InputStream getFile() {
+				try {
+					file = new FileInputStream("src/test/resources/example.ged");
+				} catch (FileNotFoundException e1) {
+					assertTrue(false);
+				}
+				return this.file;
+			}
+			
+			public String getContentType() {
+				return null;
+			}
+		};		
 
 		System.out.println(System.getProperty("user.dir")+"/src/test/resources/example.ged");
 		
 		Tree tree = new Tree();
-		
 		tree.setTitle("Teste Upload Gedcom");
 		
 		try {
@@ -90,8 +120,10 @@ public class GedcomControllerTest {
 		} catch (IOException e) {
 			assertTrue(false);
 		} catch (GedcomParserException e) {
+			e.printStackTrace();
 			assertTrue(false);
 		}
+		assertEquals(28, treeDao.getPeople(tree.getId()).size());
 	}
 
 }
