@@ -57,16 +57,16 @@ public class NameDaoTest {
 	@Test
 	public void getByName() {
 		Name name = new Name();
-		name.setName("teste");
+		name.setName("Teste");
 		
 		Session session = HibernateUtil.getSession();
 		NameDao nameDao = new NameDao(session);
 		
 		nameDao.save(name);
 		
-		Name namedb = nameDao.getByName("teste");
+		Name namedb = nameDao.getByName("Teste");
 		
-		assertEquals("teste", namedb.getName());
+		assertEquals("Teste", namedb.getName());
 	}
 	
 	@Test

@@ -71,20 +71,20 @@ public class PersonDaoTest {
 	@Test
 	public void get_existing_person() {
 		Person p = personDao.get(person1.getId());
-		Assert.assertNotNull(p);
-		Assert.assertEquals(person1, p);
+		assertNotNull(p);
+		assertEquals(person1, p);
 	}
 	
 	@Test
 	public void get_not_existing_person() {
 		Person p = personDao.get(0L);
-		Assert.assertNull(p);
+		assertNull(p);
 	}
 
 	@Test
 	public void lisAll() {	
 		ArrayList<Person> plist = personDao.listAll();
-		Assert.assertEquals(people, plist);
+		assertEquals(people, plist);
 		verify(session).createCriteria(Person.class);
 		verify(criteria).list();
 	}
@@ -100,14 +100,11 @@ public class PersonDaoTest {
 		person1.setTree(tree);
 		person2.setTree(tree);
 		
-		/*
 		ArrayList<Person> plist = personDao.getByTree(tree);
 		assertEquals(2, plist.size());
 		for( Person p : plist ) {
-			if (p.getId() == person1.getId() || p.getId() == person2.getId())
-				assertTrue(true);
-		}*/
-		assertTrue(true);
-		
+			if (p.getId() != person1.getId() || p.getId() != person2.getId())
+				assertTrue(false);
+		}
 	}
 }
