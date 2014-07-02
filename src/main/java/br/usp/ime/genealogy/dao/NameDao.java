@@ -40,4 +40,8 @@ public class NameDao {
 	public List<Name> listAll() {		
 		return session.createCriteria(Name.class).list();
 	}
+	
+	public void delete(Name name) {
+		this.session.delete(name);
+	}
 }

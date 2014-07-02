@@ -49,4 +49,8 @@ public class PersonDao {
 		q.setParameter(0, tree);
 		return (ArrayList<Person>) q.list();
 	}
+	
+	public void delete(Person p){
+		this.session.delete(p);
+	}
 }

@@ -94,6 +94,7 @@ public class PersonControllerTest {
 		
 		spouse = new Person();
 		spouse.setId(2L);
+		spouse.setName("Maria do Carmo");
 		spouse.setTree(tree);
 		infos = (Set<PersonInformation>) new HashSet<PersonInformation>();
 		info = new PersonInformation();

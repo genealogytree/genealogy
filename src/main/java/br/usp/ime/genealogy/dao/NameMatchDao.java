@@ -26,11 +26,6 @@ public class NameMatchDao {
 		this.session.saveOrUpdate(nameMatch);	
 	}
 	
-	public ArrayList<Name> relatedNames (Name name) {
-		//Query qrMatch = (Query) this.session.createQuery("select count(*) from NameMatch where name1 = ? or name2 = ?").setString(0, name.getName()).setString(1, name.getName());
-		return null;
-	}	
-	
 	@SuppressWarnings("unchecked")
 	public ArrayList<Name> getNotComparedNames(){
 		Query qrMatch = this.session.createQuery("from Name name where name.id not in (select n.id from Name n, NameMatch nm where n like nm.name1 or n like nm.name2)");
@@ -82,5 +77,9 @@ public class NameMatchDao {
 				}
 			}
 		}				
+	}
+	
+	public void delete(NameMatch nameMatch){
+		this.session.delete(nameMatch);
 	}
 }
