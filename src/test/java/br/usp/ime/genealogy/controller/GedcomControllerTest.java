@@ -2,7 +2,6 @@ package br.usp.ime.genealogy.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
 import java.io.FileInputStream;
@@ -15,7 +14,6 @@ import org.hibernate.Session;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.caelum.vraptor.core.RequestInfo;
 import br.com.caelum.vraptor.interceptor.multipart.UploadedFile;
 import br.com.caelum.vraptor.util.test.MockResult;
 import br.usp.ime.genealogy.dao.InformationTypeDao;
@@ -67,9 +65,7 @@ public class GedcomControllerTest {
 	
 	@Test
 	public void upload() {
-		RequestInfo info = mock(RequestInfo.class);
 		//UploadedFile gedcom = mock(UploadedFile.class);		
-		
 		UploadedFile gedcom = new UploadedFile() {
 			private InputStream file = null;
 
@@ -101,7 +97,7 @@ public class GedcomControllerTest {
 		tree.setTitle("Teste Upload Gedcom");
 		
 		try {
-			this.gedcomController.upload(info, gedcom, tree);
+			this.gedcomController.upload(gedcom, tree);
 		} catch (IOException e) {
 			assertTrue(false);
 		} catch (GedcomParserException e) {
