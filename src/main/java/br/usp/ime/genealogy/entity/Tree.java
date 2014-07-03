@@ -29,7 +29,7 @@ public class Tree {
     	inverseJoinColumns={@JoinColumn(name="user_id")})
 	private Set<User> users;
 	
-	@OneToMany(mappedBy="tree") 	
+	@OneToMany(mappedBy="tree",cascade=CascadeType.ALL) 	
 	private Set<Person> persons;
 	 
 	

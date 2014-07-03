@@ -141,8 +141,10 @@ public class Person {
 	}
 	
 	public String getSex() {
+		System.out.println("SEXO?");
 		for (Iterator<PersonInformation> i = this.personInfos.iterator(); i.hasNext();) {
 			PersonInformation info = (PersonInformation) i.next();
+			System.out.println(info.getType().getType());
 			if(info.getType().getType().equalsIgnoreCase("sex")) {
 				return info.getDescription();
 			}

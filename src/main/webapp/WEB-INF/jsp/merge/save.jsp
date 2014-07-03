@@ -8,15 +8,13 @@
 <title>VRaptor Blank Project</title>
 </head>
 <body>
-	<h1>Saving...</h1>
-	<table>
-	<c:forEach begin="0" end="${n}" var="i">
+	<%--<table>
+	 <c:forEach begin="0" end="${n}" var="i">
 		<tr>
-			<td>${candidates[i]}</td>
 			<td>${candidates[i]}</td>
 			<td>${status[i]}</td>
 		</tr>
 	</c:forEach>
-	</table>
+	</table> --%>
 </body>
 </html>

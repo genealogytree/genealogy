@@ -39,12 +39,15 @@ public class MergeDao {
 	
 	public void save(Merge merge) {	
 		Merge merge2 = this.getbyPeople(merge.getPerson1(), merge.getPerson2());
-		
-		if (merge2 == null) {		
+		if (merge2 == null) {
 			this.session.save(merge);
 		}
 		else {
-			if (merge2.getStatus() == MergeStatus.MAYBE) {
+			if (merge.getStatus() == MergeStatus.MAYBE) {
+				merge2.setStatus(MergeStatus.MAYBE);
+				this.session.update(merge2);
+			}
+			else if (merge2.getStatus() == MergeStatus.MAYBE) {
 				if (merge2.getRate() != merge.getRate()) {
 					merge2.setStatus(MergeStatus.NONE);
 					this.session.update(merge2);
@@ -72,4 +75,7 @@ public class MergeDao {
 		return (ArrayList<Merge>) q.list();
 	}	
 
+	public void delete(Merge merge) {
+		this.session.delete(merge);
+	}
 }

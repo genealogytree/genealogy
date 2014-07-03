@@ -15,10 +15,20 @@
 	<label for="${person.name}" >Name</label>
 	<input type="text" name="name" value="${person.name}">
     <br/>
+    <%-- <label for="${person.sex}" >Sex</label>
+    <input type="hidden" name="idxs[]" value="SEX"/>
+	<input type="text" name="datas[]"/><br />
+	<input type="text" name="places[]"/><br />
+	<select name="descriptions[]">
+			  <option value='\0'></option>
+			  <option value='F'>Female</option>
+			  <option value='M'>Male</option>
+			</select> --%>
+	<br/>
 	<br/>
 	<c:forEach items="${types}" var="type">
 	${type.type}<br />
-	<input type="hidden" name="idxs[]" value="${type.id}" /><br />
+	<input type="hidden" name="idxs[] " value="${type.id}" /><br />
 	Data - Hora:<br />
 	<input type="text" name="datas[]" /><br />
 	Local:<br />

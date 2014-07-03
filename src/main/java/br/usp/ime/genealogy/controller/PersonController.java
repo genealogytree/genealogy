@@ -2,6 +2,8 @@ package br.usp.ime.genealogy.controller;
 
 import java.util.List;
 
+import org.gedcom4j.model.IndividualEvent;
+
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;

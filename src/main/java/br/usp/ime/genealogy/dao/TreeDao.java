@@ -38,6 +38,7 @@ public class TreeDao {
 	
 	public void delete(Tree tree){
 		this.session.delete(tree);
+		//this.session.delete("Tree", tree);
 	}
 	
 	@SuppressWarnings("unchecked")

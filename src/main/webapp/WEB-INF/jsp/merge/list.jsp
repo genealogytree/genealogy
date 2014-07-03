@@ -18,9 +18,10 @@
 			<td>Status</td>
 		</tr>
 	<c:forEach items="${candidates}" var="candidate">
+		<input type="hidden" name="ids[]" value="${candidate.id}">
 		<tr>
-			<td>${candidate.person1.name}</td>
-			<td>${candidate.person2.name}</td>
+			<td><a href='<c:url value="/tree/view/"/>${candidate.person1.tree.id}/${candidate.person1.id}'>${candidate.person1.name}</a></td>
+			<td><a href='<c:url value="/tree/view/"/>${candidate.person2.tree.id}/${candidate.person2.id}'>${candidate.person2.name}</a></td>	
 			<td><select name="status[]">
 			  <option value="none"></option>
 			  <option value="accept">accept</option>
@@ -31,7 +32,7 @@
 	</c:forEach>
 	</table>
 	
-	<!-- <input type="hidden" name="ids" value="${candidates_ids}"> -->
+	<!-- <input type="hidden" name="ids" value="${candidates_ids}">-->
 	<input type="submit" value="Save">
 	</form>
 </body>

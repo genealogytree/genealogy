@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.caelum.vraptor.Path;
+import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.usp.ime.genealogy.dao.MergeDao;
@@ -341,17 +342,37 @@ public class MergeController {
 
 	public void list() {
 		ArrayList<Merge> candidates = this.mergeDao.getMergeCandidates();
-		ArrayList<Long> ids = new ArrayList<Long>();
-		for (Merge candidate : candidates) {
-			ids.add(candidate.getId());
-		}
 		result.include("candidates", candidates);
-		result.include("candidates_ids", ids);
+		/*Long[] ids = new Long[candidates.size()];
+		for (int i = 0; i < candidates.size(); i++) {
+			ids[i] = candidates.get(i).getId();
+		}
+		result.include("candidates_ids", ids);*/
 	}
 	
-	public void save(String[] status) {
-		//result.include("candidates", ids);
+	@Post
+	public void save(String[] status, Long[] ids) {
+		for (int i = 0; i < status.length; i++) {
+			Long id = ids[i];
+			Merge merge = mergeDao.get(id);
+			switch (MergeStatus.valueOf(status[i].toUpperCase())) {
+				case ACCEPT:
+					merge.setStatus(MergeStatus.ACCEPT);
+					mergeDao.save(merge);
+					break;
+				case REJECT:
+					mergeDao.delete(merge);
+					break;
+				case MAYBE:
+					merge.setStatus(MergeStatus.MAYBE);
+					mergeDao.save(merge);
+					break;
+				default:
+					break;
+			}
+		}
+		/*result.include("candidates", ids);
 		result.include("status", status);
-		result.include("n", status.length);
+		result.include("n", status.length);*/
 	}
 }
