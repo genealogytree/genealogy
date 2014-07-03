@@ -63,5 +63,13 @@ public class MergeDao {
 		else		
 			return null;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Merge> getMergePeople() {
+		Query q = (Query) this.session.createQuery("from Merge where status = ?");
+		q.setParameter(0, MergeStatus.ACCEPT);
+		q.setMaxResults(1);
+		return (ArrayList<Merge>) q.list();
+	}	
 
 }

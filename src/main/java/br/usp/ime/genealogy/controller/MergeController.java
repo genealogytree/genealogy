@@ -83,7 +83,33 @@ public class MergeController {
 	
 	@Path("/merge/merge")
 	public void merge() {
+		ArrayList<Merge> merges = this.mergeDao.getMergePeople();
+		ArrayList<Merge> results = null;
+		for (Merge merge : merges) {
+			results = initMerge(merge.getPerson1().getId(), merge.getPerson2().getId());			
+			
+			for (Merge result : results) {
+				switch (result.getStatus()) {
+				case ACCEPT:
+					this.mergeTwoPerson(result.getPerson1(), result.getPerson2());					
+					break;
+				case REJECT:					
+					break;
+				case NEW:
+					this.fixRelationship(result.getPerson2(), results);
+					this.newPerson(merge.getPerson1().getTree(), result.getPerson2());
+					break;
 
+				default:
+					System.out.println("Deu erro, não existe caso default para o merge merge!!!");
+					break;
+				}
+				
+				//apagar todas as pessoas da árvore da pessoa 2
+				System.out.println(result.getStatus());
+			}
+		}
+	
 	}
 	
 	public ArrayList<Merge> initMerge(long id1, long id2) {
@@ -93,7 +119,7 @@ public class MergeController {
 		Person person1 = this.personDao.get(id1);
 		Person person2 = this.personDao.get(id2);
 		
-		this.executeRecursive(person1, person2,MergeStatus.ACCEPT);
+		this.executeRecursive(person1, person2, MergeStatus.ACCEPT);
 		return peopleMerge;
 	}
 	
@@ -126,8 +152,13 @@ public class MergeController {
 		}
 		else if (father1 == null && father2 != null) {
 			if (hashPeople.containsKey(father2.getId())) {
-				System.out.println("Father");
-				this.newPerson(father2);
+				Merge merge2 = new Merge();
+				merge2.setPerson1(null);
+				merge2.setPerson2(father2);
+				merge2.setStatus(MergeStatus.NEW);
+				peopleMerge.add(merge2);
+				
+				hashPeople.put(father2.getId(), father2);				
 			}
 		}
 		
@@ -146,9 +177,14 @@ public class MergeController {
 			}
 		}
 		else if (mother1 == null && mother2 != null) {
-			if (hashPeople.containsKey(mother2.getId()) == false) {
-				//System.out.println("Mother");
-				this.newPerson(mother2);				
+			if (hashPeople.containsKey(mother2.getId()) == false) {						
+				Merge merge2 = new Merge();
+				merge2.setPerson1(null);
+				merge2.setPerson2(mother2);
+				merge2.setStatus(MergeStatus.NEW);
+				peopleMerge.add(merge2);
+				
+				hashPeople.put(mother2.getId(), mother2);				
 			}
 		}
 		
@@ -174,9 +210,14 @@ public class MergeController {
 		
 		
 		for (Person spouse2 : spouses2) {
-			if (hashPeople.containsKey(spouse2.getId()) == false) {
-				//System.out.println("Spouse");
-				this.newPerson(spouse2);
+			if (hashPeople.containsKey(spouse2.getId()) == false) {				
+				Merge merge2 = new Merge();
+				merge2.setPerson1(null);
+				merge2.setPerson2(spouse2);
+				merge2.setStatus(MergeStatus.NEW);
+				peopleMerge.add(merge2);
+				
+				hashPeople.put(spouse2.getId(), spouse2);
 			}
 		}
 		
@@ -188,14 +229,12 @@ public class MergeController {
 			Person finalChild2 = null;
 			for (Person child2 : children2) {
 				mean = peopleComparator.comparePeople(child1, child2);
-				//System.out.println(child1.getName()+" "+child2.getName()+" "+mean);
 				if(mean > max) {
 					max = mean;
 					finalChild2 = child2;
 				}
 			}		
 			if (max >= this.thresholdSimilarity) {
-				//System.out.println("Pair!");
 				if(hashPeople.containsKey(child1.getId()) == false &&
 				hashPeople.containsKey(finalChild2.getId()) == false)
 					this.executeRecursive(child1, finalChild2,MergeStatus.ACCEPT);
@@ -213,23 +252,66 @@ public class MergeController {
 				}
 				
 				if(mean < this.thresholdSimilarity) {
-					//System.out.println(person1.getName()+" parent of "+child2.getName());
-					//System.out.println("Child");
-					this.newPerson(child2);
+					Merge merge2 = new Merge();
+					merge2.setPerson1(null);
+					merge2.setPerson2(child2);
+					merge2.setStatus(MergeStatus.NEW);
+					peopleMerge.add(merge2);
+					
+					hashPeople.put(child2.getId(), child2);
 				}
 			}
 		}
 	}
 	
-	public void newPerson(Person person) {
-		Merge merge = new Merge();
-		merge.setPerson1(null);
-		merge.setPerson2(person);
-		merge.setStatus(MergeStatus.NEW);
-		peopleMerge.add(merge);	
+	public void mergeTwoPerson(Person person1, Person person2) {
+		//colocar as informações em person1
+		
+	}
+	
+	public Person findPersonAtMerge(Person person, ArrayList<Merge> merges) {
+		for (Merge merge : merges) {
+			if (merge.getPerson2().getId() == person.getId()) 
+				return merge.getPerson1();
+		}
+		return null;
+	}
+	
+	public void fixRelationship(Person person, ArrayList<Merge> merges) {
+		Person father = this.relationshipDao.getParent(person, 'F');
+		Person mother = this.relationshipDao.getParent(person, 'M');
+		ArrayList<Person> spouses = this.relationshipDao.getSpouses(person);
+		ArrayList<Person> children = this.relationshipDao.getChildren(person);
+		
+		if (father != null && hashPeople.containsKey(father.getId()) == true) {
+			Person fatherFix = this.findPersonAtMerge(person, merges);
+			//chamar o dao para atualizar o relacionamento de person -> father para person -> fatherFix
+		}
+		
+		if (mother != null && hashPeople.containsKey(mother.getId()) == false) {
+			
+		}
+		
+		for (Person spouse : spouses) {
+			if (hashPeople.containsKey(spouse.getId()) == false) {
+				
+			}
+		}
+		
+		for (Person child : children) {
+			if (hashPeople.containsKey(child.getId()) == false) {
+				
+			}
+		}		
+	}
+		
+	public void newPerson(Tree tree, Person person) {
+		person.setTree(tree);
+		this.personDao.save(person);
+		
+		this.hashPeople.put(person.getId(), person);
 		
 		
-		hashPeople.put(person.getId(), person);
 		
 		Person father = this.relationshipDao.getParent(person, 'F');
 		Person mother = this.relationshipDao.getParent(person, 'M');
@@ -237,22 +319,22 @@ public class MergeController {
 		ArrayList<Person> children = this.relationshipDao.getChildren(person);
 		
 		if (father != null && hashPeople.containsKey(father.getId()) == false) {
-			this.newPerson(father);
+			this.newPerson(tree, father);
 		}
 		
 		if (mother != null && hashPeople.containsKey(mother.getId()) == false) {
-			this.newPerson(mother);
+			this.newPerson(tree, mother);
 		}
 		
 		for (Person spouse : spouses) {
 			if (hashPeople.containsKey(spouse.getId()) == false) {
-				this.newPerson(spouse);
+				this.newPerson(tree, spouse);
 			}
 		}
 		
 		for (Person child : children) {
 			if (hashPeople.containsKey(child.getId()) == false) {
-				this.newPerson(child);
+				this.newPerson(tree, child);
 			}
 		}		
 	}
