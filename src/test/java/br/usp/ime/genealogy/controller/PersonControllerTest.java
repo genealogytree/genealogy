@@ -131,7 +131,7 @@ public class PersonControllerTest {
 		String[] descriptions = { "Something" };
 
 		this.personController.save(person, tree, idxs, data, places,
-				descriptions,0,'Z', person.getName());
+				descriptions,0, 0, 'Z', person.getName());
 
 		verify(personDao).save(person);
 		verify(result).redirectTo(TreeController.class);
@@ -145,7 +145,7 @@ public class PersonControllerTest {
 		String[] descriptions = { "Something" };
 
 		this.personController.save(person, tree, idxs, data, places,
-				descriptions,2,'S', person.getName());
+				descriptions, 2, 0, 'S', person.getName());
 		verify(relationshipDao).save(any(Relationship.class));
 		verify(personDao).save(person);
 		verify(result).redirectTo(TreeController.class);
@@ -159,7 +159,7 @@ public class PersonControllerTest {
 		String[] descriptions = { "Something" };
 
 		this.personController.save(spouse, tree, idxs, data, places,
-				descriptions,1,'S', spouse.getName());
+				descriptions,1, 0,'S', spouse.getName());
 		verify(relationshipDao).save(any(Relationship.class));
 		verify(personDao).save(spouse);
 		verify(result).redirectTo(TreeController.class);
@@ -173,7 +173,7 @@ public class PersonControllerTest {
 		String[] descriptions = { "Something" };
 
 		this.personController.save(person, tree, idxs, data, places,
-				descriptions,3,'F', person.getName());
+				descriptions,3, 0, 'F', person.getName());
 		verify(relationshipDao).save(any(Relationship.class));
 		verify(personDao).save(person);
 		verify(result).redirectTo(TreeController.class);
@@ -187,7 +187,7 @@ public class PersonControllerTest {
 		String[] descriptions = { "Something" };
 
 		this.personController.save(child, tree, idxs, data, places,
-				descriptions,1,'C', child.getName());
+				descriptions,1, 0, 'C', child.getName());
 		verify(relationshipDao).save(any(Relationship.class));
 		verify(personDao).save(child);
 		verify(result).redirectTo(TreeController.class);
@@ -201,7 +201,7 @@ public class PersonControllerTest {
 		String[] descriptions = { "Something" };
 
 		this.personController.save(child, tree, idxs, data, places,
-				descriptions,2,'C', child.getName());
+				descriptions,2, 0, 'C', child.getName());
 		verify(relationshipDao).save(any(Relationship.class));
 		verify(personDao).save(child);
 		verify(result).redirectTo(TreeController.class);
@@ -218,13 +218,13 @@ public class PersonControllerTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void addPerson() {
-		this.personController.addPerson(0, 0, 0, 'Z');
+		this.personController.addPerson(0, 0, 0, 0, 'Z');
 		assertEquals((long) ((Person) result.included("person")).getId(), 0L);
 		assertEquals((long) ((Tree) result.included("tree")).getId(), 0L);
 		List<InformationType> types = (List<InformationType>) result.included("types");
 		assertEquals(types.size(), 0);
 		
-		this.personController.addPerson(1, 1, 0, '\u0000');
+		this.personController.addPerson(1, 1, 0, 0, '\u0000');
 		assertEquals((long) ((Person) result.included("person")).getId(), 1L);
 		assertEquals((long) ((Tree) result.included("tree")).getId(), 1L);
 	}

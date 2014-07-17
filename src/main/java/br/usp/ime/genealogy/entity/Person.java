@@ -91,6 +91,10 @@ public class Person {
 	}
 	
 	public void setName(String name) {		
+		if (name == null) {
+			return;
+		}
+		
 		String[] newNamesContent = name.split(" ");	
 		
 		if (this.names == null) {
@@ -141,7 +145,6 @@ public class Person {
 	}
 	
 	public String getSex() {
-		System.out.println("SEXO?");
 		for (Iterator<PersonInformation> i = this.personInfos.iterator(); i.hasNext();) {
 			PersonInformation info = (PersonInformation) i.next();
 			System.out.println(info.getType().getType());
@@ -149,7 +152,7 @@ public class Person {
 				return info.getDescription();
 			}
 		}
-		return null;
+		return "U";
 	}
 	
 	public boolean equals(Object obj) {

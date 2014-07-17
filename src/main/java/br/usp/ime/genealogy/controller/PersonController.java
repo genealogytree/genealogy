@@ -52,7 +52,7 @@ public class PersonController {
 
 	public void savePerson(Person person, Tree tree, long[] idxs,
 			String[] datas, String[] places, String[] descriptions,
-			long relation_id, char relation_type, String name_form) {
+			long relation_id, long relation2_id, char relation_type, String name_form) {
 		
 		if(person.getId() != 0){
 			person = this.personDao.get(person.getId());
@@ -68,7 +68,6 @@ public class PersonController {
 		if (person.getNames() != null) {
 			this.personNameDao.delete(person, 0);
 			
-			//int i = 0;
 			for (PersonName personName : person.getNames()) {
 				this.nameDao.save(personName.getName());	
 				
@@ -78,9 +77,7 @@ public class PersonController {
 				personName.setName(name);
 				this.personNameDao.save(personName);
 
-				//i++;
 			}
-			//this.personNameDao.delete(person, i);			
 		}
 		
 		for (int i = 0; i < idxs.length; i++) {
@@ -102,6 +99,27 @@ public class PersonController {
 				relation.setPerson1(person);
 				relation.setPerson2(p);
 				relation.setType(relation_type);
+				
+				if (relation_type == 'F') {
+					Person mother = this.relationDao.getParent(p, 'M');
+					if (mother != null) {
+						Relationship relationSpouse = new Relationship();
+						relationSpouse.setPerson1(person);
+						relationSpouse.setPerson2(mother);
+						relationSpouse.setType('S');
+						this.relationDao.save(relationSpouse);
+					}
+				}
+				else {
+					Person father = this.relationDao.getParent(p, 'F');
+					if (father != null) {
+						Relationship relationSpouse = new Relationship();
+						relationSpouse.setPerson1(father);
+						relationSpouse.setPerson2(person);
+						relationSpouse.setType('S');
+						this.relationDao.save(relationSpouse);
+					}					
+				}
 			}
 			else if (relation_type == 'S') {
 				if(p.getSex().equals("F")) {
@@ -117,10 +135,26 @@ public class PersonController {
 			else if (relation_type == 'C') {
 				relation.setPerson1(p);
 				relation.setPerson2(person);
-				if (p.getSex().equals("M"))
+				if (p.getSex().equals("M")) {
 					relation.setType('F');
-				else if (p.getSex().equals("F"))
+				}
+				else {
 					relation.setType('M');
+				}
+				
+				if (relation2_id > 0) {					
+					Person p2 = this.personDao.get(relation2_id);
+					Relationship relationParent = new Relationship();
+					relationParent.setPerson1(p2);
+					relationParent.setPerson2(person);
+					if(p.getSex().equals("M")) {
+						relationParent.setType('M');
+					}
+					else {
+						relationParent.setType('F');
+					}
+					this.relationDao.save(relationParent);
+				}
 			}
 			relationDao.save(relation);
 		}
@@ -129,10 +163,10 @@ public class PersonController {
 	@Post("/person/save")
 	public void save(Person person, Tree tree, 
 			long [] idxs, String[] datas, String[] places, String [] descriptions,
-			long relation_id, char relation_type, String name){
+			long relation_id, long relation2_id, char relation_type, String name){
 		
 		savePerson(person, tree, idxs, datas, places, descriptions,
-				relation_id, relation_type, name);		
+				relation_id, relation2_id, relation_type, name);		
 		result.redirectTo(TreeController.class).view(tree.getId(), person.getId());
 	}
 
@@ -141,12 +175,12 @@ public class PersonController {
 		String[] datas = {};
 		String[] places = {};
 		String [] descriptions = {};
-		savePerson(person, tree, idxs, datas, places, descriptions, 0, (char) 0, person.getName());
+		savePerson(person, tree, idxs, datas, places, descriptions, 0, 0, (char) 0, person.getName());
 		result.redirectTo(TreeController.class).saveRootPerson(tree, person);
 	}
 	
 	@Path("/person/addPerson")
-	public void addPerson(long tree_id, long person_id, long relation_id, char relation_type) {
+	public void addPerson(long tree_id, long person_id, long relation_id, long relation2_id, char relation_type) {
 		Tree tree;
 		if(tree_id != 0)
 			tree = treeDao.get(tree_id);
@@ -170,6 +204,7 @@ public class PersonController {
 		result.include("tree", tree);
 		result.include("types", types);
 		result.include("relation_id", relation_id);
+		result.include("relation2_id", relation2_id);
 		result.include("relation_type", relation_type);
 
 	}

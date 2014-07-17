@@ -6,25 +6,13 @@
 <title>Insert title here</title>
 </head>
 <body>
+<a href="<c:url value="/tree"/>">Voltar</a>
 <table>
-  <thead>
     <tr>
       <td>Person:</td>
       <td>${person.name}</td>
       <td> <a href='<c:url value="/person/addPerson?tree_id="/><%= request.getParameter("tree_id") %>&person_id=${person.id}'>Alterar</a></td>
     </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td>
-      
-      <td> Adicionar/Visualizar:</td>      
-      <td> <a href='<c:url value="/person/addPerson?tree_id="/><%= request.getParameter("tree_id") %>&relation_id=${person.id}&relation_type=F'>Pai</a></td>
-      <td> <a href='<c:url value="/person/addPerson?tree_id="/><%= request.getParameter("tree_id") %>&relation_id=${person.id}&relation_type=M'>Mãe</a></td>
-      <td> <a href='<c:url value="/person/addPerson?tree_id="/><%= request.getParameter("tree_id") %>&relation_id=${person.id}&relation_type=C'>Filho(a)</a></td>
-      <td> <a href='<c:url value="/person/addPerson?tree_id="/><%= request.getParameter("tree_id") %>&relation_id=${person.id}&relation_type=S'>Esposo(a)</a></td>
-      </tr>          
-  </tbody>
 </table>
 
 
@@ -70,14 +58,19 @@
 </c:forEach>
 </table>
 
+
 <p>Spouses</p>
 <table>
 <c:forEach items="${spouses}" var="spouse">
-	<tr><td>
-	<a href='<c:url value="/tree/view/"/><%= request.getParameter("tree_id") %>/${spouse.id}' >${spouse.name}</a>
-	</td></tr>
+	<tr>
+	<td><a href='<c:url value="/tree/view/"/><%= request.getParameter("tree_id") %>/${spouse.id}' >${spouse.name}</a></td>
+	<td><a href='<c:url value="/person/addPerson?tree_id="/><%= request.getParameter("tree_id") %>&relation_id=${person.id}&relation_type=C&relation2_id=${spouse.id}'>Adicionar Filho(a)</a></td>
+	</tr>
 </c:forEach>
 </table>
-
+<br />
+<a href='<c:url value="/person/addPerson?tree_id="/><%= request.getParameter("tree_id") %>&relation_id=${person.id}&relation_type=S'>Adicionar Esposo(a)</a>
+<br /><br />
+<a href='<c:url value="/person/addPerson?tree_id="/><%= request.getParameter("tree_id") %>&relation_id=${person.id}&relation_type=C'>Adicionar Filho(a) Sem Pai/Mãe</a>
 </body>
 </html>

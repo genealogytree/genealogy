@@ -41,19 +41,24 @@ public class NameMatchDao {
 	@SuppressWarnings("unchecked")
 	public ArrayList<Person> searchSimilarPeople(ArrayList<Name> names, float rate) {
 		String query_str = "from Person as p "
-				+ "inner join fetch p.names as pn "
-				+ "inner join fetch pn.name as n "
-				+ "inner join fetch n.matches1 as nm1 "
-				+ "inner join fetch n.matches2 as nm2 "
-				+ "where (nm1.rate >= ? or nm2.rate >= ?) ";
-		for (int j = 0; j < names.size(); j++)
-			query_str += "and (nm1.name1 = ? or nm2.name2 = ?) ";
-		query_str += "group by p";
+				+ "where p.id in ( "
+				+ "select p.id from Person as p "
+				+ "inner join p.names as pn "
+				+ "inner join pn.name as n "
+				+ "inner join n.matches1 as nm1 "
+				+ "inner join n.matches2 as nm2 "
+				+ "where (nm1.rate >= ? and nm2.rate >= ?) ";
+		for (int j = 0; j < names.size(); j++) {
+			query_str += "and (nm1.name1 = ? or nm1.name2 = ? or nm2.name1 = ? or nm2.name2 = ?) ";
+		}
+		query_str += "group by p )";
 		Query q = this.session.createQuery(query_str);
 		q.setFloat(0, rate);
 		q.setFloat(1, rate);
 		int i = 2;
 		for (Name name : names) {
+			q.setParameter(i++, name);
+			q.setParameter(i++, name);
 			q.setParameter(i++, name);
 			q.setParameter(i++, name);
 		}

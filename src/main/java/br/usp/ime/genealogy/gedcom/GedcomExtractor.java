@@ -97,7 +97,7 @@ public class GedcomExtractor {
 			
 			person.setTree(tree);
 			//this.personDao.save(person);
-			personController.savePerson(person, this.tree, new long[0], new String[0], new String[0], new String[0], 0, 'U', ind.formattedName());
+			personController.savePerson(person, this.tree, new long[0], new String[0], new String[0], new String[0], 0, 0, 'U', ind.formattedName());
 			
 			if (tree.getRootPerson() == null){		
 				tree.setRootPerson(person);

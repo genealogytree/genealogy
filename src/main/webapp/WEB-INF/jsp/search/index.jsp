@@ -1,7 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -15,9 +14,9 @@
 	<input type="text" name="name" value="${name}" />
 	</p>
 	<p> Similarity: 
-		<input type="radio" name="similarity" value="${equal}">Exact
-		<input type="radio" name="similarity" value="${high}">High
-		<input type="radio" name="similarity" value="${low}">Low
+		<input type="radio" name="similarity" value="${equal}" />Exact
+		<input type="radio" name="similarity" value="${high}" />High
+		<input type="radio" name="similarity" value="${low}" checked="checked"/>Low
 	</p>
 	<p>
 		Sex:

@@ -34,6 +34,7 @@ public class SearchController {
 		result.include("low", Similarity.LOW.getSimilarity());
 		result.include("male", sex);
 		result.include("female", sex);
+		result.include("similarity", similarity);
 
 		return this.search(name, similarity);
 	}
@@ -59,5 +60,4 @@ public class SearchController {
 		this.nameMatchDao.completeNameMatch();
 		return this.nameMatchDao.searchSimilarPeople(names,rate);
 	}
-
 }

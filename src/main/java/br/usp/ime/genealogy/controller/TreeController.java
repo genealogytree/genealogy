@@ -36,15 +36,26 @@ public class TreeController {
 	public Tree form(long id) {
 		Tree tree;
 		if(id != 0)
-			tree = treeDao.get(id);
+			tree = this.treeDao.get(id);
 		else
 			tree = new Tree();
 		return tree;
 	}
 
-	public void save(Tree tree, Person person){
-		this.treeDao.save(tree);
-		result.redirectTo(PersonController.class).saveFirstPerson(person, tree);
+	public void save(Tree tree, Person person) {
+		if (tree.getId() > 0) {
+			Tree treeUp = this.treeDao.get(tree.getId());
+			treeUp.setTitle(tree.getTitle());
+			this.treeDao.save(treeUp);
+			result.redirectTo(TreeController.class).view(treeUp.getId(), treeUp.getRootPerson().getId());
+			return ;
+		}
+		else {
+			this.treeDao.save(tree);
+			result.redirectTo(PersonController.class).saveFirstPerson(person, tree);
+			return;
+		}
+		
 	}
 	
 	public void saveRootPerson(Tree tree, Person person) {

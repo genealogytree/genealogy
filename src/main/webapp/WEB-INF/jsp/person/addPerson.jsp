@@ -8,6 +8,7 @@
 <body>
 	<form method="post" action="<c:url value='/person/save'/>">
 	<input type="hidden" name="relation_id" value="${relation_id}" />
+	<input type="hidden" name="relation2_id" value="${relation2_id}" />
 	<input type="hidden" name="relation_type" value="${relation_type}" />
 	<input type="hidden" name="person.id" value="${person.id}">
 	<label for="${person.id}" >Id</label>
@@ -15,15 +16,6 @@
 	<label for="${person.name}" >Name</label>
 	<input type="text" name="name" value="${person.name}">
     <br/>
-    <%-- <label for="${person.sex}" >Sex</label>
-    <input type="hidden" name="idxs[]" value="SEX"/>
-	<input type="text" name="datas[]"/><br />
-	<input type="text" name="places[]"/><br />
-	<select name="descriptions[]">
-			  <option value='\0'></option>
-			  <option value='F'>Female</option>
-			  <option value='M'>Male</option>
-			</select> --%>
 	<br/>
 	<br/>
 	<c:forEach items="${types}" var="type">
